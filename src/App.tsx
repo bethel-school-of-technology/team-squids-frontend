@@ -21,6 +21,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import ChurchFinder from './pages/ChurchFinder';
 
 setupIonicReact();
 
@@ -28,8 +29,8 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
+        <Route exact path="/church-finder">
+          <ChurchFinder />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
