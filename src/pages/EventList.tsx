@@ -1,11 +1,11 @@
-import React from "react";
 import { IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
+import React from "react";
 
-const ChurchList = () => (
+const EventList = () => (
     <>
         <IonHeader>
             <IonToolbar>
-                <IonTitle>Church List</IonTitle>
+                <IonTitle>Event List</IonTitle>
             </IonToolbar>
         </IonHeader>
         <IonContent>
@@ -15,12 +15,12 @@ const ChurchList = () => (
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '100%',
-                }}
+                  }}
             >
-                Church List Content
+                Event List
             </div>
         </IonContent>
     </>
 );
 
-export default ChurchList;
+export default EventList;
