@@ -1,26 +1,32 @@
-import { IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
-import React from "react";
-
-const EventList = () => (
-    <>
+import {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonSearchbar,
+    IonTitle,
+    IonToolbar,
+  } from "@ionic/react";
+  
+  
+  
+  const EventsList: React.FC = () => {
+  
+    return (
+      <IonPage>
         <IonHeader>
-            <IonToolbar>
-                <IonTitle>Event List</IonTitle>
-            </IonToolbar>
+          <IonToolbar color="primary">
+            <IonTitle>Events</IonTitle>
+          </IonToolbar>
+          <IonToolbar color="primary">
+            <IonSearchbar></IonSearchbar>
+          </IonToolbar>
         </IonHeader>
-        <IonContent>
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%',
-                  }}
-            >
-                Event List
-            </div>
+        <IonContent fullscreen>
+          
         </IonContent>
-    </>
-);
-
-export default EventList;
+      </IonPage>
+    );
+  };
+  
+  export default EventsList;
+  
