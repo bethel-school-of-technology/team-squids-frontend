@@ -14,6 +14,9 @@ const EventItem: React.FC<ContainerProps> = ({ data }) => {
     <IonItem href="#">
       <IonThumbnail slot="start">
         <IonIcon icon={calendar} />
+        {/* <IonThumbnail slot="start">
+        <img alt="Silhouette of a person's head" src={data.imageURL} />
+      </IonThumbnail> Something more like this. */}
       </IonThumbnail>
       <IonLabel>
         <h2>{data.eventTitle}</h2>
