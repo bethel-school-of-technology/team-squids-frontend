@@ -16,6 +16,9 @@ let churches: Church[] = [
     churchName: "First Church",
     denomination: "Baptist",
     address: "123 First Street",
+    city: "Anytown",
+    state: "CK",
+    zip: "12345",
     phone: "555-555-555",
     email: "connect@firstchurch.com",
     servicesTimes: "Sundays 8:00 am, 10:30 am 12:00 pm",
@@ -30,7 +33,11 @@ let churches: Church[] = [
     churchName: "Second Church",
     denomination: "Methodist",
     address: "123 Second Street",
+    city: "Anytown",
+    state: "CK",
+    zip: "12345",
     phone: "555-555-555",
+
     email: "connect@secondchurch.com",
     servicesTimes: "Sundays 8:00 am, 10:30 am 12:00 pm",
     contactName: "Joe Pastor",
@@ -59,9 +66,7 @@ const ChurchFinder: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonList>
-          {renderChurchList()}
-        </IonList>
+        <IonList>{renderChurchList()}</IonList>
       </IonContent>
     </IonPage>
   );

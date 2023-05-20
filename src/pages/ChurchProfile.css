@@ -1,0 +1,15 @@
+
+.hero-img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.event-list {
+    padding: 1rem 0rem 2rem 0rem;
+}
+
+div h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 50%;
+}

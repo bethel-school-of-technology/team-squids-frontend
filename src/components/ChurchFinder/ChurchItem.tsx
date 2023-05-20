@@ -1,4 +1,4 @@
-import { IonAvatar, IonItem, IonLabel, IonThumbnail } from "@ionic/react";
+import { IonItem, IonLabel, IonThumbnail } from "@ionic/react";
 
 import { Church } from "../../context/churchContext";
 
@@ -8,7 +8,7 @@ interface ContainerProps {
 
 const ChurchItem: React.FC<ContainerProps> = ({ data }) => {
   return (
-    <IonItem href="#">
+    <IonItem routerLink={`churches/${data.churchId}`} >
       <IonThumbnail slot="start">
         <img alt="Silhouette of a person's head" src={data.imageURL} />
       </IonThumbnail>
