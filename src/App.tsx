@@ -32,7 +32,8 @@ const App: React.FC = () => (
     <IonReactRouter>
     <IonTabs>
       <IonRouterOutlet>
-        <Route path="/churches" component={ChurchFinder} />
+        <Route exact path="/churches" component={ChurchFinder} />
+        <Route path="/churches/:churchId" component={ChurchProfile} />
         <Route path="/events" component={EventList} />
         <Route path="/church-profile" component={ChurchProfile} />
         <Route exact path="/">
