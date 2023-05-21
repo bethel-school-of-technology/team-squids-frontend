@@ -24,6 +24,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import EventDetail from "./pages/EventDetail";
 
 setupIonicReact();
 
@@ -34,8 +35,8 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <Route exact path="/churches" component={ChurchFinder} />
         <Route path="/churches/:churchId" component={ChurchProfile} />
-        <Route path="/events" component={EventList} />
-        <Route path="/church-profile" component={ChurchProfile} />
+        <Route exact path="/events" component={EventList} />
+        <Route path="/events/:eventId" component={EventDetail} />
         <Route exact path="/">
           <Redirect to="/churches" />
         </Route>
