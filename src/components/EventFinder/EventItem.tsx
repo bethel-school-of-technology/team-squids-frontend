@@ -11,7 +11,7 @@ interface ContainerProps {
 
 const EventItem: React.FC<ContainerProps> = ({ data }) => {
   return (
-    <IonItem href="#">
+    <IonItem routerLink={`events/${data.eventId}`}>
       <IonThumbnail slot="start">
         <IonIcon icon={calendar} />
         {/* <IonThumbnail slot="start">
@@ -23,8 +23,9 @@ const EventItem: React.FC<ContainerProps> = ({ data }) => {
         <p>{data.churchName}</p>
       </IonLabel>
       <IonLabel slot="end">
+      <p>{data.eventDay}</p>
+      <h2>{data.eventDate}</h2>
         <p>{data.eventTime}</p>
-        <h2>{data.eventDate}</h2>
       </IonLabel>
     </IonItem>
   );
