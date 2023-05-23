@@ -1,44 +1,39 @@
 import axios from "axios";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 
 export interface Church {
   churchId: number;
+  userId: number;
   churchName: string;
   denomination: string;
-  address: string;
+  street: string;
   city: string;
   state: string;
   zip: string;
-  phone: string;
-  email: string;
-  servicesTimes: string;
-  contactName: string;
-  website: string;
+  phoneNumber: string;
+  churchEmail: string;
   welcomeMessage: string;
-  imageURL: string;
+  serviceTime: string;
+  imageUrl: string;
+  website: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface newChurch {
+  userId: number;
   churchName: string;
   denomination: string;
-  address: string;
+  street: string;
   city: string;
   state: string;
   zip: string;
-  phone: string;
-  email: string;
-  servicesTimes: string;
-  contactName: string;
-  website: string;
+  phoneNumber: string;
+  churchEmail: string;
   welcomeMessage: string;
-  imageURL: string;
+  serviceTime: string;
+  imageUrl: string;
+  website: string;
 }
 
 interface ChurchContextProps {
@@ -65,66 +60,65 @@ export const ChurchContext = createContext<ChurchContextProps>({
   deleteChurch: (churchId: number) => Promise.resolve({} as Church),
 });
 
+const BASE_URL = "http://localhost:3000/api/church/";
+
 export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const [churches, setChurches] = useState<Church[]>([]);
 
-  const baseURL = "http://localhost:3000/api/church/";
-
   const getAllChurches = async () => {
     try {
-      const response = await axios.get(baseURL);
-      return setChurches(response.data);
+      const response = await axios.get(BASE_URL);
+      setChurches(response.data);
     } catch (error: any) {
-      return await Promise.reject(error.response.statusText);
+      throw error.response.statusText;
     }
   };
 
   useEffect(() => {
-    async function fetchData() {
+    (async () => {
       await getAllChurches();
-    }
-    fetchData();
+    })();
   }, []);
 
   const createChurch = async (newChurch: newChurch) => {
     try {
-      const response = await axios.post(baseURL, newChurch);
+      const response = await axios.post(BASE_URL, newChurch);
       await getAllChurches();
-      return await response.data;
+      return response.data;
     } catch (error: any) {
-      return await Promise.reject(error.response.statusText);
+      throw error.response.statusText;
     }
   };
 
   const getChurch = async (churchId: number) => {
-    const churchIdURL = `${baseURL}${churchId}`;
+    const churchIdURL = `${BASE_URL}${churchId}`;
     try {
       const response = await axios.get(churchIdURL);
-      return await response.data;
+      return response.data;
     } catch (error: any) {
-      return await Promise.reject(error.response.statusText);
+      throw error.response.statusText;
     }
   };
 
   const updateChurch = async (updatedChurch: Church) => {
-    const churchIdURL = `${baseURL}${updatedChurch.churchId}`;
+    const churchIdURL = `${BASE_URL}${updatedChurch.churchId}`;
     try {
       const response = await axios.put(churchIdURL, updatedChurch);
       await getAllChurches();
-      return await response.data;
+      return response.data;
     } catch (error: any) {
-      return await Promise.reject(error.response.statusText);
+      throw error.response.statusText;
     }
   };
 
   const deleteChurch = async (churchId: number) => {
-    const churchIdURL = `${baseURL}${churchId}`;
+    const churchIdURL = `${BASE_URL}${churchId}`;
     try {
       const response = await axios.delete(churchIdURL);
       await getAllChurches();
-      return await response.data;
+      return response.data;
     } catch (error: any) {
-      return await Promise.reject(error.response.statusText);
+      throw error.response.statusText;
     }
   };
 
