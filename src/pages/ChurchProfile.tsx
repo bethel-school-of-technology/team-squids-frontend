@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from "react";
 import {
   IonBackButton,
   IonButton,
@@ -7,67 +8,71 @@ import {
   IonGrid,
   IonHeader,
   IonImg,
+  IonLoading,
   IonPage,
   IonRow,
   IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { Church } from "../context/churchContext";
-import { useParams } from "react-router";
+import { Church, ChurchContext } from "../context/churchContext";
+import { useParams } from "react-router-dom";
 import "./ChurchProfile.css";
-import { Event } from "../context/eventContext";
 import EventItem from "../components/EventFinder/EventItem";
-
-let church: Church = {
-  churchId: 1,
-  churchName: "First Church",
-  denomination: "Baptist",
-  address: "123 First Street",
-  city: "Anytown",
-  state: "CK",
-  zip: "12345",
-  phone: "555-555-555",
-  email: "connect@firstchurch.com",
-  servicesTimes: "Sundays 8:00 am, 10:30 am 12:00 pm",
-  contactName: "Joe Pastor",
-  website: "www.firstchurch.com",
-  welcomeMessage:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mattis enim ut tellus elementum. Tellus integer feugiat scelerisque varius morbi enim nunc. Facilisis gravida neque convallis a cras semper auctor neque vitae. Sit amet nisl purus in mollis nunc sed. Ac tortor vitae purus faucibus. In hendrerit gravida rutrum quisque non tellus. Convallis a cras semper auctor neque vitae tempus quam pellentesque. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Fusce ut placerat orci nulla pellentesque dignissim. Mauris augue neque gravida in fermentum et sollicitudin. ",
-  imageURL:
-    "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
-};
+import { Event } from "../context/eventContext";
 
 let events: Event[] = [
   {
     eventId: 1,
- eventTitle: "Potluck Dinner",
- churchName: "First Church",
- eventDay: "Thursday",
- eventDate: "5-18-23",
- eventTime: "6:30 PM",
- eventAddress: "123 First Street",
- eventType: "Family",
- description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+    eventTitle: "Potluck Dinner",
+    churchName: "First Church",
+    eventDay: "Thursday",
+    eventDate: "5-18-23",
+    eventTime: "6:30 PM",
+    eventAddress: "123 First Street",
+    eventType: "Family",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
   },
   {
     eventId: 2,
- eventTitle: "Gospel Concert",
- churchName: "Second Church",
- eventDay: "Friday",
- eventDate: "5-19-23",
- eventTime: "7:00 PM",
- eventAddress: "123 Second Street",
- eventType: "Family",
- description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
-  }
-] 
+    eventTitle: "Gospel Concert",
+    churchName: "Second Church",
+    eventDay: "Friday",
+    eventDate: "5-19-23",
+    eventTime: "7:00 PM",
+    eventAddress: "123 Second Street",
+    eventType: "Family",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.",
+  },
+];
 
+interface ChurchRouteParams {
+  churchId: string;
+}
 
 const ChurchProfile: React.FC = () => {
-  const params = useParams();
+  const params = useParams<ChurchRouteParams>();
+  const { getChurch } = useContext(ChurchContext);
+  const [selectedChurch, setSelectedChurch] = useState<Church | undefined>();
+  const [error, setError] = useState<string | undefined>(undefined);
 
-  //   let [church, setChurch] = useState<Church>();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const church = await getChurch(parseInt(params.churchId));
+        setSelectedChurch(church);
+      } catch (error) {
+        setError((error as Error).message);
+      }
+    }
+
+    fetchData();
+  }, [params.churchId, getChurch]);
+
+  const loading = () => {
+    return <IonLoading isOpen={true} />;
+  };
 
   const renderEventList = () => {
     return events.map((event) => (
@@ -76,78 +81,87 @@ const ChurchProfile: React.FC = () => {
   };
 
   const handleConnectClick = () => {
-    window.location.href = `mailto:${church.email}`;
+    window.location.href = `mailto:${selectedChurch?.churchEmail}`;
   };
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
-          </IonButtons>
-          <IonTitle>{church.churchName}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonGrid>
-          <IonRow>
-            <IonCol size="12">
-              <IonImg
-                className="hero-img"
-                src={church.imageURL}
-                alt={church.churchName}
-              />
-            </IonCol>
-            <IonCol size="12">
-              <h1>{church.churchName}</h1>
-              <IonText color="primary">
-                <h6>{church.denomination}</h6>
-              </IonText>
-            </IonCol>
-            <IonCol size="12">
-              <h4>Service Times</h4>
-              <IonText color="medium">
-                <p>{church.servicesTimes}</p>
-              </IonText>
-            </IonCol>
-            <IonCol size="12">
-              <h4>Location</h4>
-              <IonText color="medium">
-                <p>
-                  {church.address} <br />
-                  {church.city}, {church.state} {church.zip}
-                </p>
-              </IonText>
-            </IonCol>
-            <IonCol size="12">
-              <h4>Contact Information</h4>
-              <a href={`https://${church.website}`}>
-                <p>{church.website}</p>
-              </a>
-              <IonText color="medium">
-                <p>{church.phone}</p>
-              </IonText>
-            </IonCol>
-            <IonCol size="12">
-              <h4>Welcome to {church.churchName}</h4>
-              <IonText color="medium">
-                <p>{church.welcomeMessage}</p>
-              </IonText>
-            </IonCol>
-            <IonCol size="12">
-              <h4>Upcoming Events</h4>
-              <div className="event-list">{renderEventList()}</div>
-              
-            </IonCol>
-            <IonCol size="12">
-              <IonButton expand="block" onClick={handleConnectClick}>Connect wih Us</IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
-  );
+  const churchDetails = () => {
+    return (
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref="/" />
+            </IonButtons>
+            <IonTitle>{selectedChurch?.churchName}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent fullscreen>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="12">
+                <IonImg
+                  className="hero-img"
+                  src={selectedChurch?.imageUrl}
+                  alt={selectedChurch?.churchName}
+                />
+              </IonCol>
+              <IonCol size="12">
+                <h1>{selectedChurch?.churchName}</h1>
+                <IonText color="primary">
+                  <h6>{selectedChurch?.denomination}</h6>
+                </IonText>
+              </IonCol>
+              <IonCol size="12">
+                <h4>Service Times</h4>
+                <IonText color="medium">
+                  <p>{selectedChurch?.serviceTime}</p>
+                </IonText>
+              </IonCol>
+              <IonCol size="12">
+                <h4>Location</h4>
+                <IonText color="medium">
+                  <p>
+                    {selectedChurch?.street} <br />
+                    {selectedChurch?.city}, {selectedChurch?.state}{" "}
+                    {selectedChurch?.zip}
+                  </p>
+                </IonText>
+              </IonCol>
+              <IonCol size="12">
+                <h4>Contact Information</h4>
+                <a href={`https://${selectedChurch?.website}`}>
+                  <p>{selectedChurch?.churchEmail}</p>
+                </a>
+                <IonText color="medium">
+                  <p>{selectedChurch?.phoneNumber}</p>
+                </IonText>
+              </IonCol>
+              <IonCol size="12">
+                <h4>Welcome to {selectedChurch?.churchName}</h4>
+                <IonText color="medium">
+                  <p>{selectedChurch?.welcomeMessage}</p>
+                </IonText>
+              </IonCol>
+              <IonCol size="12">
+                <h4>Upcoming Events</h4>
+                <div className="event-list">{renderEventList()}</div>
+              </IonCol>
+              <IonCol size="12">
+                <IonButton expand="block" onClick={handleConnectClick}>
+                  Connect with Us
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonContent>
+      </IonPage>
+    );
+  };
+
+  return !selectedChurch ||
+    selectedChurch.churchId !== parseInt(params.churchId)
+    ? loading()
+    : churchDetails();
 };
 
 export default ChurchProfile;

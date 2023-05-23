@@ -10,11 +10,11 @@ const ChurchItem: React.FC<ContainerProps> = ({ data }) => {
   return (
     <IonItem routerLink={`churches/${data.churchId}`} >
       <IonThumbnail slot="start">
-        <img alt="Silhouette of a person's head" src={data.imageURL} />
+        <img alt="Silhouette of a person's head" src={data.imageUrl} />
       </IonThumbnail>
       <IonLabel>
         <h2>{data.churchName}</h2>
-        <p>{data.address}</p>
+        <p>{data.street}, {data.city}, {data.state}, {data.zip}</p>
       </IonLabel>
       <IonLabel slot="end">
         <h4>00.0 miles</h4>
