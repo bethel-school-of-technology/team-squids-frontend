@@ -1,62 +1,20 @@
 import {
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
-  IonList,
   IonPage,
+  IonRow,
   IonSearchbar,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import ChurchItem from "../components/ChurchFinder/ChurchItem";
-import { Church, ChurchContext } from "../context/churchContext";
+import { ChurchContext } from "../context/churchContext";
 import { useContext } from "react";
-
-// let churches: Church[] = [
-//   {
-//     churchId: 1,
-//     churchName: "First Church",
-//     denomination: "Baptist",
-//     address: "123 First Street",
-//     city: "Anytown",
-//     state: "CK",
-//     zip: "12345",
-//     phone: "555-555-555",
-//     email: "connect@firstchurch.com",
-//     servicesTimes: "Sundays 8:00 am, 10:30 am 12:00 pm",
-//     contactName: "Joe Pastor",
-//     website: "www.firstchurch.com",
-//     welcomeMessage:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mattis enim ut tellus elementum. Tellus integer feugiat scelerisque varius morbi enim nunc. Facilisis gravida neque convallis a cras semper auctor neque vitae. Sit amet nisl purus in mollis nunc sed. Ac tortor vitae purus faucibus. In hendrerit gravida rutrum quisque non tellus. Convallis a cras semper auctor neque vitae tempus quam pellentesque. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Fusce ut placerat orci nulla pellentesque dignissim. Mauris augue neque gravida in fermentum et sollicitudin. ",
-//     imageURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-//   },
-//   {
-//     churchId: 2,
-//     churchName: "Second Church",
-//     denomination: "Methodist",
-//     address: "123 Second Street",
-//     city: "Anytown",
-//     state: "CK",
-//     zip: "12345",
-//     phone: "555-555-555",
-
-//     email: "connect@secondchurch.com",
-//     servicesTimes: "Sundays 8:00 am, 10:30 am 12:00 pm",
-//     contactName: "Joe Pastor",
-//     website: "www.secondtchurch.com",
-//     welcomeMessage:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mattis enim ut tellus elementum. Tellus integer feugiat scelerisque varius morbi enim nunc. Facilisis gravida neque convallis a cras semper auctor neque vitae. Sit amet nisl purus in mollis nunc sed. Ac tortor vitae purus faucibus. In hendrerit gravida rutrum quisque non tellus. Convallis a cras semper auctor neque vitae tempus quam pellentesque. Fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Fusce ut placerat orci nulla pellentesque dignissim. Mauris augue neque gravida in fermentum et sollicitudin. ",
-//     imageURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-//   },
-// ];
+import ChurchList from "../components/Churchs/ChurchList";
 
 const ChurchFinder: React.FC = () => {
   const { churches } = useContext(ChurchContext);
-
-  const renderChurchList = () => {
-    return churches.map((church) => (
-      <ChurchItem data={church} key={church.churchId} />
-    ));
-  };
 
   return (
     <IonPage>
@@ -69,7 +27,13 @@ const ChurchFinder: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonList>{renderChurchList()}</IonList>
+        <IonGrid>
+          <IonRow>
+            <IonCol size="12">
+              <ChurchList data={churches} />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

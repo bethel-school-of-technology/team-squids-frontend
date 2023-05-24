@@ -7,14 +7,33 @@ interface ContainerProps {
 }
 
 const ChurchItem: React.FC<ContainerProps> = ({ data }) => {
+  const {
+    churchId,
+    userId,
+    churchName,
+    denomination,
+    street,
+    city,
+    state,
+    zip,
+    phoneNumber,
+    churchEmail,
+    welcomeMessage,
+    serviceTime,
+    imageUrl,
+    website,
+  } = data;
+
   return (
-    <IonItem routerLink={`churches/${data.churchId}`} >
+    <IonItem routerLink={`/churches/${churchId}`}>
       <IonThumbnail slot="start">
-        <img alt="Silhouette of a person's head" src={data.imageUrl} />
+        <img alt="Silhouette of a person's head" src={imageUrl} />
       </IonThumbnail>
       <IonLabel>
-        <h2>{data.churchName}</h2>
-        <p>{data.street}, {data.city}, {data.state}, {data.zip}</p>
+        <h2>{churchName}</h2>
+        <p>
+          {street}, {city}, {state}, {zip}
+        </p>
       </IonLabel>
       <IonLabel slot="end">
         <h4>00.0 miles</h4>
