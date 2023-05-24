@@ -11,10 +11,10 @@ import {
 } from "@ionic/react";
 
 import { calendar, settings, home } from "ionicons/icons";
-import { profile } from "console";
+
 
 import ChurchFinder from "./ChurchFinder";
-import EventList from "./EventList";
+import EventFinder from "./EventFinder";
 import ChurchProfile from "./ChurchProfile";
 
 function NavBar() {
@@ -28,7 +28,7 @@ function NavBar() {
             render={() => <ChurchFinder />}
             exact={true}
           />
-          <Route path="/events" render={() => <EventList />} exact={true} />
+          <Route path="/events" render={() => <EventFinder />} exact={true} />
           <Route
             path="/profile"
             render={() => <ChurchProfile />}

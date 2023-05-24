@@ -13,8 +13,6 @@ export interface Event {
   churchId: number;
   eventTitle: string;
   eventDate: Date;
-  eventDay: string;
-  eventTime: string;
   eventStreet: string;
   eventCity: string;
   eventState: string;
@@ -28,6 +26,7 @@ export interface Event {
     | "Mens"
     | "Senior";
   description: string;
+  imageUrl: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -36,8 +35,6 @@ export interface newEvent {
   churchId: number;
   eventTitle: string;
   eventDate: Date;
-  eventDay: string;
-  eventTime: string;
   eventStreet: string;
   eventCity: string;
   eventState: string;
@@ -51,6 +48,7 @@ export interface newEvent {
     | "Mens"
     | "Senior";
   description: string;
+  imageUrl: string;
 }
 
 interface EventContextProps {

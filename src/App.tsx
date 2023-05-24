@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import ChurchFinder from "./pages/ChurchFinder";
-import EventList from "./pages/EventList";
+import EventList from "./pages/EventFinder";
 import ChurchProfile from "./pages/ChurchProfile";
 import { calendar, settings, home } from "ionicons/icons";
 
@@ -24,7 +24,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import EventDetail from "./pages/EventDetail";
+import EventDetails from "./pages/EventDetails";
 
 setupIonicReact();
 
@@ -33,24 +33,35 @@ const App: React.FC = () => (
     <IonReactRouter>
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/churches" component={ChurchFinder} />
-        <Route path="/churches/:churchId" component={ChurchProfile} />
-        <Route exact path="/events" component={EventList} />
-        <Route path="/events/:eventId" component={EventDetail} />
+      <Route path="/churches" exact={true}>
+          <ChurchFinder />
+        </Route>
+        <Route path="/churches/:churchId" exact={true}>
+          <ChurchProfile />
+        </Route>
+        <Route path="/events" exact={true}>
+          <EventList />
+        </Route>
+        <Route path="/events/:eventId" exact={true}>
+          <EventDetails />
+        </Route>
         <Route exact path="/">
           <Redirect to="/churches" />
         </Route>
+        <Route exact path="/">
+            <Redirect to="/churches" />
+          </Route>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/churches">
+          <IonTabButton tab="churches" href="/churches">
             <IonIcon aria-hidden="true" icon={home} />
             <IonLabel>Churches</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/events">
+          <IonTabButton tab="events" href="/events">
             <IonIcon aria-hidden="true" icon={calendar} />
             <IonLabel>Events</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/church-profile">
+          <IonTabButton tab="user" href="/user">
             <IonIcon aria-hidden="true" icon={settings} />
             <IonLabel>Profile</IonLabel>
           </IonTabButton>

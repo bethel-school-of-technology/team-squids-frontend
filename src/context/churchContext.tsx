@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
+import { Event } from "./eventContext";
 
 export interface Church {
   churchId: number;
@@ -36,12 +37,29 @@ export interface newChurch {
   website: string;
 }
 
+export interface oneChurch {
+  userId: number;
+  churchName: string;
+  denomination: string;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  phoneNumber: string;
+  churchEmail: string;
+  welcomeMessage: string;
+  serviceTime: string;
+  imageUrl: string;
+  website: string;
+  Events: Event[];
+}
+
 interface ChurchContextProps {
   churches: Church[];
   setChurches: Dispatch<SetStateAction<Church[]>>;
   getAllChurches: () => Promise<void>;
   createChurch: (newChurch: newChurch) => Promise<newChurch>;
-  getChurch: (churchId: number) => Promise<Church>;
+  getChurch: (churchId: number) => Promise<oneChurch>;
   updateChurch: (updatedChurch: Church) => Promise<Church>;
   deleteChurch: (churchId: number) => Promise<Church>;
 }
@@ -55,7 +73,7 @@ export const ChurchContext = createContext<ChurchContextProps>({
   setChurches: () => {},
   getAllChurches: () => Promise.resolve(),
   createChurch: (newChurch: newChurch) => Promise.resolve(newChurch),
-  getChurch: (churchId: number) => Promise.resolve({} as Church),
+  getChurch: (churchId: number) => Promise.resolve({} as oneChurch),
   updateChurch: (updatedChurch: Church) => Promise.resolve(updatedChurch),
   deleteChurch: (churchId: number) => Promise.resolve({} as Church),
 });
