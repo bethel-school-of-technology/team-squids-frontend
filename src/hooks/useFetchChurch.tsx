@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { ChurchContext, oneChurch } from "../context/churchContext";
 
+
 const useFetchChurch = (churchId: number) => {
   const { getChurch } = useContext(ChurchContext);
   const [church, setChurch] = useState<oneChurch | undefined>();
@@ -25,7 +26,7 @@ const useFetchChurch = (churchId: number) => {
         }
       } catch (error) {
         if (isMountedRef.current) {
-          setError((error as Error).message);
+          setError(error instanceof Error ? error.message : String(error));
         }
       } finally {
         if (isMountedRef.current) {

@@ -91,28 +91,13 @@
 
 // // export default EventDetail;
 
-import React, { useContext, useEffect, useState } from "react";
-import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonImg,
-  IonLoading,
-  IonPage,
-  IonRow,
-  IonText,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
-import { Church, ChurchContext } from "../context/churchContext";
+import React from "react";
 import { useParams } from "react-router-dom";
-import "./ChurchProfile.css";
-import EventItem from "../components/Events/EventItem";
-import { Event, EventContext } from "../context/eventContext";
+import { useFetchEvent } from "../hooks/useFetchEvent";
+import LoadingSpinner from "../components/Global/LoadingSpinner";
+import EventInfo from "../components/Events/EventInfo";
+import ErrorAlert from "../components/Global/ErrorAlert";
+
 
 interface EventRouteParams {
   eventId: string;
@@ -120,131 +105,17 @@ interface EventRouteParams {
 
 const EventDetails: React.FC = () => {
   const params = useParams<EventRouteParams>();
-  const { events, getEvent } = useContext(EventContext);
-  const { getChurch } = useContext(ChurchContext);
-  const [selectedEvent, setSelectedEvent] = useState<Event | undefined>();
-  const [selectedChurch, setSelectedChurch] = useState<Church | undefined>();
-  const [error, setError] = useState<string | undefined>(undefined);
-
-  
-
-  const isoDate = selectedEvent ? new Date(selectedEvent.eventDate) : null;
-  const formatDate = Intl.DateTimeFormat("en-us", {
-    dateStyle: "long",
-  });
-  const formatDay = Intl.DateTimeFormat("en-us", {
-    weekday: "long",
-  });
-  const formatTime = Intl.DateTimeFormat("en-us", {
-    timeStyle: "short",
-  });
-  const date = isoDate ? formatDate.format(isoDate) : "";
-  const day = isoDate ? formatDay.format(isoDate) : "";
-  const time = isoDate ? formatTime.format(isoDate) : "";
-
-  const loading = () => {
-    return <IonLoading isOpen={true} />;
-  };
-
-  const churchEvents = events.filter(
-    (event) =>
-      event.churchId === selectedChurch?.churchId &&
-      event.eventId != selectedEvent?.eventId
+  const { event, loadingStatus, error } = useFetchEvent(
+    parseInt(params.eventId)
   );
-  const renderEventList = () => {
-    return churchEvents.map((e) => <EventItem data={e} key={e.eventId} />);
-  };
 
-  const upcomingEvents = () => {
-    if (churchEvents.length === 0) return;
-    return (
-      <IonCol size="12">
-        <h4>Other Events</h4>
-        <div className="event-list">{renderEventList()}</div>
-      </IonCol>
-    );
-  };
-  const handleConnectClick = () => {
-    window.location.href = `mailto:${selectedChurch?.churchEmail}`;
-  };
-
-  const eventInfo = () => {
-    return (
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton defaultHref="/" />
-            </IonButtons>
-            <IonTitle>{selectedEvent?.eventTitle}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent fullscreen>
-          <IonGrid>
-            <IonRow>
-              <IonCol size="12">
-                <IonImg
-                  className="hero-img"
-                  src={selectedEvent?.imageUrl}
-                  alt={selectedEvent?.eventTitle}
-                />
-              </IonCol>
-              <IonCol size="12">
-                <h1>{selectedEvent?.eventTitle}</h1>
-                <IonText color="primary">
-                  <h6>{selectedChurch?.churchName}</h6>
-                </IonText>
-              </IonCol>
-              <IonCol size="12">
-                  <IonText color="primary">
-
-                  <h6>{day}</h6>
-                </IonText>
-                <h4>{date}</h4>
-                <IonText color="medium">
-                  <p>{time}</p>
-                </IonText>
-              </IonCol>
-              <IonCol size="12">
-                <h4>Location</h4>
-                <IonText color="medium">
-                  <p>
-                    {selectedEvent?.eventStreet} <br />
-                    {selectedEvent?.eventCity}, {selectedEvent?.eventState}{" "}
-                    {selectedEvent?.eventZip}
-                  </p>
-                </IonText>
-              </IonCol>
-              <IonCol size="12">
-                <IonText color="medium">
-                  <p>{selectedEvent?.description}</p>
-                </IonText>
-              </IonCol>
-              <IonCol size="12">
-                <h4>Contact Information</h4>
-                <a href={`https://www.${selectedChurch?.website}`}>
-                  <p>{selectedChurch?.churchEmail}</p>
-                </a>
-                <IonText color="medium">
-                  <p>{selectedChurch?.phoneNumber}</p>
-                </IonText>
-              </IonCol>
-              {upcomingEvents()}
-              <IonCol>
-                <IonButton expand="block" onClick={handleConnectClick}>
-                  Connect with Us
-                </IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-      </IonPage>
-    );
-  };
-
-  return !selectedEvent || selectedEvent.churchId !== parseInt(params.eventId)
-    ? loading()
-    : eventInfo();
+  return (
+    <>
+      <ErrorAlert error={error} />
+      <LoadingSpinner status={loadingStatus} />
+      {event && <EventInfo data={event} />}
+    </>
+  );
 };
 
 export default EventDetails;

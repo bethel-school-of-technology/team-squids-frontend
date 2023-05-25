@@ -10,12 +10,12 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { ChurchContext } from "../context/churchContext";
-import { useContext } from "react";
-import ChurchList from "../components/Churchs/ChurchList";
+import { useContext, useState } from "react";
+import ChurchList from "../components/Churches/ChurchList";
 
 const ChurchFinder: React.FC = () => {
   const { churches } = useContext(ChurchContext);
-
+  
   return (
     <IonPage>
       <IonHeader>
