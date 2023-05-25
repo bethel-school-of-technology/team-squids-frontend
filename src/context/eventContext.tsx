@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { Church } from "./churchContext";
 
 export interface Event {
   eventId: number;
@@ -29,6 +30,7 @@ export interface Event {
   imageUrl: string;
   createdAt?: Date;
   updatedAt?: Date;
+  Church: Church[]
 }
 
 export interface newEvent {
@@ -51,12 +53,37 @@ export interface newEvent {
   imageUrl: string;
 }
 
+export interface oneEvent {
+  eventId: number;
+  churchId: number;
+  eventTitle: string;
+  eventDate: Date;
+  eventStreet: string;
+  eventCity: string;
+  eventState: string;
+  eventZip: string;
+  eventType:
+    | "Family"
+    | "Youth"
+    | "Young Adults"
+    | "Single"
+    | "Womans"
+    | "Mens"
+    | "Senior";
+  description: string;
+  imageUrl: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  Church: Church[];
+  Events: Event[];
+}
+
 interface EventContextProps {
   events: Event[];
   setEvents: Dispatch<SetStateAction<Event[]>>;
   getAllEvents: () => Promise<void>;
   createEvent: (newEvent: newEvent) => Promise<newEvent>;
-  getEvent: (eventId: number) => Promise<Event>;
+  getEvent: (eventId: number) => Promise<oneEvent>;
   updateEvent: (updatedEvent: Event) => Promise<Event>;
   deleteEvent: (eventId: number) => Promise<Event>;
 }
@@ -70,7 +97,7 @@ export const EventContext = createContext<EventContextProps>({
   setEvents: () => {},
   getAllEvents: () => Promise.resolve(),
   createEvent: (newEvent: newEvent) => Promise.resolve(newEvent),
-  getEvent: (eventId: number) => Promise.resolve({} as Event),
+  getEvent: (eventId: number) => Promise.resolve({} as oneEvent),
   updateEvent: (updatedEvent: Event) => Promise.resolve(updatedEvent),
   deleteEvent: (eventId: number) => Promise.resolve({} as Event),
 });

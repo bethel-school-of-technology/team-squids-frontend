@@ -1,28 +1,10 @@
-import React, { useContext } from "react";
-import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonImg,
-  IonPage,
-  IonRow,
-  IonText,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
-import { Church, ChurchContext } from "../context/churchContext";
+import React from "react";
 import { useParams } from "react-router-dom";
-import "./ChurchProfile.css";
-import EventItem from "../components/Events/EventItem";
-import { Event, EventContext } from "../context/eventContext";
 import { useFetchChurch } from "../hooks/useFetchChurch";
-import EventList from "../components/Events/EventsLists";
 import LoadingSpinner from "../components/Global/LoadingSpinner";
-import ChurchInfo from "../components/Churchs/ChurchInfo";
+import ChurchInfo from "../components/Churches/ChurchInfo";
+import ErrorAlert from "../components/Global/ErrorAlert";
+import "./ChurchProfile.css";
 
 interface ChurchRouteParams {
   churchId: string;
@@ -36,7 +18,8 @@ const ChurchProfile: React.FC = () => {
 
   return (
     <>
-      {/* <LoadingSpinner data={loadingStatus} /> */}
+      <ErrorAlert error={error} />
+      <LoadingSpinner status={loadingStatus} />
       {church && <ChurchInfo data={church} />}
     </>
   );
