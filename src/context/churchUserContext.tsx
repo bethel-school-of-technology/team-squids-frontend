@@ -7,26 +7,39 @@ import {
   useEffect,
   useState,
 } from "react";
+import { OneChurch } from "./churchContext";
 
-export interface User {
+export interface ChurchUser {
   userId: number;
   email: string;
   password: string;
 }
 
-export interface newUser {
+export interface NewChurchUser {
   email: string;
   password: string;
 }
 
+export interface AllChurchUsers {
+  userId: number;
+  email: string;
+  password: string;
+}
+
+export interface OneChurchUser {
+  email: string;
+  password: string;
+  Churches: OneChurch[];
+}
+
 interface UserContextProps {
-  users: User[];
-  setUsers: Dispatch<SetStateAction<User[]>>;
+  users: AllChurchUsers[];
+  setUsers: Dispatch<SetStateAction<AllChurchUsers[]>>;
   getAllUsers: () => Promise<void>;
-  createUser: (newUser: newUser) => Promise<newUser>;
-  getUser: (userId: number) => Promise<User>;
-  updateUser: (updatedUser: User) => Promise<User>;
-  deleteUser: (userId: number) => Promise<User>;
+  createUser: (newUser: NewChurchUser) => Promise<NewChurchUser>;
+  getUser: (userId: number) => Promise<ChurchUser>;
+  updateUser: (updatedUser: ChurchUser) => Promise<ChurchUser>;
+  deleteUser: (userId: number) => Promise<ChurchUser>;
 }
 
 interface UserContextProviderProps {
@@ -37,16 +50,16 @@ export const UserContext = createContext<UserContextProps>({
   users: [],
   setUsers: () => {},
   getAllUsers: () => Promise.resolve(),
-  createUser: (newUser: newUser) => Promise.resolve(newUser),
-  getUser: (userId: number) => Promise.resolve({} as User),
-  updateUser: (updatedUser: User) => Promise.resolve(updatedUser),
-  deleteUser: (userId: number) => Promise.resolve({} as User),
+  createUser: (newUser: NewChurchUser) => Promise.resolve(newUser),
+  getUser: (userId: number) => Promise.resolve({} as ChurchUser),
+  updateUser: (updatedUser: ChurchUser) => Promise.resolve(updatedUser),
+  deleteUser: (userId: number) => Promise.resolve({} as ChurchUser),
 });
 
 const BASE_URL = "http://localhost:3000/api/user/";
 
 export const UserProvider = ({ children }: UserContextProviderProps) => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AllChurchUsers[]>([]);
 
   const getAllUsers = async () => {
     try {
@@ -63,7 +76,7 @@ export const UserProvider = ({ children }: UserContextProviderProps) => {
     })();
   }, []);
 
-  const createUser = async (newUser: newUser) => {
+  const createUser = async (newUser: NewChurchUser) => {
     try {
       const response = await axios.post(BASE_URL, newUser);
       await getAllUsers();
@@ -83,7 +96,7 @@ export const UserProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
-  const updateUser = async (updatedUser: User) => {
+  const updateUser = async (updatedUser: ChurchUser) => {
     const userIdURL = `${BASE_URL}${updatedUser.userId}`;
     try {
       const response = await axios.put(userIdURL, updatedUser);

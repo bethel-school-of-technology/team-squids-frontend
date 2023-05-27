@@ -15,7 +15,7 @@ import ChurchList from "../components/Churches/ChurchList";
 
 const ChurchFinder: React.FC = () => {
   const { churches } = useContext(ChurchContext);
-  
+
   return (
     <IonPage>
       <IonHeader>
@@ -30,7 +30,7 @@ const ChurchFinder: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol size="12">
-              <ChurchList data={churches} />
+              <ChurchList churches={churches} />
             </IonCol>
           </IonRow>
         </IonGrid>

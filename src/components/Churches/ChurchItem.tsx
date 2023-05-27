@@ -3,26 +3,25 @@ import { IonItem, IonLabel, IonThumbnail } from "@ionic/react";
 import { Church } from "../../context/churchContext";
 
 interface ContainerProps {
-  data: Church;
+  church: Church;
 }
 
-const ChurchItem: React.FC<ContainerProps> = ({ data }) => {
+const ChurchItem: React.FC<ContainerProps> = ({ church }) => {
   const {
     churchId,
     userId,
     churchName,
     denomination,
-    street,
-    city,
-    state,
-    zip,
+    location,
     phoneNumber,
     churchEmail,
     welcomeMessage,
     serviceTime,
     imageUrl,
     website,
-  } = data;
+  } = church;
+
+  const { street, city, state, zip } = location;
 
   return (
     <IonItem routerLink={`/churches/${churchId}`}>

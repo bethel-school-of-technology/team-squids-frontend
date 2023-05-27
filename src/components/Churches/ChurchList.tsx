@@ -5,11 +5,11 @@ import ChurchItem from "./ChurchItem";
 import LoadingSpinner from "../Global/LoadingSpinner";
 
 interface ChurchListProps {
-  data: Church[];
+  churches: Church[];
 }
 
-const ChurchList: React.FC<ChurchListProps> = ({ data }) => {
-  if (data.length === 0) {
+const ChurchList: React.FC<ChurchListProps> = ({ churches }) => {
+  if (churches.length === 0) {
     return <LoadingSpinner status={true} />;
   }
 
@@ -17,8 +17,8 @@ const ChurchList: React.FC<ChurchListProps> = ({ data }) => {
     <>
     <LoadingSpinner status={false} />
     <IonList>
-      {data.map((church) => (
-        <ChurchItem data={church} key={church.churchId} />
+      {churches.map((church) => (
+        <ChurchItem church={church} key={church.churchId} />
       ))}
     </IonList>
     </>

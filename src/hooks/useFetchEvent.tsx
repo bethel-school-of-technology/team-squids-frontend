@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { EventContext, oneEvent } from "../context/eventContext";
+import { EventContext, OneEvent } from "../context/eventContext";
 
 const useFetchEvent = (eventId: number) => {
   const { getEvent } = useContext(EventContext);
-  const [event, setEvent] = useState<oneEvent | undefined>();
+  const [event, setEvent] = useState<OneEvent | undefined>();
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
 

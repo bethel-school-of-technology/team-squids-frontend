@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import { ChurchProvider } from "./context/churchContext";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider } from "./context/churchUserContext";
 import { EventProvider } from "./context/eventContext";
 
 const container = document.getElementById("root");

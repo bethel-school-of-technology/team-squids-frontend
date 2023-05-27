@@ -1,28 +1,14 @@
 import { IonItem, IonLabel, IonThumbnail } from "@ionic/react";
 
-import { Event } from "../../context/eventContext";
+import { AllEvents } from "../../context/eventContext";
 
 interface ContainerProps {
-  data: Event;
-  churchName: string;
+  event: AllEvents;
 }
 
-const EventItem: React.FC<ContainerProps> = ({ data, churchName }) => {
-  const {
-    eventId,
-    churchId,
-    eventTitle,
-    eventDate,
-    eventStreet,
-    eventCity,
-    eventState,
-    eventZip,
-    eventType,
-    description,
-    imageUrl,
-    createdAt,
-    updatedAt,
-  } = data;
+const EventItem: React.FC<ContainerProps> = ({ event }) => {
+  const { eventId, eventTitle, eventDate, imageUrl, Church } = event;
+  const {churchName } = Church;
 
   const isoDate = new Date(eventDate);
   const formatDate = Intl.DateTimeFormat("en-us", {
