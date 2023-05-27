@@ -14,10 +14,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import EventList from "../Events/EventsLists";
-import { oneChurch } from "../../context/churchContext";
+import { OneChurch } from "../../context/churchContext";
 
 interface ContainerProps {
-  data: oneChurch;
+  data: OneChurch;
 }
 
 const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
@@ -25,10 +25,7 @@ const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
     userId,
     churchName,
     denomination,
-    street,
-    city,
-    state,
-    zip,
+    location,
     phoneNumber,
     churchEmail,
     welcomeMessage,
@@ -37,6 +34,8 @@ const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
     website,
     Events,
   } = data;
+
+  const { street, city, state, zip } = location;
 
   return (
     <IonPage>
@@ -52,11 +51,7 @@ const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
         <IonGrid>
           <IonRow>
             <IonCol size="12">
-              <IonImg
-                className="hero-img"
-                src={imageUrl}
-                alt={churchName}
-              />
+              <IonImg className="hero-img" src={imageUrl} alt={churchName} />
             </IonCol>
             <IonCol size="12">
               <h1>{churchName}</h1>
@@ -93,10 +88,10 @@ const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
               <IonText color="medium">
                 <p>{welcomeMessage}</p>
               </IonText>
-            </IonCol >
+            </IonCol>
             <IonCol size="12">
-            <h4>Upcoming Events</h4>
-            <EventList data={Events} churchName={churchName} />
+              <h4>Upcoming Events</h4>
+              <EventList events={Events} />
             </IonCol>
             <IonCol size="12">
               <a href={`mailto:${churchEmail}`}>

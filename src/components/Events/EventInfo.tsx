@@ -14,11 +14,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import EventList from "../Events/EventsLists";
-import { oneChurch } from "../../context/churchContext";
-import { oneEvent } from "../../context/eventContext";
+import { OneEvent } from "../../context/eventContext";
 
 interface ContainerProps {
-  data: oneEvent;
+  data: OneEvent;
 }
 
 const EventInfo: React.FC<ContainerProps> = ({ data }) => {
@@ -26,11 +25,8 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
     eventId,
     churchId,
     eventTitle,
+    location,
     eventDate,
-    eventStreet,
-    eventCity,
-    eventState,
-    eventZip,
     eventType,
     description,
     imageUrl,
@@ -39,6 +35,10 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
     Church,
     Events
   } = data;
+
+  const { street, city, state, zip } = location;
+
+
 
   const isoDate = data ? new Date(eventDate) : null;
   const formatDate = Intl.DateTimeFormat("en-us", {
@@ -73,7 +73,7 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
             <IonCol size="12">
               <h1>{eventTitle}</h1>
               <IonText color="primary">
-                <h6>{Church[0].churchName}</h6>
+                <h6>{Church.churchName}</h6>
               </IonText>
             </IonCol>
             <IonCol size="12">
@@ -89,9 +89,9 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
               <h4>Location</h4>
               <IonText color="medium">
                 <p>
-                  {eventStreet} <br />
-                  {eventCity}, {eventState}{" "}
-                  {eventZip}
+                  {street} <br />
+                  {city}, {state}{" "}
+                  {zip}
                 </p>
               </IonText>
             </IonCol>
@@ -102,19 +102,19 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
             </IonCol>
             <IonCol size="12">
               <h4>Contact Information</h4>
-              <a href={`https://www.${Church[0].website}`}>
-                <p>{Church[0].churchEmail}</p>
+              <a href={`https://www.${Church.website}`}>
+                <p>{Church.churchEmail}</p>
               </a>
               <IonText color="medium">
-                <p>{Church[0].phoneNumber}</p>
+                <p>{Church.phoneNumber}</p>
               </IonText>
             </IonCol>
             <IonCol size="12">
             <h4>Other Upcoming Events</h4>
-            <EventList data={Events} churchName={Church[0].churchName} />
+            <EventList events={Events} />
             </IonCol>
             <IonCol size="12">
-              <a href={`mailto:${Church[0].churchEmail}`}>
+              <a href={`mailto:${Church.churchEmail}`}>
                 <IonButton expand="block">Connect with Us</IonButton>
               </a>
             </IonCol>

@@ -71,8 +71,7 @@ const EventFinder: React.FC = () => {
           <IonRow>
             <IonCol size="12">
               <EventsList
-                data={events}
-                churchName={events[0].Church[0].churchName}
+                events={events}
               />
             </IonCol>
           </IonRow>

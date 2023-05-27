@@ -1,16 +1,26 @@
 import axios from "axios";
-import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
-import { Event } from "./eventContext";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import { ChurchUser } from "./churchUserContext";
+import { AllEvents } from "./eventContext";
 
 export interface Church {
   churchId: number;
   userId: number;
   churchName: string;
   denomination: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
@@ -21,14 +31,16 @@ export interface Church {
   updatedAt?: Date;
 }
 
-export interface newChurch {
+export interface NewChurch {
   userId: number;
   churchName: string;
   denomination: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
@@ -37,29 +49,57 @@ export interface newChurch {
   website: string;
 }
 
-export interface oneChurch {
+export interface AllChurches {
+  churchId: number;
   userId: number;
   churchName: string;
   denomination: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
   serviceTime: string;
   imageUrl: string;
   website: string;
-  Events: Event[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  ChurchUser: ChurchUser;
+}
+
+export interface OneChurch {
+  churchId: number;
+  userId: number;
+  churchName: string;
+  denomination: string;
+  location: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  phoneNumber: string;
+  churchEmail: string;
+  welcomeMessage: string;
+  serviceTime: string;
+  imageUrl: string;
+  website: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  Events: AllEvents[];
+  ChurchUser: ChurchUser;
 }
 
 interface ChurchContextProps {
-  churches: Church[];
-  setChurches: Dispatch<SetStateAction<Church[]>>;
+  churches: AllChurches[];
+  setChurches: Dispatch<SetStateAction<AllChurches[]>>;
   getAllChurches: () => Promise<void>;
-  createChurch: (newChurch: newChurch) => Promise<newChurch>;
-  getChurch: (churchId: number) => Promise<oneChurch>;
+  createChurch: (newChurch: NewChurch) => Promise<NewChurch>;
+  getChurch: (churchId: number) => Promise<OneChurch>;
   updateChurch: (updatedChurch: Church) => Promise<Church>;
   deleteChurch: (churchId: number) => Promise<Church>;
 }
@@ -72,8 +112,8 @@ export const ChurchContext = createContext<ChurchContextProps>({
   churches: [],
   setChurches: () => {},
   getAllChurches: () => Promise.resolve(),
-  createChurch: (newChurch: newChurch) => Promise.resolve(newChurch),
-  getChurch: (churchId: number) => Promise.resolve({} as oneChurch),
+  createChurch: (newChurch: NewChurch) => Promise.resolve(newChurch),
+  getChurch: (churchId: number) => Promise.resolve({} as OneChurch),
   updateChurch: (updatedChurch: Church) => Promise.resolve(updatedChurch),
   deleteChurch: (churchId: number) => Promise.resolve({} as Church),
 });
@@ -81,7 +121,7 @@ export const ChurchContext = createContext<ChurchContextProps>({
 const BASE_URL = "http://localhost:3000/api/church/";
 
 export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
-  const [churches, setChurches] = useState<Church[]>([]);
+  const [churches, setChurches] = useState<AllChurches[]>([]);
 
   const getAllChurches = async () => {
     try {
@@ -98,7 +138,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
     })();
   }, []);
 
-  const createChurch = async (newChurch: newChurch) => {
+  const createChurch = async (newChurch: NewChurch) => {
     try {
       const response = await axios.post(BASE_URL, newChurch);
       await getAllChurches();

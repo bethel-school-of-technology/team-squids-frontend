@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { ChurchContext, oneChurch } from "../context/churchContext";
+import { ChurchContext, OneChurch } from "../context/churchContext";
 
 
 const useFetchChurch = (churchId: number) => {
   const { getChurch } = useContext(ChurchContext);
-  const [church, setChurch] = useState<oneChurch | undefined>();
+  const [church, setChurch] = useState<OneChurch | undefined>();
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
