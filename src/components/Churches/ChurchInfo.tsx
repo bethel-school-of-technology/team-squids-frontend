@@ -37,6 +37,8 @@ const ChurchInfo: React.FC<ContainerProps> = ({ data }) => {
 
   const { street, city, state, zip } = location;
 
+  console.log(data);
+
   return (
     <IonPage>
       <IonHeader>

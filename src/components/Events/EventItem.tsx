@@ -7,10 +7,10 @@ interface ContainerProps {
 }
 
 const EventItem: React.FC<ContainerProps> = ({ event }) => {
-  const { eventId, eventTitle, eventDate, imageUrl, Church } = event;
+  const { eventId, eventTitle, date, imageUrl, Church } = event;
   const {churchName } = Church;
 
-  const isoDate = new Date(eventDate);
+  const isoDate = new Date(date);
   const formatDate = Intl.DateTimeFormat("en-us", {
     dateStyle: "long",
   });
@@ -20,9 +20,9 @@ const EventItem: React.FC<ContainerProps> = ({ event }) => {
   const formatTime = Intl.DateTimeFormat("en-us", {
     timeStyle: "short",
   });
-  const date = formatDate.format(isoDate);
-  const day = formatDay.format(isoDate);
-  const time = formatTime.format(isoDate);
+  const eventDate = formatDate.format(isoDate);
+  const eventDay = formatDay.format(isoDate);
+  const eventTime = formatTime.format(isoDate);
 
   return (
     <IonItem routerLink={`/events/${eventId}`}>
@@ -34,9 +34,9 @@ const EventItem: React.FC<ContainerProps> = ({ event }) => {
         <p>{churchName}</p>
       </IonLabel>
       <IonLabel slot="end">
-        <p>{day}</p>
-        <h2>{date}</h2>
-        <p>{time}</p>
+        <p>{eventDay}</p>
+        <h2>{eventDate}</h2>
+        <p>{eventTime}</p>
       </IonLabel>
     </IonItem>
   );
