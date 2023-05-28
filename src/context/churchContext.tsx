@@ -9,18 +9,14 @@ import {
 } from "react";
 import { ChurchUser } from "./churchUserContext";
 import { AllEvents } from "./eventContext";
+import Location from "../interfaces/Location";
 
 export interface Church {
   churchId: number;
   userId: number;
   churchName: string;
   denomination: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
@@ -35,12 +31,7 @@ export interface NewChurch {
   userId: number;
   churchName: string;
   denomination: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
@@ -54,12 +45,7 @@ export interface AllChurches {
   userId: number;
   churchName: string;
   denomination: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;
@@ -76,12 +62,7 @@ export interface OneChurch {
   userId: number;
   churchName: string;
   denomination: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  location: Location;
   phoneNumber: string;
   churchEmail: string;
   welcomeMessage: string;

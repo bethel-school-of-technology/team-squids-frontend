@@ -26,7 +26,7 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
     churchId,
     eventTitle,
     location,
-    eventDate,
+    date,
     eventType,
     description,
     imageUrl,
@@ -40,7 +40,7 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
 
 
 
-  const isoDate = data ? new Date(eventDate) : null;
+  const isoDate = data ? new Date(date) : null;
   const formatDate = Intl.DateTimeFormat("en-us", {
     dateStyle: "long",
   });
@@ -50,9 +50,9 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
   const formatTime = Intl.DateTimeFormat("en-us", {
     timeStyle: "short",
   });
-  const date = isoDate ? formatDate.format(isoDate) : "";
-  const day = isoDate ? formatDay.format(isoDate) : "";
-  const time = isoDate ? formatTime.format(isoDate) : "";
+  const eventDate = isoDate ? formatDate.format(isoDate) : "";
+  const eventDay = isoDate ? formatDay.format(isoDate) : "";
+  const eventTime = isoDate ? formatTime.format(isoDate) : "";
 
   return (
     <IonPage>
@@ -78,11 +78,11 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
             </IonCol>
             <IonCol size="12">
               <IonText color="primary">
-                <h6>{day}</h6>
+                <h6>{eventDay}</h6>
               </IonText>
-              <h4>{date}</h4>
+              <h4>{eventDate}</h4>
               <IonText color="medium">
-                <p>{time}</p>
+                <p>{eventTime}</p>
               </IonText>
             </IonCol>
             <IonCol size="12">
@@ -108,10 +108,6 @@ const EventInfo: React.FC<ContainerProps> = ({ data }) => {
               <IonText color="medium">
                 <p>{Church.phoneNumber}</p>
               </IonText>
-            </IonCol>
-            <IonCol size="12">
-            <h4>Other Upcoming Events</h4>
-            <EventList events={Events} />
             </IonCol>
             <IonCol size="12">
               <a href={`mailto:${Church.churchEmail}`}>

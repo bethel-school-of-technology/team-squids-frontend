@@ -8,17 +8,14 @@ import {
   useState,
 } from "react";
 import { AllChurches, Church } from "./churchContext";
+import Location from "../interfaces/Location";
 
 export interface Event {
   eventId: number;
   churchId: number;
   eventTitle: string;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  date: Date;
+  location: Location
   eventType:
     | "Family"
     | "Youth"
@@ -36,7 +33,7 @@ export interface Event {
 export interface NewEvent {
   churchId: number;
   eventTitle: string;
-  eventDate: Date;
+  date: Date;
   location: {
     street: string;
     city: string;
@@ -59,13 +56,8 @@ export interface AllEvents {
   eventId: number;
   churchId: number;
   eventTitle: string;
-  eventDate: Date;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  date: Date;
+  location: Location
   eventType:
     | "Family"
     | "Youth"
@@ -85,13 +77,8 @@ export interface OneEvent {
   eventId: number;
   churchId: number;
   eventTitle: string;
-  eventDate: Date;
-  location: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
+  date: Date;
+  location: Location
   eventType:
     | "Family"
     | "Youth"
