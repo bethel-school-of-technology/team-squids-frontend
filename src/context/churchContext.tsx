@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ChurchUser } from "./churchUserContext";
+import { ChurchUser, authHeader } from "./churchUserContext";
 import { AllEvents } from "./eventContext";
 import Location from "../interfaces/Location";
 
@@ -121,7 +121,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
 
   const createChurch = async (newChurch: NewChurch) => {
     try {
-      const response = await axios.post(BASE_URL, newChurch);
+      const response = await axios.post(BASE_URL, newChurch, { headers: authHeader });
       await getAllChurches();
       return response.data;
     } catch (error: any) {
@@ -142,7 +142,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const updateChurch = async (updatedChurch: Church) => {
     const churchIdURL = `${BASE_URL}${updatedChurch.churchId}`;
     try {
-      const response = await axios.put(churchIdURL, updatedChurch);
+      const response = await axios.put(churchIdURL, updatedChurch, { headers: authHeader });
       await getAllChurches();
       return response.data;
     } catch (error: any) {
@@ -153,7 +153,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const deleteChurch = async (churchId: number) => {
     const churchIdURL = `${BASE_URL}${churchId}`;
     try {
-      const response = await axios.delete(churchIdURL);
+      const response = await axios.delete(churchIdURL, { headers: authHeader });
       await getAllChurches();
       return response.data;
     } catch (error: any) {
