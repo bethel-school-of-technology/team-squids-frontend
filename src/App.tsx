@@ -25,6 +25,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import EventDetails from "./pages/EventDetails";
+import ChurchUserProfile from "./pages/ChurchUserProfile";
 
 setupIonicReact();
 
@@ -48,9 +49,9 @@ const App: React.FC = () => (
         <Route exact path="/">
           <Redirect to="/churches" />
         </Route>
-        <Route exact path="/">
-            <Redirect to="/churches" />
-          </Route>
+        <Route path="/user" exact={true}>
+          <ChurchUserProfile />
+        </Route>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
           <IonTabButton tab="churches" href="/churches">
