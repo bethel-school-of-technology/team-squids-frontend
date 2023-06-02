@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import {
   IonCol,
   IonContent,
@@ -9,8 +10,8 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+
 import { ChurchContext } from "../context/churchContext";
-import { useContext, useState } from "react";
 import ChurchList from "../components/Churches/ChurchList";
 
 const ChurchFinder: React.FC = () => {

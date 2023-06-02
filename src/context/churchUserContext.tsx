@@ -32,9 +32,6 @@ interface decoded {
 }
 
 interface UserContextProps {
-  // churchUsers: ChurchUser[];
-  // setChurchUsers: Dispatch<SetStateAction<ChurchUser[]>>;
-  // getAllChurchUsers: () => Promise<void>;
   currentUserId: number;
   setCurrentUserId: Dispatch<SetStateAction<number>>;
   createChurchUser: (newUser: NewChurchUser) => Promise<NewChurchUser>;
@@ -51,9 +48,6 @@ interface UserContextProviderProps {
 }
 
 export const ChurchUserContext = createContext<UserContextProps>({
-  // churchUsers: [],
-  // setChurchUsers: () => {},
-  // getAllChurchUsers: () => Promise.resolve(),
   currentUserId: 0,
   setCurrentUserId: () => {},
   createChurchUser: (newUser: NewChurchUser) => Promise.resolve(newUser),
@@ -66,23 +60,24 @@ export const ChurchUserContext = createContext<UserContextProps>({
 });
 
 const BASE_URL = "http://localhost:3000/api/user/";
-const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
 
-export const authHeader = { Authorization: `Bearer ${LOGIN_TOKEN}` };
+export const authHeader = () => ({
+  Authorization: `Bearer ${localStorage.getItem("myChurchUserToken")}`,
+});
 
 export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
-  // const [churchUsers, setChurchUsers] = useState<ChurchUser[]>([]);
   const [currentUserId, setCurrentUserId] = useState<number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const getAllChurchUsers = async () => {
-  //   try {
-  //     const response: AxiosResponse<ChurchUser[]> = await axios.get(BASE_URL);
-  //     setChurchUsers(response.data);
-  //   } catch (error: any) {
-  //     throw error.response.statusText;
-  //   }
-  // };
+  const verifyCurrentUser = async () => {
+    const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
+    if (!LOGIN_TOKEN) {
+      setCurrentUserId(0);
+    } else {
+      let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
+      setCurrentUserId(decoded.userId);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -93,7 +88,6 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
   const createChurchUser = async (newUser: NewChurchUser) => {
     try {
       const response = await axios.post(BASE_URL, newUser);
-      // await getAllChurchUsers();
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -114,7 +108,6 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     const userIdURL = `${BASE_URL}${updatedUser.userId}`;
     try {
       const response = await axios.put(userIdURL, updatedUser);
-      // await getAllChurchUsers();
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -125,7 +118,6 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     const userIdURL = `${BASE_URL}${userId}`;
     try {
       await axios.delete(userIdURL);
-      // await getAllChurchUsers();
     } catch (error: any) {
       throw error.response.statusText;
     }
@@ -133,13 +125,13 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
 
   const loginChurchUser = async (churchUser: NewChurchUser) => {
     const churchUserURL = `${BASE_URL}login`;
-    setIsLoggedIn(true);
 
     try {
       const response = await axios.post(churchUserURL, churchUser);
       if (response.status === 200) {
         localStorage.setItem("myChurchUserToken", response.data.token);
         await verifyCurrentUser();
+        setIsLoggedIn(true);
         return response.data;
       } else {
         throw new Error("Unable to log in.");
@@ -157,12 +149,13 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
         logoutURL,
         {},
         {
-          headers: authHeader,
+          headers: authHeader(),
         }
       );
       if (response.status === 200) {
         localStorage.removeItem("myChurchUserToken");
         setIsLoggedIn(false);
+        setCurrentUserId(0);
       } else {
         throw new Error("Unable to log out.");
       }
@@ -171,20 +164,9 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
-  const verifyCurrentUser = async () => {
-    if (!LOGIN_TOKEN) {
-      setCurrentUserId(0);
-    } else {
-      let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
-      setCurrentUserId(decoded.userId);
-    }
-  };
   return (
     <ChurchUserContext.Provider
       value={{
-        // churchUsers,
-        // setChurchUsers,
-        // getAllChurchUsers,
         currentUserId,
         setCurrentUserId,
         createChurchUser,

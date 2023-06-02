@@ -9,19 +9,12 @@ interface EventListProps {
 }
 
 const EventsList: React.FC<EventListProps> = ({ events }) => {
-  if (events.length === 0) {
-    return <LoadingSpinner status={true} />;
-  }
-
   return (
-    <>
-      <LoadingSpinner status={false} />
-      <IonList>
-        {events.map((event) => (
-          <EventItem event={event} key={event.eventId} />
-        ))}
-      </IonList>
-    </>
+    <IonList>
+      {events.map((event) => (
+        <EventItem event={event} key={event.eventId} />
+      ))}
+    </IonList>
   );
 };
 
