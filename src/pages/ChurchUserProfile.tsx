@@ -58,7 +58,7 @@ const UserProfile: React.FC = () => {
                   Add
                 </IonRouterLink>
               </div>
-              {churchUser && churchUser?.Churches.length > 0 && (
+              {allEvents.length > 0 && (
                 <EventsList events={allEvents} />
               )}
             </IonCol> */}
