@@ -40,37 +40,11 @@ export interface NewChurch {
   website: string;
 }
 
-export interface AllChurches {
-  churchId: number;
-  userId: number;
-  churchName: string;
-  denomination: string;
-  location: Location;
-  phoneNumber: string;
-  churchEmail: string;
-  welcomeMessage: string;
-  serviceTime: string;
-  imageUrl: string;
-  website: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface AllChurches extends Church {
   ChurchUser: ChurchUser;
 }
 
-export interface OneChurch {
-  churchId: number;
-  userId: number;
-  churchName: string;
-  denomination: string;
-  location: Location;
-  phoneNumber: string;
-  churchEmail: string;
-  welcomeMessage: string;
-  serviceTime: string;
-  imageUrl: string;
-  website: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface OneChurch extends Church {
   Events: AllEvents[];
   ChurchUser: ChurchUser;
 }
@@ -121,9 +95,11 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
 
   const createChurch = async (newChurch: NewChurch) => {
     try {
-      const response = await axios.post(BASE_URL, newChurch, { headers: authHeader });
+      const response = await axios.post(BASE_URL, newChurch, {
+        headers: authHeader(),
+      });
       await getAllChurches();
-      return response.data;
+      return await response.data;
     } catch (error: any) {
       throw error.response.statusText;
     }
@@ -133,7 +109,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
     const churchIdURL = `${BASE_URL}${churchId}`;
     try {
       const response = await axios.get(churchIdURL);
-      return response.data;
+      return await response.data;
     } catch (error: any) {
       throw error.response.statusText;
     }
@@ -142,9 +118,11 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const updateChurch = async (updatedChurch: Church) => {
     const churchIdURL = `${BASE_URL}${updatedChurch.churchId}`;
     try {
-      const response = await axios.put(churchIdURL, updatedChurch, { headers: authHeader });
+      const response = await axios.put(churchIdURL, updatedChurch, {
+        headers: authHeader(),
+      });
       await getAllChurches();
-      return response.data;
+      return await response.data;
     } catch (error: any) {
       throw error.response.statusText;
     }
@@ -153,7 +131,9 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const deleteChurch = async (churchId: number) => {
     const churchIdURL = `${BASE_URL}${churchId}`;
     try {
-      const response = await axios.delete(churchIdURL, { headers: authHeader });
+      const response = await axios.delete(churchIdURL, {
+        headers: authHeader(),
+      })
       await getAllChurches();
       return response.data;
     } catch (error: any) {

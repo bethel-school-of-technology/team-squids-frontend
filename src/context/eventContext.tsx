@@ -11,13 +11,12 @@ import { AllChurches, Church } from "./churchContext";
 import Location from "../interfaces/Location";
 import { authHeader } from "./churchUserContext";
 
-
 export interface Event {
   eventId: number;
   churchId: number;
   eventTitle: string;
   date: Date;
-  location: Location
+  location: Location;
   eventType:
     | "Family"
     | "Youth"
@@ -59,7 +58,7 @@ export interface AllEvents {
   churchId: number;
   eventTitle: string;
   date: Date;
-  location: Location
+  location: Location;
   eventType:
     | "Family"
     | "Youth"
@@ -80,7 +79,7 @@ export interface OneEvent {
   churchId: number;
   eventTitle: string;
   date: Date;
-  location: Location
+  location: Location;
   eventType:
     | "Family"
     | "Youth"
@@ -154,7 +153,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
   const getEvent = async (eventId: number) => {
     const eventIdURL = `${BASE_URL}${eventId}`;
     try {
-      const response = await axios.get(eventIdURL, { headers: authHeader });
+      const response = await axios.get(eventIdURL, { headers: authHeader() });
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -164,7 +163,9 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
   const updateEvent = async (updatedEvent: Event) => {
     const eventIdURL = `${BASE_URL}${updatedEvent.eventId}`;
     try {
-      const response = await axios.put(eventIdURL, updatedEvent, { headers: authHeader });
+      const response = await axios.put(eventIdURL, updatedEvent, {
+        headers: authHeader(),
+      });
       await getAllEvents();
       return response.data;
     } catch (error: any) {
@@ -175,7 +176,9 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
   const deleteEvent = async (eventId: number) => {
     const eventIdURL = `${BASE_URL}${eventId}`;
     try {
-      const response = await axios.delete(eventIdURL, { headers: authHeader });
+      const response = await axios.delete(eventIdURL, {
+        headers: authHeader(),
+      });
       await getAllEvents();
       return response.data;
     } catch (error: any) {

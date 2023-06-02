@@ -1,42 +1,52 @@
-import { IonItem, IonLabel, IonThumbnail } from "@ionic/react";
-
+import React, { useContext } from "react";
+import { IonIcon, IonItem, IonLabel, IonThumbnail } from "@ionic/react";
+import { createOutline } from "ionicons/icons";
 import { Church } from "../../context/churchContext";
+import { ChurchUserContext } from "../../context/churchUserContext";
 
 interface ContainerProps {
   church: Church;
 }
 
-const ChurchItem: React.FC<ContainerProps> = ({ church }) => {
-  const {
+const ChurchItem: React.FC<ContainerProps> = ({
+  church: {
     churchId,
     userId,
     churchName,
     denomination,
-    location,
+    location: { street, city, state, zip },
     phoneNumber,
     churchEmail,
     welcomeMessage,
     serviceTime,
     imageUrl,
     website,
-  } = church;
-
-  const { street, city, state, zip } = location;
-
+  },
+}) => {
+  const { currentUserId } = useContext(ChurchUserContext);
   return (
-    <IonItem routerLink={`/churches/${churchId}`}>
+    <IonItem
+      routerLink={`/churches/${churchId}`}
+      button
+      detail={userId !== currentUserId}
+    >
       <IonThumbnail slot="start">
         <img alt="Silhouette of a person's head" src={imageUrl} />
       </IonThumbnail>
       <IonLabel>
         <h2>{churchName}</h2>
-        <p>
-          {street}, {city}, {state}, {zip}
-        </p>
+     {city && state &&   <p>
+          {city}, {state}
+        </p>}
       </IonLabel>
-      <IonLabel slot="end">
-        <h4>00.0 miles</h4>
-      </IonLabel>
+      {userId === currentUserId && (
+        <IonIcon
+          aria-hidden="true"
+          color="primary"
+          icon={createOutline}
+          slot="end"
+        />
+      )}
     </IonItem>
   );
 };

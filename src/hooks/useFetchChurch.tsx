@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState, useRef, useCallback } from "react";
 import { ChurchContext, OneChurch } from "../context/churchContext";
 
-
 const useFetchChurch = (churchId: number) => {
-  const { getChurch } = useContext(ChurchContext);
+  const { getChurch: getContextChurch } = useContext(ChurchContext);
   const [church, setChurch] = useState<OneChurch | undefined>();
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -16,6 +15,8 @@ const useFetchChurch = (churchId: number) => {
     };
   }, []);
 
+  const getChurch = useCallback(getContextChurch, []);  // if getContextChurch doesn't have dependencies
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,20 +24,18 @@ const useFetchChurch = (churchId: number) => {
         const oneChurch = await getChurch(churchId);
         if (isMountedRef.current) {
           setChurch(oneChurch);
+          setLoadingStatus(false);
         }
       } catch (error) {
         if (isMountedRef.current) {
           setError(error instanceof Error ? error.message : String(error));
-        }
-      } finally {
-        if (isMountedRef.current) {
           setLoadingStatus(false);
         }
       }
     };
 
     fetchData();
-  }, [churchId, getChurch]);
+  }, [churchId, getChurch]);  // getChurch reference won't cause unnecessary re-renders
 
   return { church, loadingStatus, error };
 };

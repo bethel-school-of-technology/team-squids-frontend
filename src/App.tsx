@@ -1,20 +1,21 @@
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from "@ionic/react";
+import {
+  IonApp,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  setupIonicReact,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import ChurchFinder from "./pages/ChurchFinder";
-import EventList from "./pages/EventFinder";
-import ChurchProfile from "./pages/ChurchProfile";
 import { calendar, settings, home } from "ionicons/icons";
 
-/* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
-
-/* Optional CSS utils that can be commented out */
 import "@ionic/react/css/padding.css";
 import "@ionic/react/css/float-elements.css";
 import "@ionic/react/css/text-alignment.css";
@@ -22,55 +23,74 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
 import "./theme/variables.css";
+import ChurchFinder from "./pages/ChurchFinder";
+import EventList from "./pages/EventFinder";
+import ChurchProfile from "./pages/ChurchProfile";
 import EventDetails from "./pages/EventDetails";
 import ChurchUserProfile from "./pages/ChurchUserProfile";
+import { useContext } from "react";
+import { ChurchUserContext } from "./context/churchUserContext";
+import CreateAccount from "./pages/CreateAccount";
+import LoginAccount from "./pages/LoginAccount";
+import AddChurch from "./pages/AddChurch";
+import AddEvent from "./pages/AddEvent";
+import EditChurch from "./pages/EditChurch";
+import EditEvent from "./pages/EditEvent";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-    <IonTabs>
-      <IonRouterOutlet>
-      <Route path="/churches" exact={true}>
-          <ChurchFinder />
-        </Route>
-        <Route path="/churches/:churchId" exact={true}>
-          <ChurchProfile />
-        </Route>
-        <Route path="/events" exact={true}>
-          <EventList />
-        </Route>
-        <Route path="/events/:eventId" exact={true}>
-          <EventDetails />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/churches" />
-        </Route>
-        <Route path="/user" exact={true}>
-          <ChurchUserProfile />
-        </Route>
-      </IonRouterOutlet>
-      <IonTabBar slot="bottom">
-          <IonTabButton tab="churches" href="/churches">
-            <IonIcon aria-hidden="true" icon={home} />
-            <IonLabel>Churches</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="events" href="/events">
-            <IonIcon aria-hidden="true" icon={calendar} />
-            <IonLabel>Events</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="user" href="/user">
-            <IonIcon aria-hidden="true" icon={settings} />
-            <IonLabel>Profile</IonLabel>
-          </IonTabButton>
-  
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const { isLoggedIn, currentUserId } = useContext(ChurchUserContext);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/add-church" exact component={AddChurch} />
+            <Route path="/churches/edit/:churchId" exact component={EditChurch}/>
+            <Route path="/churches/:churchId" exact component={ChurchProfile} />
+            <Route path="/churches" exact component={ChurchFinder} />
+
+            <Route path="/add-event" exact component={AddEvent} />
+            <Route path="/events/edit/:eventId" exact component={EditEvent} />
+            <Route path="/events/:eventId" exact component={EventDetails} />
+            <Route path="/events" exact component={EventList} />
+
+            <Route path="/users/create-account" component={CreateAccount} />
+            <Route path="/users/login-account" exact component={LoginAccount} />
+            <Route path="/user/:userId" exact component={ChurchUserProfile} />
+            
+            <Route exact path="/" render={() => <Redirect to="/churches" />} />
+
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="churches" href="/churches">
+              <IonIcon aria-hidden="true" icon={home} />
+              <IonLabel>Churches</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="events" href="/events">
+              <IonIcon aria-hidden="true" icon={calendar} />
+              <IonLabel>Events</IonLabel>
+            </IonTabButton>
+            {!currentUserId && (
+              <IonTabButton tab="user" href="/users/create-account">
+                <IonIcon aria-hidden="true" icon={settings} />
+                <IonLabel>Profile</IonLabel>
+              </IonTabButton>
+            )}
+            {currentUserId && (
+              <IonTabButton tab="user" href={`/user/${currentUserId}`}>
+                <IonIcon aria-hidden="true" icon={settings} />
+                <IonLabel>Profile</IonLabel>
+              </IonTabButton>
+            )}
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
