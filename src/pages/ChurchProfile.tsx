@@ -42,7 +42,7 @@ const ChurchProfile: React.FC = () => {
         await Promise.all(events.map((event) => deleteEvent(event.eventId)));
       }
       await deleteChurch(churchId);
-      history.push("/");
+      history.push(`/user/${currentUserId}`);
     } catch (error) {
       console.error(error);
     }
@@ -85,6 +85,7 @@ const ChurchProfile: React.FC = () => {
                   color="secondary"
                   fill="outline"
                   expand="block"
+                  routerLink={`/churches/edit/${church.churchId}`}
                 >
                   Edit Church
                 </IonButton>
