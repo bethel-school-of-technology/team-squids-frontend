@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { IonIcon, IonItem, IonLabel, IonThumbnail } from "@ionic/react";
 import { createOutline } from "ionicons/icons";
+import { Link } from 'react-router-dom';
 import { Church } from "../../context/churchContext";
 import { ChurchUserContext } from "../../context/churchUserContext";
 
@@ -35,17 +36,18 @@ const ChurchItem: React.FC<ContainerProps> = ({
       </IonThumbnail>
       <IonLabel>
         <h2>{churchName}</h2>
-     {city && state &&   <p>
-          {city}, {state}
-        </p>}
+        {city && state && (
+          <p>
+            {city}, {state}
+          </p>
+        )}
       </IonLabel>
       {userId === currentUserId && (
-        <IonIcon
-          aria-hidden="true"
-          color="primary"
-          icon={createOutline}
-          slot="end"
-        />
+          <IonIcon
+            aria-hidden="true"
+            color="primary"
+            icon={createOutline}
+          />
       )}
     </IonItem>
   );
