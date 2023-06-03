@@ -1,4 +1,10 @@
 input {
     border: none;
     outline: none;
+    fill: none;
+    background-color: transparent;
+}
+
+.list-item {
+    background-color: transparent;
 }

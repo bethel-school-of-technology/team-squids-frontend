@@ -28,7 +28,7 @@ const ChurchUserInfo: React.FC<ContainerProps> = ({
           slot="end"
         />
       </IonItem>
-      <IonItem>
+      <IonItem className="list-item">
         <IonLabel>
           <h2>Password</h2>
           <IonText color="medium">

@@ -51,17 +51,17 @@ const UserProfile: React.FC = () => {
                 <ChurchList churches={churchUser.Churches} />
               )}
             </IonCol>
-            {/* <IonCol size="12">
+            <IonCol size="12">
               <div className="add">
                 <h4>My Events</h4>
                 <IonRouterLink routerLink="/add-event" slot="end">
                   Add
                 </IonRouterLink>
               </div>
-              {allEvents.length > 0 && (
+              {/* {allEvents.length > 0 && (
                 <EventsList events={allEvents} />
-              )}
-            </IonCol> */}
+              )} */}
+            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>

@@ -18,7 +18,7 @@ import { ChurchUserContext } from "../context/churchUserContext";
 const AddChurch: React.FC = () => {
   const { createChurch } = useContext(ChurchContext);
   const { currentUserId, getChurchUser } = useContext(ChurchUserContext);
-  const [newChurch, setChurch] = useState<NewChurch>({
+  const [newChurch, setNewChurch] = useState<NewChurch>({
     userId: currentUserId,
     churchName: "",
     denomination: "",
@@ -45,7 +45,7 @@ const AddChurch: React.FC = () => {
   ) => {
     if (name.startsWith("location.")) {
       const key = name.split(".")[1];
-      setChurch((prevChurch) => ({
+      setNewChurch((prevChurch) => ({
         ...prevChurch,
         location: {
           ...prevChurch.location,
@@ -53,7 +53,7 @@ const AddChurch: React.FC = () => {
         },
       }));
     } else {
-      setChurch((prevChurch) => ({
+      setNewChurch((prevChurch) => ({
         ...prevChurch,
         [name]: typeof value === "string" ? (value as string).trim() : value,
       }));
@@ -83,7 +83,7 @@ const AddChurch: React.FC = () => {
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
-            <IonCol size="12">
+            <IonCol size="12"> 
               <div>
                 <IonInput
                   className={`ion-input-field ${
