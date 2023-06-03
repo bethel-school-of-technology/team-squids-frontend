@@ -15,7 +15,7 @@ export interface Event {
   eventId: number;
   churchId: number;
   eventTitle: string;
-  date: Date;
+  date: string;
   location: Location;
   eventType:
     | "Family"
@@ -34,13 +34,14 @@ export interface Event {
 export interface NewEvent {
   churchId: number;
   eventTitle: string;
-  date: Date;
+  date: string;
   location: {
     street: string;
     city: string;
     state: string;
     zip: string;
   };
+
   eventType:
     | "Family"
     | "Youth"
@@ -48,52 +49,18 @@ export interface NewEvent {
     | "Single"
     | "Womans"
     | "Mens"
-    | "Senior";
+    | "Senior"
+    | "";
   description: string;
   imageUrl: string;
 }
 
-export interface AllEvents {
-  eventId: number;
-  churchId: number;
-  eventTitle: string;
-  date: Date;
-  location: Location;
-  eventType:
-    | "Family"
-    | "Youth"
-    | "Young Adults"
-    | "Single"
-    | "Womans"
-    | "Mens"
-    | "Senior";
-  description: string;
-  imageUrl: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface AllEvents extends Event {
   Church: AllChurches;
 }
 
-export interface OneEvent {
-  eventId: number;
-  churchId: number;
-  eventTitle: string;
-  date: Date;
-  location: Location;
-  eventType:
-    | "Family"
-    | "Youth"
-    | "Young Adults"
-    | "Single"
-    | "Womans"
-    | "Mens"
-    | "Senior";
-  description: string;
-  imageUrl: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface OneEvent extends Event {
   Church: Church;
-  Events: AllEvents[];
 }
 
 interface EventContextProps {
@@ -142,7 +109,9 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
 
   const createEvent = async (newEvent: NewEvent) => {
     try {
-      const response = await axios.post(BASE_URL, newEvent);
+      const response = await axios.post(BASE_URL, newEvent, {
+        headers: authHeader(),
+      });
       await getAllEvents();
       return response.data;
     } catch (error: any) {

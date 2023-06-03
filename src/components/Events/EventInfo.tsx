@@ -19,7 +19,6 @@ const EventInfo: React.FC<EventInfoProps> = ({
     createdAt,
     updatedAt,
     Church,
-    Events, 
   }
 }) => {
 
