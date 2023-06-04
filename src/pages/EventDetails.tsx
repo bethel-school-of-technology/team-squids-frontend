@@ -16,7 +16,6 @@ import { EventContext } from "../context/eventContext";
 import { ChurchUserContext } from "../context/churchUserContext";
 import PageHeader from "../components/Global/PageHeader";
 
-
 interface EventRouteParams {
   eventId: string;
 }
@@ -48,7 +47,7 @@ const EventDetails: React.FC = () => {
         <IonGrid>
           <IonRow>{event && <EventInfo data={event} />}</IonRow>
           <IonRow>
-          {event && event.Church.churchEmail && (
+            {event && event.Church.churchEmail && (
               <IonCol size="12">
                 <IonButton
                   expand="block"
@@ -68,20 +67,9 @@ const EventDetails: React.FC = () => {
                   color="secondary"
                   fill="outline"
                   expand="block"
+                  routerLink={`/events/edit/${event.eventId}`}
                 >
                   Edit Event
-                </IonButton>
-              </IonCol>
-            )}
-              {event && event.Church.userId === currentUserId && (
-              <IonCol size="12">
-                <IonButton
-                  id="editEvent"
-                  color="secondary"
-                  fill="outline"
-                  expand="block"
-                >
-                  Edit Church
                 </IonButton>
               </IonCol>
             )}

@@ -54,6 +54,9 @@ export interface NewEvent {
   description: string;
   imageUrl: string;
 }
+export interface UpdateEvent extends Event {
+ userId: number;
+}
 
 export interface AllEvents extends Event {
   Church: AllChurches;
@@ -130,7 +133,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
   };
 
   const updateEvent = async (updatedEvent: Event) => {
-    const eventIdURL = `${BASE_URL}${updatedEvent.eventId}`;
+    const eventIdURL = `${BASE_URL}editevent/${updatedEvent.eventId}`;
     try {
       const response = await axios.put(eventIdURL, updatedEvent, {
         headers: authHeader(),
