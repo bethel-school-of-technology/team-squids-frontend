@@ -74,7 +74,7 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
           </p>
         </IonText>
       <IonCol>
-        <img src={stasticMap}> </img>
+        <IonImg src={stasticMap} alt="stasticMap"> </IonImg>
       </IonCol>
       </IonCol>
       <IonCol size="12">
