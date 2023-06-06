@@ -10,30 +10,24 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-
-import { ChurchContext } from "../context/churchContext";
 import ChurchList from "../components/Churches/ChurchList";
-import { SearchChurchContext } from "../context/churchSearchContext";
+import { ChurchLocationContext} from "../context/churchSearchContext";
 
 const ChurchFinder: React.FC = () => {
-  const { churches } = useContext(ChurchContext);
-  const { searchResults, searchChurch } = useContext(SearchChurchContext);
-  const [ searchQuery, setSearchQuery ] = useState('');
-
-
+  const searchContext = useContext(ChurchLocationContext);
 
   useEffect(() => {
-    searchChurch(searchQuery);
-  }, [ searchChurch, searchQuery ]);
-  // search operation when change in either
-  // searchChurch function searchQuery value
+    // calls function to get all locations 
+    searchContext.getAllLocations;
+  }, []);
 
-  const handleSearch: FormEventHandler<HTMLIonSearchbarElement> = (e) => {
-    const value = (e.target as HTMLInputElement).value;
-    setSearchQuery(value)
-    searchChurch(value)
+  // const handleSearch: FormEventHandler<HTMLIonSearchbarElement> = (e) => {
+  //   // Call function to search locations base on query
+  //   const value = (e.target as HTMLInputElement).value;
+  //   setSearchQuery(value)
+  //   searchChurch(value)
  
-  }
+  // }
 // 'e' event object passed to the event handler is a change event targeting an input element
 // generic type paramenter 
 // onIonchange when user selects enter instead when query get update.
@@ -41,6 +35,10 @@ const ChurchFinder: React.FC = () => {
 // FormEventHandler object vs ChangeEvent object
   // changeEvent obj doesnt have EventTarget or HTMLInputElement
 
+const handleSearch = async (searchQuery: string) => {
+    // Call function to search locations base on query
+    await searchContext.searchLocations(searchQuery)
+  };
 
 return (
     <IonPage>
@@ -49,15 +47,15 @@ return (
           <IonTitle>Church Finder</IonTitle>
         </IonToolbar>
         <IonToolbar color="primary">
-          <IonSearchbar type='text' value={searchQuery} onChange={handleSearch}></IonSearchbar>
+          <IonSearchbar onIonChange={(e) => handleSearch(e.detail.value!)}></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
             <IonCol size="12">
-              <ChurchList churches={churches} />
-              {/* <ChurchList churches={searchResults} /> */}
+              {/* <ChurchList churches={churches} /> */}
+              <ChurchList churches={searchContext.locations}/>
             </IonCol>
           </IonRow>
         </IonGrid>

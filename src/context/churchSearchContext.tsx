@@ -1,56 +1,84 @@
 import axios from "axios";
 import Location from "../interfaces/Location";
-import { ReactNode, createContext } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import { ChurchContext } from "./churchContext";
 
-
-interface SearchContextProps{
-  searchResults: SearchResults[] // Define type of results of search
-  searchChurch: (query: string) => Promise<void>;
+interface ChurchLocationContextProps {
+  locations: Location[]// Define type of results of search 
+  setLocations: Dispatch<SetStateAction<Location[]>>
+  getAllLocations: () => Promise<void>;
+  searchLocations: (searchQuery: string) => Promise<void>;
 };
 
-interface SearchResults{
-  location: string;
-  // Do we want to seach by anything else?
-}
 
-
-export const SearchChurchContext = createContext<SearchContextProps>({
-  searchResults: [],
-  searchChurch: () => Promise.resolve(),
+export const ChurchLocationContext = createContext<ChurchLocationContextProps>({
+  locations: [],
+  setLocations: () => { },
+  getAllLocations: () => Promise.resolve(),
+  searchLocations: (searchQuery: string) => Promise.resolve(),
 
 });
 
 
 
-interface SeachContextProviderProps {
+interface LocationContextProviderProps {
   children: ReactNode;
 }
 
 
 const BASE_URL = "http://localhost:3000/api/church/search";
 
-export const SearchChurchContextProvider: React.FC<SeachContextProviderProps> = ({ children }) => {
-  const searchChurch = async ( query: string ) => {
-  try {
-    const repsonse = await axios.get(`${BASE_URL}${query}`);
-    // Process response & update search results
-  } catch (error: any) {
+export const ChurchLocationProvider: React.FC<LocationContextProviderProps> = ({ children }) => {
+  const [locations, setLocations] = useState<Location[]>([]);
+  const allChurches = useContext(ChurchContext);
+
+  const getAllLocations = async () => {
+    try {
+      const repsonse = await axios.get(`${BASE_URL}`);
+      setLocations(repsonse.data);
+      // Process response & update search results
+    } catch (error: any) {
       throw error.response.statusText;
     }
-};
+  };
 
-const contextValue: SearchContextProps = {
- searchResults: [], // Initialize w/ empty arr or defult value
- searchChurch
-}
+  useEffect(() => {
+    (async () => {
+      await getAllLocations();
+    })();
+  }, []);
 
-return (
-  <SearchChurchContext.Provider
-    value={
-    contextValue
+  const searchLocations = async (searchQuery: string) => {
+    try {
+      const reponse = await axios.get(`${BASE_URL}?q=${searchQuery}`);
+      const filterLocations = reponse.data.filter((locaction: Location) => {
+        return allChurches.churches.some((church) =>
+          church.churchName.includes(searchQuery)
+        );
+      });
+      // try {
+      //   const response = await axios.get(`${BASE_URL}?q=${searchQuery}`);
+      //   const filteredLocations = response.data.filter((location: Location) => {
+      //     return [location.street, location.city, location.state, location.zip]
+      //       .some((property) => property.toLowerCase().includes(searchQuery.toLowerCase()));
+      //   });
+      setLocations(filterLocations);
+    } catch (error: any) {
+      throw error.response.statusText;
     }
-  >
-    {children}
-  </SearchChurchContext.Provider>
-);
+  };
+
+  return (
+    <ChurchLocationContext.Provider
+      value={
+        {
+          locations,
+          setLocations,
+          getAllLocations,
+          searchLocations,
+        }}
+    >
+      {children}
+    </ChurchLocationContext.Provider>
+  );
 };
