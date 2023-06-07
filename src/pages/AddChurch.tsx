@@ -94,9 +94,16 @@ const AddChurch: React.FC = () => {
                   label="Church Name"
                   labelPlacement="floating"
                   value={newChurch.churchName}
-                  onIonChange={(e) =>
-                    handleInputChange("churchName", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("churchName", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("churchName")}
                 />
                 <br />
@@ -110,9 +117,16 @@ const AddChurch: React.FC = () => {
                   label="Denomination"
                   labelPlacement="floating"
                   value={newChurch.denomination}
-                  onIonChange={(e) =>
-                    handleInputChange("denomination", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("denomination", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("denomination")}
                 />
                 <br />
@@ -126,9 +140,16 @@ const AddChurch: React.FC = () => {
                   label="Street"
                   labelPlacement="floating"
                   value={newChurch.location.street}
-                  onIonChange={(e) =>
-                    handleInputChange("location.street", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.street", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.street")}
                 />
                 <br />
@@ -142,9 +163,16 @@ const AddChurch: React.FC = () => {
                   label="City"
                   labelPlacement="floating"
                   value={newChurch.location.city}
-                  onIonChange={(e) =>
-                    handleInputChange("location.city", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.city", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.city")}
                 />
                 <br />
@@ -158,9 +186,16 @@ const AddChurch: React.FC = () => {
                   label="State"
                   labelPlacement="floating"
                   value={newChurch.location.state}
-                  onIonChange={(e) =>
-                    handleInputChange("location.state", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.state", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.state")}
                 />
                 <br />
@@ -174,9 +209,16 @@ const AddChurch: React.FC = () => {
                   label="Zip Code"
                   labelPlacement="floating"
                   value={newChurch.location.zip}
-                  onIonChange={(e) =>
-                    handleInputChange("location.zip", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.zip", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.zip")}
                 />
                 <br />
@@ -190,9 +232,16 @@ const AddChurch: React.FC = () => {
                   label="Phone Number"
                   labelPlacement="floating"
                   value={newChurch.phoneNumber}
-                  onIonChange={(e) =>
-                    handleInputChange("phoneNumber", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("phoneNumber", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("phoneNumber")}
                 />
                 <br />
@@ -206,7 +255,7 @@ const AddChurch: React.FC = () => {
                   label="Church Email"
                   labelPlacement="floating"
                   value={newChurch.churchEmail}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("churchEmail", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("churchEmail")}
@@ -222,9 +271,16 @@ const AddChurch: React.FC = () => {
                   labelPlacement="floating"
                   rows={10}
                   value={newChurch.welcomeMessage}
-                  onIonChange={(e) =>
-                    handleInputChange("welcomeMessage", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("welcomeMessage", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("welcomeMessage")}
                 />
                 <br />
@@ -238,9 +294,16 @@ const AddChurch: React.FC = () => {
                   label="Service Time"
                   labelPlacement="floating"
                   value={newChurch.serviceTime}
-                  onIonChange={(e) =>
-                    handleInputChange("serviceTime", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("serviceTime", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("serviceTime")}
                 />
                 <br />
@@ -254,7 +317,7 @@ const AddChurch: React.FC = () => {
                   label="Church Image URL"
                   labelPlacement="floating"
                   value={newChurch.imageUrl}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("imageUrl", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("imageUrl")}
@@ -270,7 +333,7 @@ const AddChurch: React.FC = () => {
                   label="Church Website"
                   labelPlacement="floating"
                   value={newChurch.website}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("website", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("website")}

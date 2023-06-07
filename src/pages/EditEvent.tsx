@@ -171,9 +171,16 @@ const EditEvent: React.FC = () => {
                   label="Event Title"
                   labelPlacement="floating"
                   value={currentEvent.eventTitle}
-                  onIonChange={(e) =>
-                    handleInputChange("eventTitle", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("eventTitle", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("eventTitle")}
                 />
                 <br />
@@ -216,9 +223,16 @@ const EditEvent: React.FC = () => {
                   label="Street"
                   labelPlacement="floating"
                   value={currentEvent.location.street}
-                  onIonChange={(e) =>
-                    handleInputChange("location.street", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.street", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.street")}
                 />
                 <br />
@@ -232,9 +246,16 @@ const EditEvent: React.FC = () => {
                   label="City"
                   labelPlacement="floating"
                   value={currentEvent.location.city}
-                  onIonChange={(e) =>
-                    handleInputChange("location.city", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.city", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.city")}
                 />
                 <br />
@@ -248,9 +269,16 @@ const EditEvent: React.FC = () => {
                   label="State"
                   labelPlacement="floating"
                   value={currentEvent.location.state}
-                  onIonChange={(e) =>
-                    handleInputChange("location.state", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.state", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.state")}
                 />
                 <br />
@@ -264,9 +292,16 @@ const EditEvent: React.FC = () => {
                   label="Zip Code"
                   labelPlacement="floating"
                   value={currentEvent.location.zip}
-                  onIonChange={(e) =>
-                    handleInputChange("location.zip", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.zip", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.zip")}
                 />
                 <br />
@@ -304,9 +339,16 @@ const EditEvent: React.FC = () => {
                   label="Description"
                   labelPlacement="floating"
                   value={currentEvent.description}
-                  onIonChange={(e) =>
-                    handleInputChange("description", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("description", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("description")}
                 />
                 <br />

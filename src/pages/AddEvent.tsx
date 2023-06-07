@@ -137,9 +137,16 @@ const AddEvent: React.FC = () => {
                   label="Event Title"
                   labelPlacement="floating"
                   value={newEvent.eventTitle}
-                  onIonChange={(e) =>
-                    handleInputChange("eventTitle", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("eventTitle", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("eventTitle")}
                 />
                 <br />
@@ -183,9 +190,16 @@ const AddEvent: React.FC = () => {
                   label="Street"
                   labelPlacement="floating"
                   value={newEvent.location.street}
-                  onIonChange={(e) =>
-                    handleInputChange("location.street", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.street", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.street")}
                 />
                 <br />
@@ -199,9 +213,16 @@ const AddEvent: React.FC = () => {
                   label="City"
                   labelPlacement="floating"
                   value={newEvent.location.city}
-                  onIonChange={(e) =>
-                    handleInputChange("location.city", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.city", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.city")}
                 />
                 <br />
@@ -215,9 +236,16 @@ const AddEvent: React.FC = () => {
                   label="State"
                   labelPlacement="floating"
                   value={newEvent.location.state}
-                  onIonChange={(e) =>
-                    handleInputChange("location.state", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.state", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.state")}
                 />
                 <br />
@@ -231,9 +259,16 @@ const AddEvent: React.FC = () => {
                   label="Zip Code"
                   labelPlacement="floating"
                   value={newEvent.location.zip}
-                  onIonChange={(e) =>
-                    handleInputChange("location.zip", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.zip", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.zip")}
                 />
                 <br />
@@ -271,9 +306,16 @@ const AddEvent: React.FC = () => {
                   label="Description"
                   labelPlacement="floating"
                   value={newEvent.description}
-                  onIonChange={(e) =>
-                    handleInputChange("description", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("description", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("description")}
                 />
                 <br />
@@ -287,7 +329,7 @@ const AddEvent: React.FC = () => {
                   label="Event Image URL"
                   labelPlacement="floating"
                   value={newEvent.imageUrl}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("imageUrl", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("imageUrl")}
