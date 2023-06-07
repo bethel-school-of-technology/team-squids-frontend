@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IonCol, IonImg, IonRow, IonText } from "@ionic/react";
 import { OneChurch } from "../../context/churchContext";
-import { useFetchLocation } from "../../hooks/useFetchLocation";
+
 
 interface ChurchInfoProps {
   data: OneChurch;
@@ -21,32 +21,11 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
   },
 }) => {
 
-  // const [ latitude, setLatitude ] = useState<number | null>(null);
-  // const [ longitude, setLongitude ] = useState<number | null>(null);
-  
-  // const getLocationCor = async () => {
-  //   try {
-  //     const response = await fetch(`https://nominatim.org/reverse?address=${street}, ${city}, ${zip}`);
-  //     const data = await response.json();
-  //     const {lat, long} = data.features[0].geoemtry.location;
-  //     setLatitude(lat);
-  //     setLongitude(long);
-  //   } catch (error: any) {
-  //       throw error.response.statusText;
-  //   }
-  // }
-  
-  // useEffect(() => {
-  //   getLocationCor();
-  //   }, []);
 
-  const apiKey = process.env.REACT_APP_API_Key;
+  const apiKey = 'AIzaSyBzMxAntTwImXe9Du0J042nG09954Ww980';
 
-  const { latitude, longitude } = useFetchLocation( street, city, state, zip );
-  
-  const stasticMap = latitude && longitude
-  ? `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=12&size=600x400&key=${apiKey}`
-  : "";
+  const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${street},${city},${state}&markers=${street},${city},${state}&zoom=14&size=600x400&key=${apiKey}`
+
   
   return (
     <IonRow>
@@ -73,9 +52,9 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
             {city}, {state} {zip}
           </p>
         </IonText>
+        </IonCol>
       <IonCol>
-        <IonImg src={stasticMap} alt="stasticMap"> </IonImg>
-      </IonCol>
+        <IonImg src={staticMap} alt="staticMap"> </IonImg>
       </IonCol>
       <IonCol size="12">
         <h4>Contact Information</h4>
