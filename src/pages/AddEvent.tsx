@@ -137,7 +137,7 @@ const AddEvent: React.FC = () => {
                   label="Event Title"
                   labelPlacement="floating"
                   value={newEvent.eventTitle}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("eventTitle", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("eventTitle")}
@@ -183,7 +183,7 @@ const AddEvent: React.FC = () => {
                   label="Street"
                   labelPlacement="floating"
                   value={newEvent.location.street}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("location.street", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("location.street")}
@@ -199,7 +199,7 @@ const AddEvent: React.FC = () => {
                   label="City"
                   labelPlacement="floating"
                   value={newEvent.location.city}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("location.city", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("location.city")}
@@ -215,7 +215,7 @@ const AddEvent: React.FC = () => {
                   label="State"
                   labelPlacement="floating"
                   value={newEvent.location.state}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("location.state", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("location.state")}
@@ -231,7 +231,7 @@ const AddEvent: React.FC = () => {
                   label="Zip Code"
                   labelPlacement="floating"
                   value={newEvent.location.zip}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("location.zip", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("location.zip")}
@@ -271,7 +271,7 @@ const AddEvent: React.FC = () => {
                   label="Description"
                   labelPlacement="floating"
                   value={newEvent.description}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("description", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("description")}
@@ -287,7 +287,7 @@ const AddEvent: React.FC = () => {
                   label="Event Image URL"
                   labelPlacement="floating"
                   value={newEvent.imageUrl}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("imageUrl", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("imageUrl")}
