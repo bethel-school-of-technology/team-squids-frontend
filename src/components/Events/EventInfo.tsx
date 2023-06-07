@@ -37,6 +37,11 @@ const EventInfo: React.FC<EventInfoProps> = ({
   const eventDay = isoDate ? formatDay.format(isoDate) : "";
   const eventTime = isoDate ? formatTime.format(isoDate) : "";
 
+  const apiKey = 'AIzaSyBzMxAntTwImXe9Du0J042nG09954Ww980';
+
+  const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${street},${city},${state}&markers=${street},${city},${state}&zoom=14&size=600x400&key=${apiKey}`
+
+
   return (
     <IonRow>
       <IonCol size="12">
@@ -63,6 +68,9 @@ const EventInfo: React.FC<EventInfoProps> = ({
             {city}, {state} {zip}
           </p>
         </IonText>
+      </IonCol>
+      <IonCol>
+        <IonImg src={staticMap} alt="staticMap"> </IonImg>
       </IonCol>
       <IonCol size="12">
         <h4>Description</h4>
