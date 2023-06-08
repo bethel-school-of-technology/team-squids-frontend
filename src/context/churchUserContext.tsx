@@ -49,6 +49,7 @@ interface UserContextProps {
   deleteChurchUser: (userId: number) => Promise<void>;
   loginChurchUser: (churchUser: LoginChurchUser) => Promise<any>;
   logoutChurchUser: () => Promise<void>;
+  checkCurrentUser: (userId: string) => Promise<any>;
   isLoggedIn: boolean;
 }
 
@@ -65,6 +66,7 @@ export const ChurchUserContext = createContext<UserContextProps>({
   deleteChurchUser: (userId: number) => Promise.resolve(),
   loginChurchUser: (churchUser: LoginChurchUser) => Promise.resolve({}),
   logoutChurchUser: () => Promise.resolve(),
+  checkCurrentUser: (userId: string) => Promise.resolve(),
   isLoggedIn: false,
 });
 
@@ -87,6 +89,15 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
       setCurrentUserId(decoded.userId);
     }
   };
+
+  const checkCurrentUser = async (userId: string) => {
+    let id = parseInt(userId)
+    if (currentUserId === id) {
+      return true
+    } else {
+      return false
+    };
+  }
 
   useEffect(() => {
     (async () => {
@@ -153,25 +164,8 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
   };
 
   const logoutChurchUser = async () => {
-    const logoutURL = `${BASE_URL}logout`;
-    try {
-      const response = await axios.post(
-        logoutURL,
-        {},
-        {
-          headers: authHeader(),
-        }
-      );
-      if (response.status === 200) {
-        localStorage.removeItem("myChurchUserToken");
-        setIsLoggedIn(false);
-        setCurrentUserId(0);
-      } else {
-        throw new Error("Unable to log out.");
-      }
-    } catch (error: any) {
-      throw error;
-    }
+    localStorage.removeItem("myChurchUserToken");
+    setCurrentUserId(0)
   };
 
   return (
@@ -185,6 +179,7 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
         deleteChurchUser,
         loginChurchUser,
         logoutChurchUser,
+        checkCurrentUser,
         isLoggedIn,
       }}
     >
