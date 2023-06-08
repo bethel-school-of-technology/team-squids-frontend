@@ -10,6 +10,7 @@ import {
 import { ChurchUser, authHeader } from "./churchUserContext";
 import { AllEvents } from "./eventContext";
 import Location from "../interfaces/Location";
+import { queryAllByAltText } from "@testing-library/react";
 
 export interface Church {
   churchId: number;
@@ -57,6 +58,7 @@ interface ChurchContextProps {
   getChurch: (churchId: number) => Promise<OneChurch>;
   updateChurch: (updatedChurch: Church) => Promise<Church>;
   deleteChurch: (churchId: number) => Promise<Church>;
+  searchChurches: (query: string) => Promise<void>;
 }
 
 interface ChurchContextProviderProps {
@@ -71,6 +73,7 @@ export const ChurchContext = createContext<ChurchContextProps>({
   getChurch: (churchId: number) => Promise.resolve({} as OneChurch),
   updateChurch: (updatedChurch: Church) => Promise.resolve(updatedChurch),
   deleteChurch: (churchId: number) => Promise.resolve({} as Church),
+  searchChurches: (query: string) => Promise.resolve(),
 });
 
 const BASE_URL = "http://localhost:3000/api/church/";
@@ -141,6 +144,22 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
     }
   };
 
+  const searchChurches = async (query: string) => {
+    const searchChurchUrl = `${BASE_URL}/search/${query}`
+    try {
+      const response = await axios.get(searchChurchUrl);
+      setChurches(response.data);
+    } catch (error: any) {
+      throw error.response.statusText;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await searchChurches('');
+    })();
+  }, []);
+
   return (
     <ChurchContext.Provider
       value={{
@@ -151,6 +170,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
         getChurch,
         updateChurch,
         deleteChurch,
+        searchChurches,
       }}
     >
       {children}

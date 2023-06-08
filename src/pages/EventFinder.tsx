@@ -14,7 +14,16 @@ import { EventContext } from "../context/eventContext";
 import EventsList from "../components/Events/EventsLists";
 
 const EventFinder: React.FC = () => {
-  const { events } = useContext(EventContext);
+  const { events, searchEvents, getAllEvents  } = useContext(EventContext);
+
+  const handleSearch = async (searchQuery: string) => {
+    // Call function to search locations base on query
+    await searchEvents(searchQuery)
+  };
+
+  const handleClear = async () => {
+    await getAllEvents();
+  }
 
   return (
     <IonPage>
@@ -23,16 +32,15 @@ const EventFinder: React.FC = () => {
           <IonTitle>Event Finder</IonTitle>
         </IonToolbar>
         <IonToolbar color="primary">
-          <IonSearchbar></IonSearchbar>
+          <IonSearchbar onIonChange={(e) => handleSearch(e.detail.value!)} 
+          onIonClear={handleClear}></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
             <IonCol size="12">
-              <EventsList
-                events={events}
-              />
+              <EventsList events={events} />
             </IonCol>
           </IonRow>
         </IonGrid>

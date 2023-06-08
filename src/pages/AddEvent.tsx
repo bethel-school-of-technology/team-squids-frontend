@@ -103,9 +103,8 @@ const AddEvent: React.FC = () => {
           <IonRow>
             <IonCol size="12">
               <IonSelect
-                className={`ion-input-field ${
-                  isFieldTouched("churchId") ? "" : "ion-untouched"
-                }`}
+                className={`ion-input-field ${isFieldTouched("churchId") ? "" : "ion-untouched"
+                  }`}
                 placeholder="Select Church"
                 label="Church"
                 labelPlacement="floating"
@@ -129,25 +128,30 @@ const AddEvent: React.FC = () => {
 
               <div>
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("eventTitle") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("eventTitle") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Event Title"
                   labelPlacement="floating"
                   value={newEvent.eventTitle}
-                  onIonChange={(e) =>
-                    handleInputChange("eventTitle", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+
+                      } else {
+                        handleInputChange("eventTitle", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("eventTitle")}
                 />
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("date") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("date") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   placeholder=""
@@ -175,73 +179,138 @@ const AddEvent: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.street") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.street") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Street"
                   labelPlacement="floating"
                   value={newEvent.location.street}
-                  onIonChange={(e) =>
-                    handleInputChange("location.street", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+
+                      } else {
+                        handleInputChange("location.street", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.street")}
                 />
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.city") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.city") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="City"
                   labelPlacement="floating"
                   value={newEvent.location.city}
-                  onIonChange={(e) =>
-                    handleInputChange("location.city", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+
+                      } else {
+                        handleInputChange("location.city", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.city")}
                 />
                 <br />
 
-                <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.state") ? "" : "ion-untouched"
-                  }`}
-                  required
-                  type="text"
+                <IonSelect
+                  className={`ion-select-field ${isFieldTouched("location.state") ? "" : "ion-untouched"
+                    }`}
                   label="State"
-                  labelPlacement="floating"
                   value={newEvent.location.state}
-                  onIonChange={(e) =>
-                    handleInputChange("location.state", e.detail.value!)
-                  }
+                  onIonChange={(e) => {
+                    const selectedValue = e.detail.value;
+                    handleInputChange("location.state", selectedValue);
+                  }}
                   onBlur={() => handleInputBlur("location.state")}
-                />
+                >
+                  <IonSelectOption value="AL">Alabama</IonSelectOption>
+                  <IonSelectOption value="AK">Alaska</IonSelectOption>
+                  <IonSelectOption value="AZ">Arizona</IonSelectOption>
+                  <IonSelectOption value="AR">Arkansas</IonSelectOption>
+                  <IonSelectOption value="CA">California</IonSelectOption>
+                  <IonSelectOption value="CO">Colorado</IonSelectOption>
+                  <IonSelectOption value="CT">Connecticut</IonSelectOption>
+                  <IonSelectOption value="DE">Delaware</IonSelectOption>
+                  <IonSelectOption value="FL">Florida</IonSelectOption>
+                  <IonSelectOption value="GA">Georgia</IonSelectOption>
+                  <IonSelectOption value="HI">Hawaii</IonSelectOption>
+                  <IonSelectOption value="ID">Idaho</IonSelectOption>
+                  <IonSelectOption value="IL">Illinois</IonSelectOption>
+                  <IonSelectOption value="IN">Indiana</IonSelectOption>
+                  <IonSelectOption value="IA">Iowa</IonSelectOption>
+                  <IonSelectOption value="KS">Kansas</IonSelectOption>
+                  <IonSelectOption value="KY">Kentucky</IonSelectOption>
+                  <IonSelectOption value="LA">Louisiana</IonSelectOption>
+                  <IonSelectOption value="ME">Maine</IonSelectOption>
+                  <IonSelectOption value="MD">Maryland</IonSelectOption>
+                  <IonSelectOption value="MA">Massachusetts</IonSelectOption>
+                  <IonSelectOption value="MI">Michigan</IonSelectOption>
+                  <IonSelectOption value="MN">Minnesota</IonSelectOption>
+                  <IonSelectOption value="MS">Mississippi</IonSelectOption>
+                  <IonSelectOption value="MO">Missouri</IonSelectOption>
+                  <IonSelectOption value="MT">Montana</IonSelectOption>
+                  <IonSelectOption value="NE">Nebraska</IonSelectOption>
+                  <IonSelectOption value="NV">Nevada</IonSelectOption>
+                  <IonSelectOption value="NH">New Hampshire</IonSelectOption>
+                  <IonSelectOption value="NJ">New Jersey</IonSelectOption>
+                  <IonSelectOption value="NM">New Mexico</IonSelectOption>
+                  <IonSelectOption value="NY">New York</IonSelectOption>
+                  <IonSelectOption value="NC">North Carolina</IonSelectOption>
+                  <IonSelectOption value="ND">North Dakota</IonSelectOption>
+                  <IonSelectOption value="OH">Ohio</IonSelectOption>
+                  <IonSelectOption value="OK">Oklahoma</IonSelectOption>
+                  <IonSelectOption value="OR">Oregon</IonSelectOption>
+                  <IonSelectOption value="PA">Pennsylvania</IonSelectOption>
+                  <IonSelectOption value="RI">Rhode Island</IonSelectOption>
+                  <IonSelectOption value="SC">South Carolina</IonSelectOption>
+                  <IonSelectOption value="SD">South Dakota</IonSelectOption>
+                  <IonSelectOption value="TN">Tennessee</IonSelectOption>
+                  <IonSelectOption value="TX">Texas</IonSelectOption>
+                  <IonSelectOption value="UT">Utah</IonSelectOption>
+                  <IonSelectOption value="VT">Vermont</IonSelectOption>
+                  <IonSelectOption value="VA">Virginia</IonSelectOption>
+                  <IonSelectOption value="WA">Washington</IonSelectOption>
+                  <IonSelectOption value="WV">West Virginia</IonSelectOption>
+                  <IonSelectOption value="WI">Wisconsin</IonSelectOption>
+                  <IonSelectOption value="WY">Wyoming</IonSelectOption>
+                </IonSelect>
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.zip") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.zip") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Zip Code"
                   labelPlacement="floating"
                   value={newEvent.location.zip}
-                  onIonChange={(e) =>
-                    handleInputChange("location.zip", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+
+                      } else {
+                        handleInputChange("location.zip", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.zip")}
                 />
                 <br />
 
                 <IonSelect
-                  className={`ion-input-field ${
-                    isFieldTouched("eventType") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("eventType") ? "" : "ion-untouched"
+                    }`}
                   placeholder="Select Event Type"
                   label="Event Type"
                   labelPlacement="floating"
@@ -264,30 +333,35 @@ const AddEvent: React.FC = () => {
                 <br />
 
                 <IonTextarea
-                  className={`ion-input-field ${
-                    isFieldTouched("description") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("description") ? "" : "ion-untouched"
+                    }`}
                   rows={10}
                   label="Description"
                   labelPlacement="floating"
                   value={newEvent.description}
-                  onIonChange={(e) =>
-                    handleInputChange("description", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+
+                      } else {
+                        handleInputChange("description", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("description")}
                 />
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("imageUrl") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("imageUrl") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="url"
                   label="Event Image URL"
                   labelPlacement="floating"
                   value={newEvent.imageUrl}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("imageUrl", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("imageUrl")}

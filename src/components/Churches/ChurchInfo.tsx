@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IonCol, IonImg, IonRow, IonText } from "@ionic/react";
 import { OneChurch } from "../../context/churchContext";
+
 
 interface ChurchInfoProps {
   data: OneChurch;
@@ -19,6 +20,13 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
     website,
   },
 }) => {
+
+
+  const apiKey = 'AIzaSyBzMxAntTwImXe9Du0J042nG09954Ww980';
+
+  const staticMap = `https://maps.googleapis.com/maps/api/staticmap?center=${street},${city},${state}&markers=${street},${city},${state}&zoom=14&size=600x400&key=${apiKey}`
+
+  
   return (
     <IonRow>
       <IonCol size="12">
@@ -44,6 +52,9 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
             {city}, {state} {zip}
           </p>
         </IonText>
+        </IonCol>
+      <IonCol>
+        <IonImg src={staticMap} alt="staticMap"> </IonImg>
       </IonCol>
       <IonCol size="12">
         <h4>Contact Information</h4>

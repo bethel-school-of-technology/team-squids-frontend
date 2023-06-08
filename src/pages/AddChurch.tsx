@@ -9,6 +9,8 @@ import {
   IonLabel,
   IonButton,
   IonTextarea,
+  IonSelect,
+  IonSelectOption,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import PageHeader from "../components/Global/PageHeader";
@@ -94,9 +96,16 @@ const AddChurch: React.FC = () => {
                   label="Church Name"
                   labelPlacement="floating"
                   value={newChurch.churchName}
-                  onIonChange={(e) =>
-                    handleInputChange("churchName", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("churchName", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("churchName")}
                 />
                 <br />
@@ -110,9 +119,16 @@ const AddChurch: React.FC = () => {
                   label="Denomination"
                   labelPlacement="floating"
                   value={newChurch.denomination}
-                  onIonChange={(e) =>
-                    handleInputChange("denomination", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("denomination", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("denomination")}
                 />
                 <br />
@@ -126,9 +142,16 @@ const AddChurch: React.FC = () => {
                   label="Street"
                   labelPlacement="floating"
                   value={newChurch.location.street}
-                  onIonChange={(e) =>
-                    handleInputChange("location.street", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.street", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.street")}
                 />
                 <br />
@@ -142,27 +165,82 @@ const AddChurch: React.FC = () => {
                   label="City"
                   labelPlacement="floating"
                   value={newChurch.location.city}
-                  onIonChange={(e) =>
-                    handleInputChange("location.city", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.city", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.city")}
                 />
                 <br />
 
-                <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.state") ? "" : "ion-untouched"
-                  }`}
-                  required
-                  type="text"
+                <IonSelect
+                  className={`ion-select-field ${isFieldTouched("location.state") ? "" : "ion-untouched"
+                    }`}
                   label="State"
-                  labelPlacement="floating"
                   value={newChurch.location.state}
-                  onIonChange={(e) =>
-                    handleInputChange("location.state", e.detail.value!)
-                  }
+                  onIonChange={(e) => {
+                    const selectedValue = e.detail.value;
+                    handleInputChange("location.state", selectedValue);
+                  }}
                   onBlur={() => handleInputBlur("location.state")}
-                />
+                >
+                  <IonSelectOption value="AL">Alabama</IonSelectOption>
+                  <IonSelectOption value="AK">Alaska</IonSelectOption>
+                  <IonSelectOption value="AZ">Arizona</IonSelectOption>
+                  <IonSelectOption value="AR">Arkansas</IonSelectOption>
+                  <IonSelectOption value="CA">California</IonSelectOption>
+                  <IonSelectOption value="CO">Colorado</IonSelectOption>
+                  <IonSelectOption value="CT">Connecticut</IonSelectOption>
+                  <IonSelectOption value="DE">Delaware</IonSelectOption>
+                  <IonSelectOption value="FL">Florida</IonSelectOption>
+                  <IonSelectOption value="GA">Georgia</IonSelectOption>
+                  <IonSelectOption value="HI">Hawaii</IonSelectOption>
+                  <IonSelectOption value="ID">Idaho</IonSelectOption>
+                  <IonSelectOption value="IL">Illinois</IonSelectOption>
+                  <IonSelectOption value="IN">Indiana</IonSelectOption>
+                  <IonSelectOption value="IA">Iowa</IonSelectOption>
+                  <IonSelectOption value="KS">Kansas</IonSelectOption>
+                  <IonSelectOption value="KY">Kentucky</IonSelectOption>
+                  <IonSelectOption value="LA">Louisiana</IonSelectOption>
+                  <IonSelectOption value="ME">Maine</IonSelectOption>
+                  <IonSelectOption value="MD">Maryland</IonSelectOption>
+                  <IonSelectOption value="MA">Massachusetts</IonSelectOption>
+                  <IonSelectOption value="MI">Michigan</IonSelectOption>
+                  <IonSelectOption value="MN">Minnesota</IonSelectOption>
+                  <IonSelectOption value="MS">Mississippi</IonSelectOption>
+                  <IonSelectOption value="MO">Missouri</IonSelectOption>
+                  <IonSelectOption value="MT">Montana</IonSelectOption>
+                  <IonSelectOption value="NE">Nebraska</IonSelectOption>
+                  <IonSelectOption value="NV">Nevada</IonSelectOption>
+                  <IonSelectOption value="NH">New Hampshire</IonSelectOption>
+                  <IonSelectOption value="NJ">New Jersey</IonSelectOption>
+                  <IonSelectOption value="NM">New Mexico</IonSelectOption>
+                  <IonSelectOption value="NY">New York</IonSelectOption>
+                  <IonSelectOption value="NC">North Carolina</IonSelectOption>
+                  <IonSelectOption value="ND">North Dakota</IonSelectOption>
+                  <IonSelectOption value="OH">Ohio</IonSelectOption>
+                  <IonSelectOption value="OK">Oklahoma</IonSelectOption>
+                  <IonSelectOption value="OR">Oregon</IonSelectOption>
+                  <IonSelectOption value="PA">Pennsylvania</IonSelectOption>
+                  <IonSelectOption value="RI">Rhode Island</IonSelectOption>
+                  <IonSelectOption value="SC">South Carolina</IonSelectOption>
+                  <IonSelectOption value="SD">South Dakota</IonSelectOption>
+                  <IonSelectOption value="TN">Tennessee</IonSelectOption>
+                  <IonSelectOption value="TX">Texas</IonSelectOption>
+                  <IonSelectOption value="UT">Utah</IonSelectOption>
+                  <IonSelectOption value="VT">Vermont</IonSelectOption>
+                  <IonSelectOption value="VA">Virginia</IonSelectOption>
+                  <IonSelectOption value="WA">Washington</IonSelectOption>
+                  <IonSelectOption value="WV">West Virginia</IonSelectOption>
+                  <IonSelectOption value="WI">Wisconsin</IonSelectOption>
+                  <IonSelectOption value="WY">Wyoming</IonSelectOption>
+                </IonSelect>
                 <br />
 
                 <IonInput
@@ -174,9 +252,16 @@ const AddChurch: React.FC = () => {
                   label="Zip Code"
                   labelPlacement="floating"
                   value={newChurch.location.zip}
-                  onIonChange={(e) =>
-                    handleInputChange("location.zip", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("location.zip", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("location.zip")}
                 />
                 <br />
@@ -190,9 +275,16 @@ const AddChurch: React.FC = () => {
                   label="Phone Number"
                   labelPlacement="floating"
                   value={newChurch.phoneNumber}
-                  onIonChange={(e) =>
-                    handleInputChange("phoneNumber", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("phoneNumber", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("phoneNumber")}
                 />
                 <br />
@@ -206,7 +298,7 @@ const AddChurch: React.FC = () => {
                   label="Church Email"
                   labelPlacement="floating"
                   value={newChurch.churchEmail}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("churchEmail", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("churchEmail")}
@@ -222,9 +314,16 @@ const AddChurch: React.FC = () => {
                   labelPlacement="floating"
                   rows={10}
                   value={newChurch.welcomeMessage}
-                  onIonChange={(e) =>
-                    handleInputChange("welcomeMessage", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("welcomeMessage", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("welcomeMessage")}
                 />
                 <br />
@@ -238,9 +337,16 @@ const AddChurch: React.FC = () => {
                   label="Service Time"
                   labelPlacement="floating"
                   value={newChurch.serviceTime}
-                  onIonChange={(e) =>
-                    handleInputChange("serviceTime", e.detail.value!)
-                  }
+                  onIonInput={(e) => {
+                    const inputValue = e.detail.value;
+                    if (inputValue) {
+                      if (inputValue.slice(-1) === " ") {
+                        
+                      } else {
+                        handleInputChange("serviceTime", inputValue);
+                      }
+                    }
+                  }}
                   onBlur={() => handleInputBlur("serviceTime")}
                 />
                 <br />
@@ -254,7 +360,7 @@ const AddChurch: React.FC = () => {
                   label="Church Image URL"
                   labelPlacement="floating"
                   value={newChurch.imageUrl}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("imageUrl", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("imageUrl")}
@@ -270,7 +376,7 @@ const AddChurch: React.FC = () => {
                   label="Church Website"
                   labelPlacement="floating"
                   value={newChurch.website}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("website", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("website")}
