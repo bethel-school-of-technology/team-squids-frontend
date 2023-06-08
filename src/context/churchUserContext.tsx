@@ -51,6 +51,7 @@ interface UserContextProps {
   deleteChurchUser: (userId: number) => Promise<void>;
   loginChurchUser: (churchUser: LoginChurchUser) => Promise<any>;
   logoutChurchUser: () => Promise<void>;
+  checkCurrentUser: (userId: string) => Promise<any>;
   isLoggedIn: boolean;
 }
 
@@ -67,6 +68,7 @@ export const ChurchUserContext = createContext<UserContextProps>({
   deleteChurchUser: (userId: number) => Promise.resolve(),
   loginChurchUser: (churchUser: LoginChurchUser) => Promise.resolve({}),
   logoutChurchUser: () => Promise.resolve(),
+  checkCurrentUser: (userId: string) => Promise.resolve(),
   isLoggedIn: false,
 });
 
@@ -89,6 +91,15 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
       setCurrentUserId(decoded.userId);
     }
   };
+
+  const checkCurrentUser = async (userId: string) => {
+    let id = parseInt(userId)
+    if (currentUserId === id) {
+      return true
+    } else {
+      return false
+    };
+  }
 
   useEffect(() => {
     (async () => {
@@ -176,6 +187,18 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
+  // const verifyUserWithServer = async (userId: string) => {
+  //   const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
+  //   if (!LOGIN_TOKEN) {
+  //     setCurrentUserId(0);
+  //   } else {
+  //     axios
+  //     // let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
+  //     // setCurrentUserId(decoded.userId);
+  //     // console.log(decoded.userId)
+  //   }
+  // };
+
   return (
     <ChurchUserContext.Provider
       value={{
@@ -187,6 +210,7 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
         deleteChurchUser,
         loginChurchUser,
         logoutChurchUser,
+        checkCurrentUser,
         isLoggedIn,
       }}
     >
