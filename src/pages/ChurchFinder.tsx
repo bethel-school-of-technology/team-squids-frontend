@@ -12,6 +12,7 @@ import {
 } from "@ionic/react";
 import ChurchList from "../components/Churches/ChurchList";
 import { ChurchContext } from "../context/churchContext";
+import { trashBin } from "ionicons/icons";
 
 const ChurchFinder: React.FC = () => {
   const { searchChurches, churches, getAllChurches } = useContext(ChurchContext);
@@ -39,8 +40,11 @@ const ChurchFinder: React.FC = () => {
           <IonTitle>Church Finder</IonTitle>
         </IonToolbar>
         <IonToolbar color="primary">
-          <IonSearchbar onIonChange={(e) => handleSearch(e.detail.value!)}
-          onIonClear={handleClear}></IonSearchbar>
+          <IonSearchbar 
+          onIonChange={(e) => handleSearch(e.detail.value!)}
+          onIonClear={handleClear}
+          clearIcon={trashBin} 
+          ></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

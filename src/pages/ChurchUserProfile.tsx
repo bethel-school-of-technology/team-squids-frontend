@@ -1,5 +1,6 @@
+
 import React, { useContext, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom"
 import LoadingSpinner from "../components/Global/LoadingSpinner";
 import ErrorAlert from "../components/Global/ErrorAlert";
 import {
@@ -19,6 +20,7 @@ import EventsList from "../components/Events/EventsLists";
 import { useFetchChurchUser } from "../hooks/useFetchChurchUser";
 import "./ChurchUserProfile.css";
 import { ChurchUserContext } from "../context/churchUserContext";
+import { EventContext } from "../context/eventContext";
 
 interface ChurchUserRouteParams {
   userId: string;
@@ -31,6 +33,8 @@ const UserProfile: React.FC = () => {
   const { churchUser, loadingStatus, error } = useFetchChurchUser(
     parseInt(params.userId)
   );
+  const { userEvents } = useContext(EventContext);
+
 
   const { checkCurrentUser, logoutChurchUser } = useContext(ChurchUserContext);
 
@@ -51,7 +55,7 @@ const UserProfile: React.FC = () => {
     logoutChurchUser()
     history.push(`/churches`)
   }
-
+  
   return (
     <IonPage>
       <ErrorAlert error={error} />
@@ -79,9 +83,9 @@ const UserProfile: React.FC = () => {
                   Add
                 </IonRouterLink>
               </div>
-              {/* {allEvents.length > 0 && (
-                <EventsList events={allEvents} />
-              )} */}
+              {userEvents.length > 0 && (
+                <EventsList events={userEvents} />
+              )}
             </IonCol>
           </IonRow>
           <IonRow>
