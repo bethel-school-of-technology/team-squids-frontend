@@ -74,6 +74,7 @@ interface EventContextProps {
   getEvent: (eventId: number) => Promise<OneEvent>;
   updateEvent: (updatedEvent: Event) => Promise<Event>;
   deleteEvent: (eventId: number) => Promise<Event>;
+  searchEvents: (query: string) => Promise<void>;
 }
 
 interface EventContextProviderProps {
@@ -88,6 +89,7 @@ export const EventContext = createContext<EventContextProps>({
   getEvent: (eventId: number) => Promise.resolve({} as OneEvent),
   updateEvent: (updatedEvent: Event) => Promise.resolve(updatedEvent),
   deleteEvent: (eventId: number) => Promise.resolve({} as Event),
+  searchEvents: (query: string) => Promise.resolve()
 });
 
 const BASE_URL = "http://localhost:3000/api/event/";
@@ -158,6 +160,22 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
     }
   };
 
+  const searchEvents = async (query: string) => {
+    const searchEventUrl = `${BASE_URL}search/${query}`
+    try {
+      const response = await axios.get(searchEventUrl);
+      setEvents(response.data);
+    } catch (error: any) {
+      throw error.response.statusText;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await searchEvents('');
+    })();
+  }, []);
+
   return (
     <EventContext.Provider
       value={{
@@ -168,6 +186,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
         getEvent,
         updateEvent,
         deleteEvent,
+        searchEvents,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FormEventHandler, useContext, useEffect, useState } from "react";
 import {
   IonCol,
   IonContent,
@@ -10,12 +10,27 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-
-import { ChurchContext } from "../context/churchContext";
 import ChurchList from "../components/Churches/ChurchList";
+import { ChurchContext } from "../context/churchContext";
 
 const ChurchFinder: React.FC = () => {
-  const { churches } = useContext(ChurchContext);
+  const { searchChurches, churches, getAllChurches } = useContext(ChurchContext);
+
+  // 'e' event object passed to the event handler is a change event targeting an input element
+  // generic type paramenter 
+  // onIonchange when user selects enter instead when query get update.
+  // onChange when user change value in searchBar 
+  // FormEventHandler object vs ChangeEvent object
+  // changeEvent obj doesnt have EventTarget or HTMLInputElement
+
+  const handleSearch = async (searchQuery: string) => {
+    // Call function to search locations base on query
+    await searchChurches(searchQuery)
+  };
+
+  const handleClear = async () => {
+    await getAllChurches();
+  }
 
   return (
     <IonPage>
@@ -24,7 +39,8 @@ const ChurchFinder: React.FC = () => {
           <IonTitle>Church Finder</IonTitle>
         </IonToolbar>
         <IonToolbar color="primary">
-          <IonSearchbar></IonSearchbar>
+          <IonSearchbar onIonChange={(e) => handleSearch(e.detail.value!)}
+          onIonClear={handleClear}></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
