@@ -16,7 +16,6 @@ export interface ChurchUser {
   password: string;
   firstName: string;
   lastName: string;
-  // churchName: string;
 }
 
 export interface NewChurchUser {
@@ -24,7 +23,6 @@ export interface NewChurchUser {
   password: string;
   firstName: string;
   lastName: string;
-  // churchName: string;
 }
 
 export interface LoginChurchUser {
