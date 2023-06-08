@@ -168,6 +168,18 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     setCurrentUserId(0)
   };
 
+  // const verifyUserWithServer = async (userId: string) => {
+  //   const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
+  //   if (!LOGIN_TOKEN) {
+  //     setCurrentUserId(0);
+  //   } else {
+  //     axios
+  //     // let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
+  //     // setCurrentUserId(decoded.userId);
+  //     // console.log(decoded.userId)
+  //   }
+  // };
+
   return (
     <ChurchUserContext.Provider
       value={{
