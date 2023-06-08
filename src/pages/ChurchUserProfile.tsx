@@ -51,26 +51,11 @@ const UserProfile: React.FC = () => {
     checkingUserId()
   }, [])
 
-  const { checkCurrentUser } = useContext(ChurchUserContext);
-
-    async function checkingUserId() {
-      let userId = params.userId.toString()
-      let isChecked = await checkCurrentUser(userId)
-      if (isChecked === false) {
-        history.push("/churches")
-      }
-    }
-  
-
-  useEffect(() => {
-    checkingUserId()
-  }, [])
-
   const allEvents = churchUser?.Churches.flatMap((church) => church.Events) || [];
 
   function handleLogout() {
-    localStorage.removeItem("myChurchUserToken");
-    history.push(`/churches`)
+    logoutChurchUser()
+    history.push("/churches")
   }
 
 
@@ -104,13 +89,6 @@ const UserProfile: React.FC = () => {
               {userEvents.length > 0 && (
                 <EventsList events={userEvents} />
               )}
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonButton expand="full" onClick={handleLogout}>
-                Logout
-              </IonButton>
             </IonCol>
           </IonRow>
           <IonRow>
