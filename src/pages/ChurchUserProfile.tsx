@@ -32,8 +32,9 @@ const UserProfile: React.FC = () => {
     parseInt(params.userId)
   );
 
-  const { checkCurrentUser } = useContext(ChurchUserContext);
+  const { checkCurrentUser, logoutChurchUser } = useContext(ChurchUserContext);
 
+  useEffect(() => {
     async function checkingUserId() {
       let userId = params.userId.toString()
       let isChecked = await checkCurrentUser(userId)
@@ -41,16 +42,13 @@ const UserProfile: React.FC = () => {
         history.push("/churches")
       }
     }
-  
-
-  useEffect(() => {
     checkingUserId()
   }, [])
 
   const allEvents = churchUser?.Churches.flatMap((church) => church.Events) || [];
 
   function handleLogout() {
-    localStorage.removeItem("myChurchUserToken");
+    logoutChurchUser()
     history.push(`/churches`)
   }
 

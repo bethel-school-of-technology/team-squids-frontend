@@ -166,38 +166,9 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
   };
 
   const logoutChurchUser = async () => {
-    const logoutURL = `${BASE_URL}logout`;
-    try {
-      const response = await axios.post(
-        logoutURL,
-        {},
-        {
-          headers: authHeader(),
-        }
-      );
-      if (response.status === 200) {
-        localStorage.removeItem("myChurchUserToken");
-        setIsLoggedIn(false);
-        setCurrentUserId(0);
-      } else {
-        throw new Error("Unable to log out.");
-      }
-    } catch (error: any) {
-      throw error;
-    }
+    localStorage.removeItem("myChurchUserToken");
+    setCurrentUserId(0)
   };
-
-  // const verifyUserWithServer = async (userId: string) => {
-  //   const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
-  //   if (!LOGIN_TOKEN) {
-  //     setCurrentUserId(0);
-  //   } else {
-  //     axios
-  //     // let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
-  //     // setCurrentUserId(decoded.userId);
-  //     // console.log(decoded.userId)
-  //   }
-  // };
 
   return (
     <ChurchUserContext.Provider
