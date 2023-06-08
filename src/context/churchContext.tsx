@@ -145,7 +145,10 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   };
 
   const searchChurches = async (query: string) => {
-    const searchChurchUrl = `${BASE_URL}/search/${query}`
+    if (query === "") {
+      return
+    }
+    const searchChurchUrl = `${BASE_URL}search/${query}`
     try {
       const response = await axios.get(searchChurchUrl);
       setChurches(response.data);

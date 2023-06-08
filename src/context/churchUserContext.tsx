@@ -16,7 +16,6 @@ export interface ChurchUser {
   password: string;
   firstName: string;
   lastName: string;
-  // churchName: string;
 }
 
 export interface NewChurchUser {
@@ -24,7 +23,6 @@ export interface NewChurchUser {
   password: string;
   firstName: string;
   lastName: string;
-  // churchName: string;
 }
 
 export interface LoginChurchUser {
@@ -166,25 +164,8 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
   };
 
   const logoutChurchUser = async () => {
-    const logoutURL = `${BASE_URL}logout`;
-    try {
-      const response = await axios.post(
-        logoutURL,
-        {},
-        {
-          headers: authHeader(),
-        }
-      );
-      if (response.status === 200) {
-        localStorage.removeItem("myChurchUserToken");
-        setIsLoggedIn(false);
-        setCurrentUserId(0);
-      } else {
-        throw new Error("Unable to log out.");
-      }
-    } catch (error: any) {
-      throw error;
-    }
+    localStorage.removeItem("myChurchUserToken");
+    setCurrentUserId(0)
   };
 
   // const verifyUserWithServer = async (userId: string) => {
