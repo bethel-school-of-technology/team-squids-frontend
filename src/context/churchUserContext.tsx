@@ -14,9 +14,20 @@ export interface ChurchUser {
   userId: number;
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  // churchName: string;
 }
 
 export interface NewChurchUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  // churchName: string;
+}
+
+export interface LoginChurchUser {
   email: string;
   password: string;
 }
@@ -38,7 +49,7 @@ interface UserContextProps {
   getChurchUser: (userId: number) => Promise<OneChurchUser>;
   updateChurchUser: (updatedUser: ChurchUser) => Promise<ChurchUser>;
   deleteChurchUser: (userId: number) => Promise<void>;
-  loginChurchUser: (churchUser: NewChurchUser) => Promise<any>;
+  loginChurchUser: (churchUser: LoginChurchUser) => Promise<any>;
   logoutChurchUser: () => Promise<void>;
   isLoggedIn: boolean;
 }
@@ -54,7 +65,7 @@ export const ChurchUserContext = createContext<UserContextProps>({
   getChurchUser: (userId: number) => Promise.resolve({} as OneChurchUser),
   updateChurchUser: (updatedUser: ChurchUser) => Promise.resolve(updatedUser),
   deleteChurchUser: (userId: number) => Promise.resolve(),
-  loginChurchUser: (churchUser: NewChurchUser) => Promise.resolve({}),
+  loginChurchUser: (churchUser: LoginChurchUser) => Promise.resolve({}),
   logoutChurchUser: () => Promise.resolve(),
   isLoggedIn: false,
 });
@@ -86,8 +97,9 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
   }, []);
 
   const createChurchUser = async (newUser: NewChurchUser) => {
+    const NewUserURL = `${BASE_URL}create-account`;
     try {
-      const response = await axios.post(BASE_URL, newUser);
+      const response = await axios.post(NewUserURL, newUser);
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -123,8 +135,8 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
-  const loginChurchUser = async (churchUser: NewChurchUser) => {
-    const churchUserURL = `${BASE_URL}login`;
+  const loginChurchUser = async (churchUser: LoginChurchUser) => {
+    const churchUserURL = `${BASE_URL}signin`;
 
     try {
       const response = await axios.post(churchUserURL, churchUser);

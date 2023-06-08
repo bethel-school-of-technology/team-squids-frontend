@@ -22,6 +22,14 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
+import passport from 'passport';
+import session from 'express-session';
+
+// Passport/Session middleware
+// app.use(session({ secret: 'I am a child of God' }));
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 import "./theme/variables.css";
 import ChurchFinder from "./pages/ChurchFinder";
@@ -31,7 +39,7 @@ import EventDetails from "./pages/EventDetails";
 import ChurchUserProfile from "./pages/ChurchUserProfile";
 import { useContext } from "react";
 import { ChurchUserContext } from "./context/churchUserContext";
-import CreateAccount from "./pages/CreateAccount";
+import AddUser from "./pages/AddUser";
 import LoginAccount from "./pages/LoginAccount";
 import AddChurch from "./pages/AddChurch";
 import AddEvent from "./pages/AddEvent";
@@ -58,7 +66,7 @@ const App: React.FC = () => {
             <Route path="/events/:eventId" exact component={EventDetails} />
             <Route path="/events" exact component={EventList} />
 
-            <Route path="/users/create-account" component={CreateAccount} />
+            <Route path="/users/create-account" component={AddUser} />
             <Route path="/users/login-account" exact component={LoginAccount} />
             <Route path="/user/:userId" exact component={ChurchUserProfile} />
             
