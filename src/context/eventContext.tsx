@@ -178,7 +178,10 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
   };
 
   const searchEvents = async (query: string) => {
-    const searchEventUrl = `${BASE_URL}search/${query}`;
+    if (query === "") {
+      return
+    }
+    const searchEventUrl = `${BASE_URL}search/${query}`
     try {
       const response = await axios.get(searchEventUrl);
       setEvents(response.data);
