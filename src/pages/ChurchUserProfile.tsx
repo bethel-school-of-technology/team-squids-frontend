@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/Global/LoadingSpinner";
 import ErrorAlert from "../components/Global/ErrorAlert";
 import {
@@ -17,6 +17,7 @@ import ChurchUserInfo from "../components/ChurchUsers/ChurchUserInfo";
 import EventsList from "../components/Events/EventsLists";
 import { useFetchChurchUser } from "../hooks/useFetchChurchUser";
 import "./ChurchUserProfile.css";
+import { EventContext } from "../context/eventContext";
 
 interface ChurchUserRouteParams {
   userId: string;
@@ -27,10 +28,9 @@ const UserProfile: React.FC = () => {
   const { churchUser, loadingStatus, error } = useFetchChurchUser(
     parseInt(params.userId)
   );
+  const { userEvents } = useContext(EventContext);
 
-  const allEvents =
-    churchUser?.Churches.flatMap((church) => church.Events) || [];
-  console.log(allEvents);
+
   return (
     <IonPage>
       <ErrorAlert error={error} />
@@ -58,9 +58,9 @@ const UserProfile: React.FC = () => {
                   Add
                 </IonRouterLink>
               </div>
-              {/* {allEvents.length > 0 && (
-                <EventsList events={allEvents} />
-              )} */}
+              {userEvents.length > 0 && (
+                <EventsList events={userEvents} />
+              )}
             </IonCol>
           </IonRow>
         </IonGrid>

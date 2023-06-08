@@ -4,12 +4,13 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
 import { AllChurches, Church } from "./churchContext";
 import Location from "../interfaces/Location";
-import { authHeader } from "./churchUserContext";
+import { ChurchUserContext, authHeader } from "./churchUserContext";
 
 export interface Event {
   eventId: number;
@@ -55,7 +56,7 @@ export interface NewEvent {
   imageUrl: string;
 }
 export interface UpdateEvent extends Event {
- userId: number;
+  userId: number;
 }
 
 export interface AllEvents extends Event {
@@ -68,8 +69,10 @@ export interface OneEvent extends Event {
 
 interface EventContextProps {
   events: AllEvents[];
+  userEvents: AllEvents[];
   setEvents: Dispatch<SetStateAction<AllEvents[]>>;
   getAllEvents: () => Promise<void>;
+  getAllUserEvents: () => Promise<void>;
   createEvent: (newEvent: NewEvent) => Promise<NewEvent>;
   getEvent: (eventId: number) => Promise<OneEvent>;
   updateEvent: (updatedEvent: Event) => Promise<Event>;
@@ -83,19 +86,23 @@ interface EventContextProviderProps {
 
 export const EventContext = createContext<EventContextProps>({
   events: [],
+  userEvents: [],
   setEvents: () => {},
   getAllEvents: () => Promise.resolve(),
+  getAllUserEvents: () => Promise.resolve(),
   createEvent: (newEvent: NewEvent) => Promise.resolve(newEvent),
   getEvent: (eventId: number) => Promise.resolve({} as OneEvent),
   updateEvent: (updatedEvent: Event) => Promise.resolve(updatedEvent),
   deleteEvent: (eventId: number) => Promise.resolve({} as Event),
-  searchEvents: (query: string) => Promise.resolve()
+  searchEvents: (query: string) => Promise.resolve(),
 });
 
 const BASE_URL = "http://localhost:3000/api/event/";
 
 export const EventProvider = ({ children }: EventContextProviderProps) => {
   const [events, setEvents] = useState<AllEvents[]>([]);
+  const [userEvents, setUserEvents] = useState<AllEvents[]>([]);
+  const { currentUserId } = useContext(ChurchUserContext);
 
   const getAllEvents = async () => {
     try {
@@ -112,12 +119,22 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
     })();
   }, []);
 
+  const getAllUserEvents = async () => {
+    const UserEventsURL = `${BASE_URL}userevent/${currentUserId}`;
+    try {
+      const response = await axios.get(UserEventsURL);
+      setUserEvents(response.data);
+    } catch (error: any) {
+      throw error.response.statusText;
+    }
+  };
+
   const createEvent = async (newEvent: NewEvent) => {
     try {
       const response = await axios.post(BASE_URL, newEvent, {
         headers: authHeader(),
       });
-      await getAllEvents();
+      await Promise.all([getAllEvents(), getAllUserEvents()]);
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -140,7 +157,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
       const response = await axios.put(eventIdURL, updatedEvent, {
         headers: authHeader(),
       });
-      await getAllEvents();
+      await Promise.all([getAllEvents(), getAllUserEvents()]);
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -153,7 +170,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
       const response = await axios.delete(eventIdURL, {
         headers: authHeader(),
       });
-      await getAllEvents();
+      await Promise.all([getAllEvents(), getAllUserEvents()]);
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -175,7 +192,7 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
 
   useEffect(() => {
     (async () => {
-      await searchEvents('');
+      await searchEvents("");
     })();
   }, []);
 
@@ -183,8 +200,10 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
     <EventContext.Provider
       value={{
         events,
+        userEvents,
         setEvents,
         getAllEvents,
+        getAllUserEvents,
         createEvent,
         getEvent,
         updateEvent,
