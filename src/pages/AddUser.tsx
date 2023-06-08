@@ -16,80 +16,36 @@ import PageHeader from "../components/Global/PageHeader";
 import UserProfile from "./ChurchUserProfile";
 import { ChurchContext, NewChurch } from "../context/churchContext";
 // I need to make a UserContext, and a NewUser file. 
-import { ChurchUserContext } from "../context/churchUserContext";
+import { ChurchUserContext, NewChurchUser } from "../context/churchUserContext";
 
 
 const AddUser: React.FC = () => {
-  const { NewChurchUser } = useContext(ChurchUserContext); 
-  const [ newUser, setUser ] = useState<NewUser>({
-    userId: "",
-    churchName: "",
+  const { createChurchUser } = useContext(ChurchUserContext); 
+  const [ newUser, setNewUser ] = useState<NewChurchUser>({
     email: "",
     password: "",
-    phoneNumber: "",
     firstName: "",
     lastName: ""
   });
   
-
-
-
   const [touchedFields, setTouchedFields] = useState<string[]>([]);
 
   const history = useHistory();
 
   const handleInputChange = (
     name: string,
-    value: string | number | Location
+    value: string | number 
   ) => {
-    setUser({
-      userId: userId,
-      username: username,
-      password: password,
-      email: email,
-      firstName: firstName,
-      lastName: lastName
-      });
-    console.log(addUser);
-
-  const handleSubmit = async () => {
-    console.log(addUser);
-    await createNewAccoount(addUser)
-    history.push("/login");
-  };
-  //   const response = await fetch("http://localhost:8080/api/user/create", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify(addUser)
-  //       });
-  // }
-
+      setNewUser((prevValue) => ({
+        ...prevValue,
+        // [name]: typeof value === "string" ? (value as string).trim() : value,
+        [name]: value,  
+      }));
+    // console.log(newUser);
   }
 
     const [isTouched, setIsTouched] = useState(false);
-    const [isValid, setIsValid] = useState<boolean>();
-  
-    const validateEmail = (email: string) => {
-      return email.match(
-        /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-      );
-    };
-  
-    const validate = (ev: Event) => {
-      const value = (ev.target as HTMLTextAreaElement).value;
-  
-      setIsValid(undefined);
-  
-      if (value === '') return;
-  
-      validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
-    };
-  
-    const markTouched = () => {
-      setIsTouched(true);
-    };
+
     
     const handleInputBlur = (name: string) => {
       if (!touchedFields.includes(name)) {
@@ -97,12 +53,31 @@ const AddUser: React.FC = () => {
       }
     };
     
-    const handleSubmit = async (event: any) => {
-      event.preventDefault();
-      await NewChurchUser(newUser);
-      await getChurchUser(currentUserId);
-      history.push(`/user/${currentUserId}`);
-    };
+    // const handleSubmit = async (event: any) => {
+    //   event.preventDefault();
+    //   console.log(newUser);
+    //   await createChurchUser(newUser);
+    //   // await getChurchUser(currentUserId);
+    //   history.push(`/users/login-account`);
+    //   if ( handleSubmit.newUser == valid )
+    //         { } else () { } 
+    //    };
+    
+       const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        console.log(newUser);
+        // await createChurchUser(newUser);
+        // await getChurchUser(currentUserId);
+        const isCreateSuccessful = await createChurchUser(newUser);
+        if (isCreateSuccessful) {
+          history.push(`/users/login-account`);
+          console.log('true');
+        } else {
+          // Handle the error
+          console.log('false');
+        }
+      };
+
 
     const isFieldTouched = (name: string) => {
       return touchedFields.includes(name);
@@ -113,13 +88,13 @@ const AddUser: React.FC = () => {
 
     return (
       <IonPage>
-      <PageHeader header="Add a Church" />
+      <PageHeader header="Create Account" />
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
             <IonCol size="12"> 
               <div>
-                <IonInput
+                {/* <IonInput
                   className={`ion-input-field ${
                     isFieldTouched("churchName") ? "" : "ion-untouched"
                   }`}
@@ -132,7 +107,7 @@ const AddUser: React.FC = () => {
                     handleInputChange("churchName", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("churchName")}
-                />
+                /> */}
                 <br />
 
                 <IonInput
@@ -144,8 +119,8 @@ const AddUser: React.FC = () => {
                   label="First Name"
                   labelPlacement="floating"
                   value={newUser.firstName}
-                  onIonChange={(e) =>
-                    handleInputChange("firtName", e.detail.value!)
+                  onIonInput={(e) =>
+                    handleInputChange("firstName", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("firstName")}
                 />
@@ -160,7 +135,7 @@ const AddUser: React.FC = () => {
                   label="Last Name"
                   labelPlacement="floating"
                   value={newUser.lastName}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("lastName", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("lastName")}
@@ -172,11 +147,11 @@ const AddUser: React.FC = () => {
                     isFieldTouched("email") ? "" : "ion-untouched"
                   }`}
                   required
-                  type="text"
+                  type="email"
                   label="Email Address"
                   labelPlacement="floating"
                   value={newUser.email}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("email", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("email")}
@@ -188,34 +163,16 @@ const AddUser: React.FC = () => {
                     isFieldTouched("password") ? "" : "ion-untouched"
                   }`}
                   required
-                  type="text"
+                  type="password"
                   label="Password"
                   labelPlacement="floating"
                   value={newUser.password}
-                  onIonChange={(e) =>
+                  onIonInput={(e) =>
                     handleInputChange("password", e.detail.value!)
                   }
                   onBlur={() => handleInputBlur("password")}
                 />
                 <br />
-
-                <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("phoneNumber") ? "" : "ion-untouched"
-                  }`}
-                  required
-                  type="tel"
-                  label="Phone Number"
-                  labelPlacement="floating"
-                  value={newUser.phoneNumber}
-                  onIonChange={(e) =>
-                    handleInputChange("phoneNumber", e.detail.value!)
-                  }
-                  onBlur={() => handleInputBlur("phoneNumber")}
-                />
-                <br />
-
-                
                 <br />
 
                 <IonButton expand="full" onClick={handleSubmit}>
