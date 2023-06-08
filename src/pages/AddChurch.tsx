@@ -85,12 +85,11 @@ const AddChurch: React.FC = () => {
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
-            <IonCol size="12"> 
+            <IonCol size="12">
               <div>
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("churchName") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("churchName") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Church Name"
@@ -100,7 +99,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("churchName", inputValue);
                       }
@@ -111,9 +110,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("denomination") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("denomination") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Denomination"
@@ -123,7 +121,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("denomination", inputValue);
                       }
@@ -134,9 +132,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.street") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.street") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Street"
@@ -146,7 +143,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("location.street", inputValue);
                       }
@@ -157,9 +154,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.city") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.city") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="City"
@@ -169,7 +165,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("location.city", inputValue);
                       }
@@ -190,63 +186,62 @@ const AddChurch: React.FC = () => {
                   }}
                   onBlur={() => handleInputBlur("location.state")}
                 >
-                  <IonSelectOption value="AL">Alabama</IonSelectOption>
-                  <IonSelectOption value="AK">Alaska</IonSelectOption>
-                  <IonSelectOption value="AZ">Arizona</IonSelectOption>
-                  <IonSelectOption value="AR">Arkansas</IonSelectOption>
-                  <IonSelectOption value="CA">California</IonSelectOption>
-                  <IonSelectOption value="CO">Colorado</IonSelectOption>
-                  <IonSelectOption value="CT">Connecticut</IonSelectOption>
-                  <IonSelectOption value="DE">Delaware</IonSelectOption>
-                  <IonSelectOption value="FL">Florida</IonSelectOption>
-                  <IonSelectOption value="GA">Georgia</IonSelectOption>
-                  <IonSelectOption value="HI">Hawaii</IonSelectOption>
-                  <IonSelectOption value="ID">Idaho</IonSelectOption>
-                  <IonSelectOption value="IL">Illinois</IonSelectOption>
-                  <IonSelectOption value="IN">Indiana</IonSelectOption>
-                  <IonSelectOption value="IA">Iowa</IonSelectOption>
-                  <IonSelectOption value="KS">Kansas</IonSelectOption>
-                  <IonSelectOption value="KY">Kentucky</IonSelectOption>
-                  <IonSelectOption value="LA">Louisiana</IonSelectOption>
-                  <IonSelectOption value="ME">Maine</IonSelectOption>
-                  <IonSelectOption value="MD">Maryland</IonSelectOption>
-                  <IonSelectOption value="MA">Massachusetts</IonSelectOption>
-                  <IonSelectOption value="MI">Michigan</IonSelectOption>
-                  <IonSelectOption value="MN">Minnesota</IonSelectOption>
-                  <IonSelectOption value="MS">Mississippi</IonSelectOption>
-                  <IonSelectOption value="MO">Missouri</IonSelectOption>
-                  <IonSelectOption value="MT">Montana</IonSelectOption>
-                  <IonSelectOption value="NE">Nebraska</IonSelectOption>
-                  <IonSelectOption value="NV">Nevada</IonSelectOption>
-                  <IonSelectOption value="NH">New Hampshire</IonSelectOption>
-                  <IonSelectOption value="NJ">New Jersey</IonSelectOption>
-                  <IonSelectOption value="NM">New Mexico</IonSelectOption>
-                  <IonSelectOption value="NY">New York</IonSelectOption>
-                  <IonSelectOption value="NC">North Carolina</IonSelectOption>
-                  <IonSelectOption value="ND">North Dakota</IonSelectOption>
-                  <IonSelectOption value="OH">Ohio</IonSelectOption>
-                  <IonSelectOption value="OK">Oklahoma</IonSelectOption>
-                  <IonSelectOption value="OR">Oregon</IonSelectOption>
-                  <IonSelectOption value="PA">Pennsylvania</IonSelectOption>
-                  <IonSelectOption value="RI">Rhode Island</IonSelectOption>
-                  <IonSelectOption value="SC">South Carolina</IonSelectOption>
-                  <IonSelectOption value="SD">South Dakota</IonSelectOption>
-                  <IonSelectOption value="TN">Tennessee</IonSelectOption>
-                  <IonSelectOption value="TX">Texas</IonSelectOption>
-                  <IonSelectOption value="UT">Utah</IonSelectOption>
-                  <IonSelectOption value="VT">Vermont</IonSelectOption>
-                  <IonSelectOption value="VA">Virginia</IonSelectOption>
-                  <IonSelectOption value="WA">Washington</IonSelectOption>
-                  <IonSelectOption value="WV">West Virginia</IonSelectOption>
-                  <IonSelectOption value="WI">Wisconsin</IonSelectOption>
-                  <IonSelectOption value="WY">Wyoming</IonSelectOption>
+                  <IonSelectOption value="Alabama">Alabama</IonSelectOption>
+                  <IonSelectOption value="Alaska">Alaska</IonSelectOption>
+                  <IonSelectOption value="Arizona">Arizona</IonSelectOption>
+                  <IonSelectOption value="Arkansas">Arkansas</IonSelectOption>
+                  <IonSelectOption value="California">California</IonSelectOption>
+                  <IonSelectOption value="Colorado">Colorado</IonSelectOption>
+                  <IonSelectOption value="Connecticut">Connecticut</IonSelectOption>
+                  <IonSelectOption value="Delaware">Delaware</IonSelectOption>
+                  <IonSelectOption value="Florida">Florida</IonSelectOption>
+                  <IonSelectOption value="Georgia">Georgia</IonSelectOption>
+                  <IonSelectOption value="Hawaii">Hawaii</IonSelectOption>
+                  <IonSelectOption value="Idaho">Idaho</IonSelectOption>
+                  <IonSelectOption value="Illinois">Illinois</IonSelectOption>
+                  <IonSelectOption value="Indiana">Indiana</IonSelectOption>
+                  <IonSelectOption value="Iowa">Iowa</IonSelectOption>
+                  <IonSelectOption value="Kansas">Kansas</IonSelectOption>
+                  <IonSelectOption value="Kentucky">Kentucky</IonSelectOption>
+                  <IonSelectOption value="Louisiana">Louisiana</IonSelectOption>
+                  <IonSelectOption value="Maine">Maine</IonSelectOption>
+                  <IonSelectOption value="Maryland">Maryland</IonSelectOption>
+                  <IonSelectOption value="Massachusetts">Massachusetts</IonSelectOption>
+                  <IonSelectOption value="Michigan">Michigan</IonSelectOption>
+                  <IonSelectOption value="Minnesota">Minnesota</IonSelectOption>
+                  <IonSelectOption value="Mississippi">Mississippi</IonSelectOption>
+                  <IonSelectOption value="Missouri">Missouri</IonSelectOption>
+                  <IonSelectOption value="Montana">Montana</IonSelectOption>
+                  <IonSelectOption value="Nebraska">Nebraska</IonSelectOption>
+                  <IonSelectOption value="Nevada">Nevada</IonSelectOption>
+                  <IonSelectOption value="New Hampshire">New Hampshire</IonSelectOption>
+                  <IonSelectOption value="New Jersey">New Jersey</IonSelectOption>
+                  <IonSelectOption value="New Mexico">New Mexico</IonSelectOption>
+                  <IonSelectOption value="New York">New York</IonSelectOption>
+                  <IonSelectOption value="North Carolina">North Carolina</IonSelectOption>
+                  <IonSelectOption value="North Dakota">North Dakota</IonSelectOption>
+                  <IonSelectOption value="Ohio">Ohio</IonSelectOption>
+                  <IonSelectOption value="Oklahoma">Oklahoma</IonSelectOption>
+                  <IonSelectOption value="Oregon">Oregon</IonSelectOption>
+                  <IonSelectOption value="Pennsylvania">Pennsylvania</IonSelectOption>
+                  <IonSelectOption value="Rhode Island">Rhode Island</IonSelectOption>
+                  <IonSelectOption value="South Carolina">South Carolina</IonSelectOption>
+                  <IonSelectOption value="South Dakota">South Dakota</IonSelectOption>
+                  <IonSelectOption value="Tennessee">Tennessee</IonSelectOption>
+                  <IonSelectOption value="Texas">Texas</IonSelectOption>
+                  <IonSelectOption value="Utah">Utah</IonSelectOption>
+                  <IonSelectOption value="Vermont">Vermont</IonSelectOption>
+                  <IonSelectOption value="Virginia">Virginia</IonSelectOption>
+                  <IonSelectOption value="Washington">Washington</IonSelectOption>
+                  <IonSelectOption value="West Virginia">West Virginia</IonSelectOption>
+                  <IonSelectOption value="Wisconsin">Wisconsin</IonSelectOption>
+                  <IonSelectOption value="Wyoming">Wyoming</IonSelectOption>
                 </IonSelect>
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("location.zip") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("location.zip") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Zip Code"
@@ -256,7 +251,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("location.zip", inputValue);
                       }
@@ -267,9 +262,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("phoneNumber") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("phoneNumber") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="tel"
                   label="Phone Number"
@@ -279,7 +273,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("phoneNumber", inputValue);
                       }
@@ -290,9 +284,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("churchEmail") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("churchEmail") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="email"
                   label="Church Email"
@@ -306,9 +299,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonTextarea
-                  className={`ion-input-field ${
-                    isFieldTouched("welcomeMessage") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("welcomeMessage") ? "" : "ion-untouched"
+                    }`}
                   required
                   label="Welcome Message"
                   labelPlacement="floating"
@@ -318,7 +310,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("welcomeMessage", inputValue);
                       }
@@ -329,9 +321,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("serviceTime") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("serviceTime") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="text"
                   label="Service Time"
@@ -341,7 +332,7 @@ const AddChurch: React.FC = () => {
                     const inputValue = e.detail.value;
                     if (inputValue) {
                       if (inputValue.slice(-1) === " ") {
-                        
+
                       } else {
                         handleInputChange("serviceTime", inputValue);
                       }
@@ -352,9 +343,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("imageUrl") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("imageUrl") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="url"
                   label="Church Image URL"
@@ -368,9 +358,8 @@ const AddChurch: React.FC = () => {
                 <br />
 
                 <IonInput
-                  className={`ion-input-field ${
-                    isFieldTouched("website") ? "" : "ion-untouched"
-                  }`}
+                  className={`ion-input-field ${isFieldTouched("website") ? "" : "ion-untouched"
+                    }`}
                   required
                   type="url"
                   label="Church Website"
