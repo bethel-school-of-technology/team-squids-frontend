@@ -78,7 +78,9 @@ export const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("myChurchUserToken")}`,
 });
 
-export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps) => {
+export const ChurchUserProvider = ({
+  children,
+}: ChurchUserContextProviderProps) => {
   const [currentUserId, setCurrentUserId] = useState<number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -91,7 +93,9 @@ export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps)
     } else {
       try {
         const verifyUserURL = `${BASE_URL}verify-current-user`;
-        const response = await axios.get(verifyUserURL, { headers: authHeader() });
+        const response = await axios.get(verifyUserURL, {
+          headers: authHeader(),
+        });
         if (response.status === 200) {
           let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
           setCurrentUserId(decoded.userId);
@@ -135,7 +139,9 @@ export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps)
   const updateChurchUser = async (updatedUser: ChurchUser) => {
     const updateUserURL = `${BASE_URL}edit-account/${updatedUser.userId}`;
     try {
-      const response = await axios.put(updateUserURL, updatedUser);
+      const response = await axios.put(updateUserURL, updatedUser, {
+        headers: authHeader(),
+      });
       return response.data;
     } catch (error: any) {
       throw error;
@@ -145,7 +151,9 @@ export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps)
   const deleteChurchUser = async (userId: number) => {
     const deleteUserURL = `${BASE_URL}delete-account${userId}`;
     try {
-      await axios.delete(deleteUserURL);
+      await axios.delete(deleteUserURL, {
+        headers: authHeader(),
+      });
     } catch (error: any) {
       throw error;
     }
@@ -170,7 +178,6 @@ export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps)
       throw new Error(error.response?.data?.message || "Unable to log in.");
     }
   };
-  
 
   const logoutChurchUser = async () => {
     localStorage.removeItem("myChurchUserToken");

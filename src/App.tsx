@@ -22,16 +22,8 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-import passport from 'passport';
-import session from 'express-session';
-
-// Passport/Session middleware
-// app.use(session({ secret: 'I am a child of God' }));
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 import "./theme/variables.css";
+
 import ChurchFinder from "./pages/ChurchFinder";
 import EventList from "./pages/EventFinder";
 import ChurchProfile from "./pages/ChurchProfile";
@@ -39,13 +31,12 @@ import EventDetails from "./pages/EventDetails";
 import ChurchUserProfile from "./pages/ChurchUserProfile";
 import { useContext } from "react";
 import { ChurchUserContext } from "./context/churchUserContext";
-import AddUser from "./pages/AddUser";
-import LoginAccount from "./pages/LoginAccount";
 import AddChurch from "./pages/AddChurch";
 import AddEvent from "./pages/AddEvent";
 import EditChurch from "./pages/EditChurch";
 import EditEvent from "./pages/EditEvent";
 import UserAuth from "./pages/UserAuth";
+import EditUser from "./pages/EditUser";
 
 setupIonicReact();
 
@@ -68,8 +59,7 @@ const App: React.FC = () => {
             <Route path="/events" exact component={EventList} />
             
             <Route path="/user" component={UserAuth} />
-            {/* <Route path="/users/create-account" component={AddUser} />
-            <Route path="/users/login-account" exact component={LoginAccount} /> */}
+            <Route path="/user/edit/:userId" exact component={EditUser} />
             <Route path="/user/:userId" exact component={ChurchUserProfile} />
             
             <Route exact path="/" render={() => <Redirect to="/churches" />} />
