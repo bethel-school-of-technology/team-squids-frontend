@@ -32,9 +32,14 @@ const EditUser: React.FC = () => {
   useEffect(() => {
     (async () => {
       const currentUser = await getChurchUser(parseInt(params.userId));
-      setUpdatedUser(currentUser);
+      setUpdatedUser((prevUser) => ({
+        ...prevUser,
+        ...currentUser,
+        password: ""
+      }));
     })();
   }, []);
+  
 
   const [touchedFields, setTouchedFields] = useState<string[]>([]);
 
