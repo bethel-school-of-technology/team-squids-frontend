@@ -68,6 +68,7 @@ const UserProfile: React.FC = () => {
     localStorage.removeItem("myChurchUserToken");
     verifyCurrentUser();
     history.push(`/churches`);
+
   }
 
   return (
@@ -98,13 +99,6 @@ const UserProfile: React.FC = () => {
                 </IonRouterLink>
               </div>
               {userEvents.length > 0 && <EventsList events={userEvents} />}
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonButton expand="full" onClick={handleLogout}>
-                Logout
-              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
