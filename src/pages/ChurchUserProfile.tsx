@@ -101,6 +101,11 @@ const UserProfile: React.FC = () => {
               {userEvents.length > 0 && <EventsList events={userEvents} />}
             </IonCol>
           </IonRow>
+          <IonCol>
+            <IonButton expand="full" onClick={handleLogout}>
+              Logout
+            </IonButton>
+          </IonCol>
         </IonGrid>
       </IonContent>
     </IonPage>
