@@ -30,7 +30,7 @@ const LoginAccount: React.FC = () => {
     await Promise.all([loginChurchUser(loginUser), verifyCurrentUser()]);
     console.log(currentUserId);
     history.push(`/churches`);
-    // history.push(`/user/${currentUserId}`);
+    //history.push(`/user/${currentUserId}`);
   };
 
   const [touchedFields, setTouchedFields] = useState<string[]>([]);
