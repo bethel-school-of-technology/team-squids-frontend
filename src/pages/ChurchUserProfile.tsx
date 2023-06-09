@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 
@@ -30,34 +29,47 @@ interface ChurchUserRouteParams {
 
 const UserProfile: React.FC = () => {
   const params = useParams<ChurchUserRouteParams>();
-  let history = useHistory()
+  let history = useHistory();
 
   const { churchUser, loadingStatus, error } = useFetchChurchUser(
     parseInt(params.userId)
   );
   const { userEvents } = useContext(EventContext);
 
-
-  const { checkCurrentUser, logoutChurchUser } = useContext(ChurchUserContext);
+  const { checkCurrentUser, verifyCurrentUser } = useContext(ChurchUserContext);
 
   useEffect(() => {
     async function checkingUserId() {
-      let userId = params.userId.toString()
-      let isChecked = await checkCurrentUser(userId)
+      let userId = params.userId.toString();
+      let isChecked = await checkCurrentUser(userId);
       if (isChecked === false) {
-        history.push("/churches")
+        history.push("/churches");
       }
     }
-    checkingUserId()
-  }, [])
+    checkingUserId();
+  }, []);
 
-  const allEvents = churchUser?.Churches.flatMap((church) => church.Events) || [];
-
-  function handleLogout() {
-    logoutChurchUser()
-    history.push("/churches")
+  async function checkingUserId() {
+    let userId = params.userId.toString();
+    let isChecked = await checkCurrentUser(userId);
+    if (isChecked === false) {
+      history.push("/churches");
+    }
   }
 
+  useEffect(() => {
+    checkingUserId();
+  }, []);
+
+  const allEvents =
+    churchUser?.Churches.flatMap((church) => church.Events) || [];
+
+  async function handleLogout() {
+    localStorage.removeItem("myChurchUserToken");
+    verifyCurrentUser();
+    history.push(`/churches`);
+
+  }
 
   return (
     <IonPage>
@@ -86,16 +98,7 @@ const UserProfile: React.FC = () => {
                   Add
                 </IonRouterLink>
               </div>
-              {userEvents.length > 0 && (
-                <EventsList events={userEvents} />
-              )}
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonButton expand="full" onClick={handleLogout}>
-                Logout
-              </IonButton>
+              {userEvents.length > 0 && <EventsList events={userEvents} />}
             </IonCol>
           </IonRow>
         </IonGrid>

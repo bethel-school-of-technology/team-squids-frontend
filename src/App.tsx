@@ -45,6 +45,7 @@ import AddChurch from "./pages/AddChurch";
 import AddEvent from "./pages/AddEvent";
 import EditChurch from "./pages/EditChurch";
 import EditEvent from "./pages/EditEvent";
+import UserAuth from "./pages/UserAuth";
 
 setupIonicReact();
 
@@ -65,9 +66,10 @@ const App: React.FC = () => {
             <Route path="/events/edit/:eventId" exact component={EditEvent} />
             <Route path="/events/:eventId" exact component={EventDetails} />
             <Route path="/events" exact component={EventList} />
-
-            <Route path="/users/create-account" component={AddUser} />
-            <Route path="/users/login-account" exact component={LoginAccount} />
+            
+            <Route path="/user" component={UserAuth} />
+            {/* <Route path="/users/create-account" component={AddUser} />
+            <Route path="/users/login-account" exact component={LoginAccount} /> */}
             <Route path="/user/:userId" exact component={ChurchUserProfile} />
             
             <Route exact path="/" render={() => <Redirect to="/churches" />} />
@@ -83,7 +85,7 @@ const App: React.FC = () => {
               <IonLabel>Events</IonLabel>
             </IonTabButton>
             {!currentUserId && (
-              <IonTabButton tab="user" href="/users/create-account">
+              <IonTabButton tab="user" href="/user">
                 <IonIcon aria-hidden="true" icon={settings} />
                 <IonLabel>Profile</IonLabel>
               </IonTabButton>
