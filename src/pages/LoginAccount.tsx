@@ -5,7 +5,7 @@ import {
   ChurchUserContext,
   LoginChurchUser,
 } from "../context/churchUserContext";
-import "./LoginAccount.css"
+import "./LoginAccount.css";
 
 const LoginAccount: React.FC = () => {
   const [loginUser, setLoginUser] = useState<LoginChurchUser>({
@@ -13,7 +13,8 @@ const LoginAccount: React.FC = () => {
     password: "",
   });
 
-  const { currentUserId, loginChurchUser, verifyCurrentUser } = useContext(ChurchUserContext);
+  const { currentUserId, loginChurchUser, verifyCurrentUser } =
+    useContext(ChurchUserContext);
 
   const history = useHistory();
 
@@ -27,10 +28,12 @@ const LoginAccount: React.FC = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log(loginUser);
-    await Promise.all([loginChurchUser(loginUser), verifyCurrentUser()]);
+    // await Promise.all([loginChurchUser(loginUser), verifyCurrentUser()]);
+    loginChurchUser(loginUser).then((resp) => {
+      history.push(`/user/${resp.userId}`);
+    });
     console.log(currentUserId);
-    history.push(`/churches`);
-    //history.push(`/user/${currentUserId}`);
+    //history.push(`/churches`);
   };
 
   const [touchedFields, setTouchedFields] = useState<string[]>([]);
