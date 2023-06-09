@@ -8,6 +8,7 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonImg,
   IonPage,
   IonRouterLink,
   IonRow,
@@ -61,14 +62,10 @@ const UserProfile: React.FC = () => {
     checkingUserId();
   }, []);
 
-  const allEvents =
-    churchUser?.Churches.flatMap((church) => church.Events) || [];
-
   async function handleLogout() {
     localStorage.removeItem("myChurchUserToken");
     verifyCurrentUser();
     history.push(`/churches`);
-
   }
 
   return (
@@ -78,7 +75,13 @@ const UserProfile: React.FC = () => {
       <PageHeader header={churchUser ? "User Profile" : "No User"} />
       <IonContent fullscreen>
         <IonGrid>
-          <IonRow>
+          <IonRow> 
+            <IonCol size="12">
+            <div className="header-container">
+              <IonImg src="/svg/church_hive_icon.svg" />
+              <h2>Welcome {churchUser?.firstName}</h2>
+            </div>
+            </IonCol>
             {churchUser && <ChurchUserInfo data={churchUser} />}
             <IonCol size="12">
               <div className="add">
