@@ -40,9 +40,10 @@ interface decoded {
   exp: number;
 }
 
-interface UserContextProps {
+interface ChurchUserContextProps {
   currentUserId: number;
   setCurrentUserId: Dispatch<SetStateAction<number>>;
+  verifyCurrentUser: () => Promise<decoded | null>;
   createChurchUser: (newUser: NewChurchUser) => Promise<NewChurchUser>;
   getChurchUser: (userId: number) => Promise<OneChurchUser>;
   updateChurchUser: (updatedUser: ChurchUser) => Promise<ChurchUser>;
@@ -53,13 +54,14 @@ interface UserContextProps {
   isLoggedIn: boolean;
 }
 
-interface UserContextProviderProps {
+interface ChurchUserContextProviderProps {
   children: ReactNode;
 }
 
-export const ChurchUserContext = createContext<UserContextProps>({
+export const ChurchUserContext = createContext<ChurchUserContextProps>({
   currentUserId: 0,
   setCurrentUserId: () => {},
+  verifyCurrentUser: () => Promise.resolve(null),
   createChurchUser: (newUser: NewChurchUser) => Promise.resolve(newUser),
   getChurchUser: (userId: number) => Promise.resolve({} as OneChurchUser),
   updateChurchUser: (updatedUser: ChurchUser) => Promise.resolve(updatedUser),
@@ -76,7 +78,7 @@ export const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("myChurchUserToken")}`,
 });
 
-export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
+export const ChurchUserProvider = ({ children }: ChurchUserContextProviderProps) => {
   const [currentUserId, setCurrentUserId] = useState<number>(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -84,107 +86,117 @@ export const ChurchUserProvider = ({ children }: UserContextProviderProps) => {
     const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
     if (!LOGIN_TOKEN) {
       setCurrentUserId(0);
+      setIsLoggedIn(false);
+      return null;
     } else {
-      let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
-      setCurrentUserId(decoded.userId);
+      try {
+        const verifyUserURL = `${BASE_URL}verify-current-user`;
+        const response = await axios.get(verifyUserURL, { headers: authHeader() });
+        if (response.status === 200) {
+          let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
+          setCurrentUserId(decoded.userId);
+          setIsLoggedIn(true);
+          return decoded;
+        } else {
+          localStorage.removeItem("myChurchUserToken");
+          setCurrentUserId(0);
+          setIsLoggedIn(false);
+          return null;
+        }
+      } catch (error: any) {
+        localStorage.removeItem("myChurchUserToken");
+        setCurrentUserId(0);
+        setIsLoggedIn(false);
+        return null;
+      }
     }
   };
-
-  const checkCurrentUser = async (userId: string) => {
-    let id = parseInt(userId)
-    if (currentUserId === id) {
-      return true
-    } else {
-      return false
-    };
-  }
-
-  useEffect(() => {
-    (async () => {
-      await verifyCurrentUser();
-    })();
-  }, []);
 
   const createChurchUser = async (newUser: NewChurchUser) => {
-    const NewUserURL = `${BASE_URL}create-account`;
+    const newUserURL = `${BASE_URL}create-account`;
     try {
-      const response = await axios.post(NewUserURL, newUser);
+      const response = await axios.post(newUserURL, newUser);
       return response.data;
     } catch (error: any) {
-      throw error.response.statusText;
-    }
-  };
-
-  const getChurchUser = async (userId: number) => {
-    const userIdURL = `${BASE_URL}${userId}`;
-    try {
-      const response = await axios.get(userIdURL);
-      return response.data;
-    } catch (error: any) {
-      throw error.response.statusText;
-    }
-  };
-
-  const updateChurchUser = async (updatedUser: ChurchUser) => {
-    const userIdURL = `${BASE_URL}${updatedUser.userId}`;
-    try {
-      const response = await axios.put(userIdURL, updatedUser);
-      return response.data;
-    } catch (error: any) {
-      throw error.response.statusText;
-    }
-  };
-
-  const deleteChurchUser = async (userId: number) => {
-    const userIdURL = `${BASE_URL}${userId}`;
-    try {
-      await axios.delete(userIdURL);
-    } catch (error: any) {
-      throw error.response.statusText;
-    }
-  };
-
-  const loginChurchUser = async (churchUser: LoginChurchUser) => {
-    const churchUserURL = `${BASE_URL}signin`;
-
-    try {
-      const response = await axios.post(churchUserURL, churchUser);
-      if (response.status === 200) {
-        localStorage.setItem("myChurchUserToken", response.data.token);
-        await verifyCurrentUser();
-        setIsLoggedIn(true);
-        return response.data;
-      } else {
-        throw new Error("Unable to log in.");
-      }
-    } catch (error: any) {
-      setIsLoggedIn(false);
       throw error;
     }
   };
 
-  const logoutChurchUser = async () => {
-    localStorage.removeItem("myChurchUserToken");
-    setCurrentUserId(0)
+  const getChurchUser = async (userId: number) => {
+    const getUserURL = `${BASE_URL}${userId}`;
+    try {
+      const response = await axios.get(getUserURL);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
   };
 
-  // const verifyUserWithServer = async (userId: string) => {
-  //   const LOGIN_TOKEN = localStorage.getItem("myChurchUserToken");
-  //   if (!LOGIN_TOKEN) {
-  //     setCurrentUserId(0);
-  //   } else {
-  //     axios
-  //     // let decoded: decoded = await jwt_decode(LOGIN_TOKEN);
-  //     // setCurrentUserId(decoded.userId);
-  //     // console.log(decoded.userId)
-  //   }
-  // };
+  const updateChurchUser = async (updatedUser: ChurchUser) => {
+    const updateUserURL = `${BASE_URL}edit-account/${updatedUser.userId}`;
+    try {
+      const response = await axios.put(updateUserURL, updatedUser);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const deleteChurchUser = async (userId: number) => {
+    const deleteUserURL = `${BASE_URL}delete-account${userId}`;
+    try {
+      await axios.delete(deleteUserURL);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const loginChurchUser = async (churchUser: LoginChurchUser) => {
+    const loginUserURL = `${BASE_URL}signin`;
+    try {
+      const response = await axios.post(loginUserURL, churchUser);
+      if (response.status === 200) {
+        localStorage.setItem("myChurchUserToken", response.data.token);
+        await verifyCurrentUser();
+        console.log(currentUserId);
+        setIsLoggedIn(true);
+        return response.data;
+      } else {
+        setIsLoggedIn(false);
+        throw new Error("Unable to log in.");
+      }
+    } catch (error: any) {
+      setIsLoggedIn(false);
+      throw new Error(error.response?.data?.message || "Unable to log in.");
+    }
+  };
+  
+
+  const logoutChurchUser = async () => {
+    localStorage.removeItem("myChurchUserToken");
+    setCurrentUserId(0);
+    setIsLoggedIn(false);
+  };
+
+  const checkCurrentUser = async (userId: string) => {
+    let id = parseInt(userId);
+    if (currentUserId === id) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    verifyCurrentUser();
+  }, [loginChurchUser]);
 
   return (
     <ChurchUserContext.Provider
       value={{
         currentUserId,
         setCurrentUserId,
+        verifyCurrentUser,
         createChurchUser,
         getChurchUser,
         updateChurchUser,

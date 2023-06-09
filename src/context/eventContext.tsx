@@ -102,7 +102,7 @@ const BASE_URL = "http://localhost:3000/api/event/";
 export const EventProvider = ({ children }: EventContextProviderProps) => {
   const [events, setEvents] = useState<AllEvents[]>([]);
   const [userEvents, setUserEvents] = useState<AllEvents[]>([]);
-  const { currentUserId } = useContext(ChurchUserContext);
+  const { currentUserId, verifyCurrentUser } = useContext(ChurchUserContext);
 
   const getAllEvents = async () => {
     try {
@@ -128,6 +128,12 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
       throw error.response.statusText;
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await getAllUserEvents();
+    })();
+  }, [currentUserId]);
 
   const createEvent = async (newEvent: NewEvent) => {
     try {
@@ -179,9 +185,9 @@ export const EventProvider = ({ children }: EventContextProviderProps) => {
 
   const searchEvents = async (query: string) => {
     if (query === "") {
-      return
+      return;
     }
-    const searchEventUrl = `${BASE_URL}search/${query}`
+    const searchEventUrl = `${BASE_URL}search/${query}`;
     try {
       const response = await axios.get(searchEventUrl);
       setEvents(response.data);

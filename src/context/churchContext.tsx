@@ -4,10 +4,11 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
-import { ChurchUser, authHeader } from "./churchUserContext";
+import { ChurchUser, ChurchUserContext, authHeader } from "./churchUserContext";
 import { AllEvents } from "./eventContext";
 import Location from "../interfaces/Location";
 import { queryAllByAltText } from "@testing-library/react";
@@ -80,6 +81,7 @@ const BASE_URL = "http://localhost:3000/api/church/";
 
 export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const [churches, setChurches] = useState<AllChurches[]>([]);
+  const { currentUserId, getChurchUser } = useContext(ChurchUserContext);
 
   const getAllChurches = async () => {
     try {
@@ -101,7 +103,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
       const response = await axios.post(BASE_URL, newChurch, {
         headers: authHeader(),
       });
-      await getAllChurches();
+      await Promise.all([getAllChurches(), getChurchUser(currentUserId)]);
       return await response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -124,7 +126,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
       const response = await axios.put(churchIdURL, updatedChurch, {
         headers: authHeader(),
       });
-      await getAllChurches();
+      await Promise.all([getAllChurches(), getChurchUser(currentUserId)]);
       return await response.data;
     } catch (error: any) {
       throw error.response.statusText;
@@ -137,7 +139,7 @@ export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
       const response = await axios.delete(churchIdURL, {
         headers: authHeader(),
       })
-      await getAllChurches();
+      await Promise.all([getAllChurches(), getChurchUser(currentUserId)]);
       return response.data;
     } catch (error: any) {
       throw error.response.statusText;
