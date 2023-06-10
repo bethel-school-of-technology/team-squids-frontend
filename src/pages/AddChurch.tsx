@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 import PageHeader from "../components/Global/PageHeader";
 import { ChurchContext, NewChurch } from "../context/churchContext";
 import { ChurchUserContext } from "../context/churchUserContext";
-import "./AddChurch.css"
+import styles from "../theme/forms.module.css";
 
 const AddChurch: React.FC = () => {
   const { createChurch } = useContext(ChurchContext);
@@ -73,7 +73,7 @@ const AddChurch: React.FC = () => {
     event.preventDefault();
     await createChurch(newChurch);
     await getChurchUser(currentUserId);
-    history.push(`/user/${currentUserId}`);
+    history.push(`/churches`);
   };
 
   const isFieldTouched = (name: string) => {
@@ -82,14 +82,17 @@ const AddChurch: React.FC = () => {
 
   return (
     <IonPage>
-      <PageHeader header="Add a Church" />
+      <PageHeader header="Add Church" />
       <IonContent fullscreen>
         <IonGrid>
           <IonRow>
-          <IonCol size="12">
-            <div className="header-container">
-              <IonImg src="/svg/church_hive_icon.svg" />
-            </div>
+            <IonCol size="12">
+              <div className={styles.header}>
+                <IonImg
+                  src="/svg/church_hive_icon.svg"
+                  className={styles.logo}
+                />
+              </div>
             </IonCol>
             <IonCol size="12">
               <IonInput
@@ -337,6 +340,7 @@ const AddChurch: React.FC = () => {
                 label="Welcome Message"
                 labelPlacement="floating"
                 rows={10}
+                maxlength={1000}
                 value={newChurch.welcomeMessage}
                 onIonInput={(e) => {
                   const inputValue = e.detail.value;
@@ -405,7 +409,11 @@ const AddChurch: React.FC = () => {
               />
             </IonCol>
             <IonCol size="12">
-              <IonButton expand="full" onClick={handleSubmit}>
+              <IonButton
+                expand="full"
+                onClick={handleSubmit}
+                className={styles.button}
+              >
                 Submit
               </IonButton>
             </IonCol>

@@ -15,7 +15,7 @@ const useFetchChurchUser = (userId: number) => {
     };
   }, []);
 
-  const getChurchUser = useCallback(getContextChurchUser, []);  // if getContextChurch doesn't have dependencies
+  const getChurchUser = useCallback(getContextChurchUser, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +35,7 @@ const useFetchChurchUser = (userId: number) => {
     };
 
     fetchData();
-  }, [userId, getChurchUser]);  // getChurch reference won't cause unnecessary re-renders
+  }, [userId, getChurchUser]);
 
   return { churchUser, loadingStatus, error };
 };

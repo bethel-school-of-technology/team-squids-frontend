@@ -27,7 +27,7 @@ const ChurchItem: React.FC<ContainerProps> = ({
   const { currentUserId } = useContext(ChurchUserContext);
   return (
     <IonItem
-      routerLink={`/churches/${churchId}`}
+      routerLink={`/church/${churchId}`}
       button
       detail={userId !== currentUserId}
     >

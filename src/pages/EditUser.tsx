@@ -12,7 +12,7 @@ import {
 import { useHistory, useParams } from "react-router-dom";
 import PageHeader from "../components/Global/PageHeader";
 import { ChurchUser, ChurchUserContext } from "../context/churchUserContext";
-import "./EditUser.css"
+import styles from "../theme/forms.module.css";
 
 interface EditUserParams {
   userId: string;
@@ -76,9 +76,12 @@ const EditUser: React.FC = () => {
         <IonGrid>
           <IonRow>
           <IonCol size="12">
-            <div className="header-container">
-              <IonImg src="/svg/church_hive_icon.svg" />
-            </div>
+              <div className={styles.header}>
+                <IonImg
+                  src="/svg/church_hive_icon.svg"
+                  className={styles.logo}
+                />
+              </div>
             </IonCol>
             <IonCol size="12">
               <IonInput
@@ -169,7 +172,7 @@ const EditUser: React.FC = () => {
               />
             </IonCol>
             <IonCol size="12">
-              <IonButton expand="full" onClick={handleSubmit}>
+              <IonButton expand="full" onClick={handleSubmit} className={styles.button}>
                 Submit
               </IonButton>
             </IonCol>

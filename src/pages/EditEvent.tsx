@@ -12,12 +12,14 @@ import {
   IonSelectOption,
   IonDatetime,
   IonModal,
+  IonImg,
 } from "@ionic/react";
 import { useHistory, useParams } from "react-router-dom";
 import PageHeader from "../components/Global/PageHeader";
 import { EventContext, Event, UpdateEvent } from "../context/eventContext";
 import { ChurchUserContext } from "../context/churchUserContext";
 import { useFetchChurchUser } from "../hooks/useFetchChurchUser";
+import styles from "../theme/forms.module.css";
 
 interface EditEventParams {
   eventId: string;
@@ -132,13 +134,22 @@ const EditEvent: React.FC = () => {
   return (
     <IonPage>
       <PageHeader header="Edit Event" />
-      <IonContent fullscreen>
+      <IonContent fullscreen className={styles.modal}>
         <IonGrid>
           <IonRow>
             <IonCol size="12">
+              <div className={styles.header}>
+                <IonImg
+                  src="/svg/church_hive_icon.svg"
+                  className={styles.logo}
+                />
+              </div>
+            </IonCol>
+            <IonCol size="12">
               <IonSelect
-                className={`ion-input-field ${isFieldTouched("churchId") ? "" : "ion-untouched"
-                  }`}
+                className={`ion-input-field ${
+                  isFieldTouched("churchId") ? "" : "ion-untouched"
+                }`}
                 placeholder="Select Church"
                 label="Church"
                 labelPlacement="floating"
@@ -158,277 +169,284 @@ const EditEvent: React.FC = () => {
                     </IonSelectOption>
                   ))}
               </IonSelect>
-              <br />
-
-              <div>
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("eventTitle") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  label="Event Title"
-                  labelPlacement="floating"
-                  value={currentEvent.eventTitle}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("eventTitle", inputValue);
-                      }
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("eventTitle") ? "" : "ion-untouched"
+                }`}
+                required
+                type="text"
+                label="Event Title"
+                labelPlacement="floating"
+                value={currentEvent.eventTitle}
+                onIonInput={(e) => {
+                  const inputValue = e.detail.value;
+                  if (inputValue) {
+                    if (inputValue.slice(-1) === " ") {
+                    } else {
+                      handleInputChange("eventTitle", inputValue);
                     }
-                  }}
-                  onBlur={() => handleInputBlur("eventTitle")}
-                />
-                <br />
-
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("date") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  placeholder=""
-                  label="Event Date and Time"
-                  labelPlacement="floating"
-                  value={localDate}
-                  readonly
-                  onClick={() => setShowDatePicker(true)}
-                  onBlur={() => handleInputBlur("date")}
-                />
-                <IonModal isOpen={showDatePicker}>
-                  <IonDatetime
-                    color="primary"
-                    value={currentEvent.date}
-                    title="Event Date"
-                    showDefaultTitle={true}
-                    showDefaultButtons={true}
-                    onIonChange={(e) => {
-                      handleInputChange("date", e.detail.value as string);
-                      setShowDatePicker(false);
-                    }}
-                  />
-                </IonModal>
-                <br />
-
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("location.street") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  label="Street"
-                  labelPlacement="floating"
-                  value={currentEvent.location.street}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("location.street", inputValue);
-                      }
-                    }
-                  }}
-                  onBlur={() => handleInputBlur("location.street")}
-                />
-                <br />
-
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("location.city") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  label="City"
-                  labelPlacement="floating"
-                  value={currentEvent.location.city}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("location.city", inputValue);
-                      }
-                    }
-                  }}
-                  onBlur={() => handleInputBlur("location.city")}
-                />
-                <br />
-
-
-                {/* 
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("location.state") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  label="State"
-                  labelPlacement="floating"
-                  value={currentEvent.location.state}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("location.state", inputValue);
-                      }
-                    }
-                  }}
-                  onBlur={() => handleInputBlur("location.state")}
-                /> */}
-
-                <IonSelect
-                  className={`ion-select-field ${isFieldTouched("location.state") ? "" : "ion-untouched"
-                    }`}
-                  label="State"
-                  value={currentEvent.location.state}
+                  }
+                }}
+                onBlur={() => handleInputBlur("eventTitle")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("date") ? "" : "ion-untouched"
+                }`}
+                required
+                type="text"
+                placeholder=""
+                label="Event Date and Time"
+                labelPlacement="floating"
+                value={localDate}
+                readonly
+                onClick={() => setShowDatePicker(true)}
+                onBlur={() => handleInputBlur("date")}
+              />
+              <IonModal isOpen={showDatePicker}>
+                <IonDatetime
+                  color="primary"
+                  value={currentEvent.date}
+                  title="Event Date"
+                  showDefaultTitle={true}
+                  showDefaultButtons={true}
                   onIonChange={(e) => {
-                    const selectedValue = e.detail.value;
-                    handleInputChange("location.state", selectedValue);
+                    handleInputChange("date", e.detail.value as string);
+                    setShowDatePicker(false);
                   }}
-                  onBlur={() => handleInputBlur("location.state")}
-                >
-                  <IonSelectOption value="Alabama">Alabama</IonSelectOption>
-                  <IonSelectOption value="Alaska">Alaska</IonSelectOption>
-                  <IonSelectOption value="Arizona">Arizona</IonSelectOption>
-                  <IonSelectOption value="Arkansas">Arkansas</IonSelectOption>
-                  <IonSelectOption value="California">California</IonSelectOption>
-                  <IonSelectOption value="Colorado">Colorado</IonSelectOption>
-                  <IonSelectOption value="Connecticut">Connecticut</IonSelectOption>
-                  <IonSelectOption value="Delaware">Delaware</IonSelectOption>
-                  <IonSelectOption value="Florida">Florida</IonSelectOption>
-                  <IonSelectOption value="Georgia">Georgia</IonSelectOption>
-                  <IonSelectOption value="Hawaii">Hawaii</IonSelectOption>
-                  <IonSelectOption value="Idaho">Idaho</IonSelectOption>
-                  <IonSelectOption value="Illinois">Illinois</IonSelectOption>
-                  <IonSelectOption value="Indiana">Indiana</IonSelectOption>
-                  <IonSelectOption value="Iowa">Iowa</IonSelectOption>
-                  <IonSelectOption value="Kansas">Kansas</IonSelectOption>
-                  <IonSelectOption value="Kentucky">Kentucky</IonSelectOption>
-                  <IonSelectOption value="Louisiana">Louisiana</IonSelectOption>
-                  <IonSelectOption value="Maine">Maine</IonSelectOption>
-                  <IonSelectOption value="Maryland">Maryland</IonSelectOption>
-                  <IonSelectOption value="Massachusetts">Massachusetts</IonSelectOption>
-                  <IonSelectOption value="Michigan">Michigan</IonSelectOption>
-                  <IonSelectOption value="Minnesota">Minnesota</IonSelectOption>
-                  <IonSelectOption value="Mississippi">Mississippi</IonSelectOption>
-                  <IonSelectOption value="Missouri">Missouri</IonSelectOption>
-                  <IonSelectOption value="Montana">Montana</IonSelectOption>
-                  <IonSelectOption value="Nebraska">Nebraska</IonSelectOption>
-                  <IonSelectOption value="Nevada">Nevada</IonSelectOption>
-                  <IonSelectOption value="New Hampshire">New Hampshire</IonSelectOption>
-                  <IonSelectOption value="New Jersey">New Jersey</IonSelectOption>
-                  <IonSelectOption value="New Mexico">New Mexico</IonSelectOption>
-                  <IonSelectOption value="New York">New York</IonSelectOption>
-                  <IonSelectOption value="North Carolina">North Carolina</IonSelectOption>
-                  <IonSelectOption value="North Dakota">North Dakota</IonSelectOption>
-                  <IonSelectOption value="Ohio">Ohio</IonSelectOption>
-                  <IonSelectOption value="Oklahoma">Oklahoma</IonSelectOption>
-                  <IonSelectOption value="Oregon">Oregon</IonSelectOption>
-                  <IonSelectOption value="Pennsylvania">Pennsylvania</IonSelectOption>
-                  <IonSelectOption value="Rhode Island">Rhode Island</IonSelectOption>
-                  <IonSelectOption value="South Carolina">South Carolina</IonSelectOption>
-                  <IonSelectOption value="South Dakota">South Dakota</IonSelectOption>
-                  <IonSelectOption value="Tennessee">Tennessee</IonSelectOption>
-                  <IonSelectOption value="Texas">Texas</IonSelectOption>
-                  <IonSelectOption value="Utah">Utah</IonSelectOption>
-                  <IonSelectOption value="Vermont">Vermont</IonSelectOption>
-                  <IonSelectOption value="Virginia">Virginia</IonSelectOption>
-                  <IonSelectOption value="Washington">Washington</IonSelectOption>
-                  <IonSelectOption value="West Virginia">West Virginia</IonSelectOption>
-                  <IonSelectOption value="Wisconsin">Wisconsin</IonSelectOption>
-                  <IonSelectOption value="Wyoming">Wyoming</IonSelectOption>
-                </IonSelect>
-                <br />
-
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("location.zip") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="text"
-                  label="Zip Code"
-                  labelPlacement="floating"
-                  value={currentEvent.location.zip}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("location.zip", inputValue);
-                      }
+                />
+              </IonModal>
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("location.street") ? "" : "ion-untouched"
+                }`}
+                required
+                type="text"
+                label="Street"
+                labelPlacement="floating"
+                value={currentEvent.location.street}
+                onIonInput={(e) => {
+                  const inputValue = e.detail.value;
+                  if (inputValue) {
+                    if (inputValue.slice(-1) === " ") {
+                    } else {
+                      handleInputChange("location.street", inputValue);
                     }
-                  }}
-                  onBlur={() => handleInputBlur("location.zip")}
-                />
-                <br />
-
-                <IonSelect
-                  className={`ion-input-field ${isFieldTouched("eventType") ? "" : "ion-untouched"
-                    }`}
-                  placeholder="Select Event Type"
-                  label="Event Type"
-                  labelPlacement="floating"
-                  value={currentEvent.eventType}
-                  onIonChange={(e) =>
-                    handleInputChange("eventType", e.detail.value!)
                   }
-                  onBlur={() => handleInputBlur("eventType")}
-                >
-                  <IonSelectOption value="Family">Family</IonSelectOption>
-                  <IonSelectOption value="Youth">Youth</IonSelectOption>
-                  <IonSelectOption value="Young Adults">
-                    Young Adults
-                  </IonSelectOption>
-                  <IonSelectOption value="Single">Single</IonSelectOption>
-                  <IonSelectOption value="Womans">Womans</IonSelectOption>
-                  <IonSelectOption value="Mens">Mens</IonSelectOption>
-                  <IonSelectOption value="Senior">Senior</IonSelectOption>
-                </IonSelect>
-                <br />
-
-                <IonTextarea
-                  className={`ion-input-field ${isFieldTouched("description") ? "" : "ion-untouched"
-                    }`}
-                  rows={10}
-                  label="Description"
-                  labelPlacement="floating"
-                  value={currentEvent.description}
-                  onIonInput={(e) => {
-                    const inputValue = e.detail.value;
-                    if (inputValue) {
-                      if (inputValue.slice(-1) === " ") {
-
-                      } else {
-                        handleInputChange("description", inputValue);
-                      }
+                }}
+                onBlur={() => handleInputBlur("location.street")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("location.city") ? "" : "ion-untouched"
+                }`}
+                required
+                type="text"
+                label="City"
+                labelPlacement="floating"
+                value={currentEvent.location.city}
+                onIonInput={(e) => {
+                  const inputValue = e.detail.value;
+                  if (inputValue) {
+                    if (inputValue.slice(-1) === " ") {
+                    } else {
+                      handleInputChange("location.city", inputValue);
                     }
-                  }}
-                  onBlur={() => handleInputBlur("description")}
-                />
-                <br />
-
-                <IonInput
-                  className={`ion-input-field ${isFieldTouched("imageUrl") ? "" : "ion-untouched"
-                    }`}
-                  required
-                  type="url"
-                  label="Event Image URL"
-                  labelPlacement="floating"
-                  value={currentEvent.imageUrl}
-                  onIonChange={(e) =>
-                    handleInputChange("imageUrl", e.detail.value!)
                   }
-                  onBlur={() => handleInputBlur("imageUrl")}
-                />
-                <br />
-                <br />
-
-                <IonButton expand="full" onClick={handleSubmit}>
-                  Submit
-                </IonButton>
-              </div>
+                }}
+                onBlur={() => handleInputBlur("location.city")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonSelect
+                className={`ion-select-field ${
+                  isFieldTouched("location.state") ? "" : "ion-untouched"
+                }`}
+                placeholder="Select s State"
+                label="State"
+                labelPlacement="floating"
+                value={currentEvent.location.state}
+                onIonChange={(e) => {
+                  const selectedValue = e.detail.value;
+                  handleInputChange("location.state", selectedValue);
+                }}
+                onBlur={() => handleInputBlur("location.state")}
+              >
+                <IonSelectOption value="Alabama">Alabama</IonSelectOption>
+                <IonSelectOption value="Alaska">Alaska</IonSelectOption>
+                <IonSelectOption value="Arizona">Arizona</IonSelectOption>
+                <IonSelectOption value="Arkansas">Arkansas</IonSelectOption>
+                <IonSelectOption value="California">California</IonSelectOption>
+                <IonSelectOption value="Colorado">Colorado</IonSelectOption>
+                <IonSelectOption value="Connecticut">
+                  Connecticut
+                </IonSelectOption>
+                <IonSelectOption value="Delaware">Delaware</IonSelectOption>
+                <IonSelectOption value="Florida">Florida</IonSelectOption>
+                <IonSelectOption value="Georgia">Georgia</IonSelectOption>
+                <IonSelectOption value="Hawaii">Hawaii</IonSelectOption>
+                <IonSelectOption value="Idaho">Idaho</IonSelectOption>
+                <IonSelectOption value="Illinois">Illinois</IonSelectOption>
+                <IonSelectOption value="Indiana">Indiana</IonSelectOption>
+                <IonSelectOption value="Iowa">Iowa</IonSelectOption>
+                <IonSelectOption value="Kansas">Kansas</IonSelectOption>
+                <IonSelectOption value="Kentucky">Kentucky</IonSelectOption>
+                <IonSelectOption value="Louisiana">Louisiana</IonSelectOption>
+                <IonSelectOption value="Maine">Maine</IonSelectOption>
+                <IonSelectOption value="Maryland">Maryland</IonSelectOption>
+                <IonSelectOption value="Massachusetts">
+                  Massachusetts
+                </IonSelectOption>
+                <IonSelectOption value="Michigan">Michigan</IonSelectOption>
+                <IonSelectOption value="Minnesota">Minnesota</IonSelectOption>
+                <IonSelectOption value="Mississippi">
+                  Mississippi
+                </IonSelectOption>
+                <IonSelectOption value="Missouri">Missouri</IonSelectOption>
+                <IonSelectOption value="Montana">Montana</IonSelectOption>
+                <IonSelectOption value="Nebraska">Nebraska</IonSelectOption>
+                <IonSelectOption value="Nevada">Nevada</IonSelectOption>
+                <IonSelectOption value="New Hampshire">
+                  New Hampshire
+                </IonSelectOption>
+                <IonSelectOption value="New Jersey">New Jersey</IonSelectOption>
+                <IonSelectOption value="New Mexico">New Mexico</IonSelectOption>
+                <IonSelectOption value="New York">New York</IonSelectOption>
+                <IonSelectOption value="North Carolina">
+                  North Carolina
+                </IonSelectOption>
+                <IonSelectOption value="North Dakota">
+                  North Dakota
+                </IonSelectOption>
+                <IonSelectOption value="Ohio">Ohio</IonSelectOption>
+                <IonSelectOption value="Oklahoma">Oklahoma</IonSelectOption>
+                <IonSelectOption value="Oregon">Oregon</IonSelectOption>
+                <IonSelectOption value="Pennsylvania">
+                  Pennsylvania
+                </IonSelectOption>
+                <IonSelectOption value="Rhode Island">
+                  Rhode Island
+                </IonSelectOption>
+                <IonSelectOption value="South Carolina">
+                  South Carolina
+                </IonSelectOption>
+                <IonSelectOption value="South Dakota">
+                  South Dakota
+                </IonSelectOption>
+                <IonSelectOption value="Tennessee">Tennessee</IonSelectOption>
+                <IonSelectOption value="Texas">Texas</IonSelectOption>
+                <IonSelectOption value="Utah">Utah</IonSelectOption>
+                <IonSelectOption value="Vermont">Vermont</IonSelectOption>
+                <IonSelectOption value="Virginia">Virginia</IonSelectOption>
+                <IonSelectOption value="Washington">Washington</IonSelectOption>
+                <IonSelectOption value="West Virginia">
+                  West Virginia
+                </IonSelectOption>
+                <IonSelectOption value="Wisconsin">Wisconsin</IonSelectOption>
+                <IonSelectOption value="Wyoming">Wyoming</IonSelectOption>
+              </IonSelect>
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("location.zip") ? "" : "ion-untouched"
+                }`}
+                required
+                type="text"
+                label="Zip Code"
+                labelPlacement="floating"
+                value={currentEvent.location.zip}
+                onIonInput={(e) => {
+                  const inputValue = e.detail.value;
+                  if (inputValue) {
+                    if (inputValue.slice(-1) === " ") {
+                    } else {
+                      handleInputChange("location.zip", inputValue);
+                    }
+                  }
+                }}
+                onBlur={() => handleInputBlur("location.zip")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonSelect
+                className={`ion-input-field ${
+                  isFieldTouched("eventType") ? "" : "ion-untouched"
+                }`}
+                placeholder="Select Event Type"
+                label="Event Type"
+                labelPlacement="floating"
+                value={currentEvent.eventType}
+                onIonChange={(e) =>
+                  handleInputChange("eventType", e.detail.value!)
+                }
+                onBlur={() => handleInputBlur("eventType")}
+              >
+                <IonSelectOption value="Family">Family</IonSelectOption>
+                <IonSelectOption value="Youth">Youth</IonSelectOption>
+                <IonSelectOption value="Young Adults">
+                  Young Adults
+                </IonSelectOption>
+                <IonSelectOption value="Single">Single</IonSelectOption>
+                <IonSelectOption value="Womans">Womans</IonSelectOption>
+                <IonSelectOption value="Mens">Mens</IonSelectOption>
+                <IonSelectOption value="Senior">Senior</IonSelectOption>
+              </IonSelect>
+            </IonCol>
+            <IonCol size="12">
+              <IonTextarea
+                className={`ion-input-field ${
+                  isFieldTouched("description") ? "" : "ion-untouched"
+                }`}
+                rows={10}
+                maxlength={1000}
+                label="Description"
+                labelPlacement="floating"
+                value={currentEvent.description}
+                onIonInput={(e) => {
+                  const inputValue = e.detail.value;
+                  if (inputValue) {
+                    if (inputValue.slice(-1) === " ") {
+                    } else {
+                      handleInputChange("description", inputValue);
+                    }
+                  }
+                }}
+                onBlur={() => handleInputBlur("description")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonInput
+                className={`ion-input-field ${
+                  isFieldTouched("imageUrl") ? "" : "ion-untouched"
+                }`}
+                required
+                type="url"
+                label="Event Image URL"
+                labelPlacement="floating"
+                value={currentEvent.imageUrl}
+                onIonInput={(e) =>
+                  handleInputChange("imageUrl", e.detail.value!)
+                }
+                onBlur={() => handleInputBlur("imageUrl")}
+              />
+            </IonCol>
+            <IonCol size="12">
+              <IonButton
+                expand="full"
+                onClick={handleSubmit}
+                className={styles.button}
+              >
+                Submit
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>

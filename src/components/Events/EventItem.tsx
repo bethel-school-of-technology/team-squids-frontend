@@ -36,7 +36,7 @@ const EventItem: React.FC<ContainerProps> = ({
 
   return (
     <IonItem
-      routerLink={`/events/${eventId}`}
+      routerLink={`/event/${eventId}`}
       button
       detail={userId !== currentUserId}
     >

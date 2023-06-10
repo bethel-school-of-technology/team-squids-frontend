@@ -49,18 +49,18 @@ const App: React.FC = () => {
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/add-church" exact component={AddChurch} />
-            <Route path="/churches/edit/:churchId" exact component={EditChurch}/>
-            <Route path="/churches/:churchId" exact component={ChurchProfile} />
+            <Route path="/edit-church/:churchId" exact component={EditChurch}/>
+            <Route path="/church/:churchId" exact component={ChurchProfile} />
             <Route path="/churches" exact component={ChurchFinder} />
 
             <Route path="/add-event" exact component={AddEvent} />
-            <Route path="/events/edit/:eventId" exact component={EditEvent} />
-            <Route path="/events/:eventId" exact component={EventDetails} />
+            <Route path="/edit-event/:eventId" exact component={EditEvent} />
+            <Route path="/event/:eventId" exact component={EventDetails} />
             <Route path="/events" exact component={EventList} />
             
-            <Route path="/user" component={UserAuth} />
-            <Route path="/user/edit/:userId" exact component={EditUser} />
+            <Route path="/edit-user/:userId" exact component={EditUser} />
             <Route path="/user/:userId" exact component={ChurchUserProfile} />
+            <Route path="/users" component={UserAuth} />
             
             <Route exact path="/" render={() => <Redirect to="/churches" />} />
 
@@ -75,7 +75,7 @@ const App: React.FC = () => {
               <IonLabel>Events</IonLabel>
             </IonTabButton>
             {!currentUserId && (
-              <IonTabButton tab="user" href="/user">
+              <IonTabButton tab="user" href="/users">
                 <IonIcon aria-hidden="true" icon={settings} />
                 <IonLabel>Profile</IonLabel>
               </IonTabButton>

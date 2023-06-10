@@ -5,7 +5,7 @@ import {
   ChurchUserContext,
   LoginChurchUser,
 } from "../context/churchUserContext";
-import "./LoginAccount.css";
+import styles from "../theme/forms.module.css";
 
 const LoginAccount: React.FC = () => {
   const [loginUser, setLoginUser] = useState<LoginChurchUser>({
@@ -31,9 +31,10 @@ const LoginAccount: React.FC = () => {
     // await Promise.all([loginChurchUser(loginUser), verifyCurrentUser()]);
     loginChurchUser(loginUser).then((resp) => {
       history.push(`/user/${resp.userId}`);
+      //history.push(`/churches`);
     });
     console.log(currentUserId);
-    //history.push(`/churches`);
+    history.push(`/churches`);
   };
 
   const [touchedFields, setTouchedFields] = useState<string[]>([]);
@@ -79,7 +80,7 @@ const LoginAccount: React.FC = () => {
         />
       </IonCol>
       <IonCol size="12">
-        <IonButton expand="full" onClick={handleSubmit}>
+        <IonButton expand="full" onClick={handleSubmit} className={styles.button}>
           Submit
         </IonButton>
       </IonCol>

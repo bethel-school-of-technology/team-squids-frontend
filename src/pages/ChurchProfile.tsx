@@ -14,7 +14,6 @@ import {
 } from "@ionic/react";
 import { ChurchContext } from "../context/churchContext";
 import { ChurchUserContext } from "../context/churchUserContext";
-import "./ChurchProfile.css";
 import PageHeader from "../components/Global/PageHeader";
 import { AllEvents, EventContext } from "../context/eventContext";
 import EventsList from "../components/Events/EventsLists";
@@ -85,7 +84,7 @@ const ChurchProfile: React.FC = () => {
                   color="secondary"
                   fill="outline"
                   expand="block"
-                  routerLink={`/churches/edit/${church.churchId}`}
+                  routerLink={`/edit-church/${church.churchId}`}
                 >
                   Edit Church
                 </IonButton>
