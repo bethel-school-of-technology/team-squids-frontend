@@ -1,0 +1,51 @@
+.header {
+  text-align: center;
+  margin: 3rem auto;
+}
+
+.logo {
+  width: 150px;
+  margin: 0rem auto -0.5rem auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.welcome {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.welcomeSpan {
+  font-size: 1.75rem;
+  font-weight: 200;
+  text-transform: uppercase;
+}
+
+.segment {
+  margin: 0rem auto 1rem auto;
+}
+
+.button {
+  margin: 2rem auto;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.addButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 16px;
+  font-weight: 600;
+  margin-top: 2rem;
+}
