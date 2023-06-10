@@ -9,7 +9,7 @@ Google Chrome for iPhone or Android
 Apple Safari for iPhone
 Apple Safari for iPad
 
-## Insatlling
+## Installing
 To install the app, simply open your web browser to the link which will be forthcoming.  
 
 ## About handler
