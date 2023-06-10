@@ -12,6 +12,7 @@ import {
 import { useContext } from "react";
 import { EventContext } from "../context/eventContext";
 import EventsList from "../components/Events/EventsLists";
+import { trashBin } from "ionicons/icons";
 
 const EventFinder: React.FC = () => {
   const { events, searchEvents, getAllEvents  } = useContext(EventContext);
@@ -32,8 +33,11 @@ const EventFinder: React.FC = () => {
           <IonTitle>Event Finder</IonTitle>
         </IonToolbar>
         <IonToolbar color="primary">
-          <IonSearchbar onIonChange={(e) => handleSearch(e.detail.value!)} 
-          onIonClear={handleClear}></IonSearchbar>
+          <IonSearchbar 
+          onIonChange={(e) => handleSearch(e.detail.value!)} 
+          onIonClear={handleClear}
+          clearIcon={trashBin} 
+          ></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

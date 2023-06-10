@@ -11,3 +11,11 @@ Apple Safari for iPad
 
 ## Insatlling
 To install the app, simply open your web browser to the link which will be forthcoming.  
+
+## About handler
+ 'e' event object passed to the event handler is a change event targeting an input element
+  generic type paramenter 
+  onIonchange when user selects enter instead when query get update.
+  onChange when user change value in searchBar 
+  FormEventHandler object vs ChangeEvent object
+  changeEvent obj doesnt have EventTarget or HTMLInputElement
