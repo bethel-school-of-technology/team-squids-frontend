@@ -12,12 +12,12 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-tint: #ffc121;
 
   /** secondary **/
-	--ion-color-secondary: #F48C06;
-	--ion-color-secondary-rgb: 244,140,6;
-	--ion-color-secondary-contrast: #000000;
-	--ion-color-secondary-contrast-rgb: 0,0,0;
-	--ion-color-secondary-shade: #d77b05;
-	--ion-color-secondary-tint: #f5981f;
+  --ion-color-secondary: #F48C06;
+  --ion-color-secondary-rgb: 244,140,6;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0,0,0;
+  --ion-color-secondary-shade: #d77b05;
+  --ion-color-secondary-tint: #f5981f;
 
   /** tertiary **/
   --ion-color-tertiary: #dc2f02;
@@ -64,16 +64,16 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-medium-rgb: 92, 92, 92;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #515151;
-  --ion-color-medium-tint: #6c6c6c;
+  --ion-color-medium-shade: #525252;
+  --ion-color-medium-tint: #686868;
 
   /** light **/
-  --ion-color-light: #e0e0e2;
-  --ion-color-light-rgb: 224, 224, 226;
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #c5c5c7;
-  --ion-color-light-tint: #e3e3e5;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -92,12 +92,12 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-primary-tint: #ffc121;
 
     /** secondary **/
-    --ion-color-secondary: #ffba08;
-    --ion-color-secondary-rgb: 255, 186, 8;
+    --ion-color-secondary: #F48C06;
+    --ion-color-secondary-rgb: 244, 140, 6;
     --ion-color-secondary-contrast: #ffffff;
     --ion-color-secondary-contrast-rgb: 255, 255, 255;
-    --ion-color-secondary-shade: #e0a407;
-    --ion-color-secondary-tint: #ffc121;
+    --ion-color-secondary-shade: #dc7a05;
+    --ion-color-secondary-tint: #f59e27;
 
     /** tertiary **/
     --ion-color-tertiary: #dc2f02;

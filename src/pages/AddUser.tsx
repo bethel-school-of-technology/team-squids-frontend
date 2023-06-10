@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { IonInput, IonButton, IonRow, IonCol } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { ChurchUserContext, NewChurchUser } from "../context/churchUserContext";
-import "./AddUser.css"
+import styles from "../theme/forms.module.css";
 
 interface AddUserProps {
   setSelectedPage: React.Dispatch<React.SetStateAction<"create" | "login">>;
@@ -54,7 +54,7 @@ const AddUser: React.FC<AddUserProps> = ({ setSelectedPage }) => {
       <IonCol size="12">
         <IonInput
           className={`ion-input-field ${
-            isFieldTouched("firstname") ? "" : "ion-untouched"
+            isFieldTouched("firstName") ? "" : "ion-untouched"
           }`}
           required
           type="text"
@@ -108,7 +108,11 @@ const AddUser: React.FC<AddUserProps> = ({ setSelectedPage }) => {
         />
       </IonCol>
       <IonCol size="12">
-        <IonButton expand="full" onClick={handleSubmit}>
+        <IonButton
+          expand="full"
+          onClick={handleSubmit}
+          className={styles.button}
+        >
           Submit
         </IonButton>
       </IonCol>

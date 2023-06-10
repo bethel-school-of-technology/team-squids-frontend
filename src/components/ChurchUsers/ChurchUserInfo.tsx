@@ -14,7 +14,7 @@ const ChurchUserInfo: React.FC<ContainerProps> = ({
   return (
     <IonCol size="12">
       <h4>User Information</h4>
-      <IonRouterLink routerLink={`/user/edit/${userId}`}>
+      <IonRouterLink routerLink={`/edit-user/${userId}`}>
       <IonItem>
         <IonLabel>
           <h2>First Name</h2>

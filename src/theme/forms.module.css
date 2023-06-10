@@ -14,6 +14,12 @@
   text-transform: lowercase;
 }
 
+.titleSpan {
+    font-size: 2.5rem;
+    font-weight: 200;
+    text-transform: uppercase;
+  }
+
 .welcome {
   font-size: 1.75rem;
   font-weight: 600;

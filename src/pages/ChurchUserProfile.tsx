@@ -13,16 +13,14 @@ import {
   IonRouterLink,
   IonRow,
 } from "@ionic/react";
-import "./ChurchProfile.css";
 import PageHeader from "../components/Global/PageHeader";
 import ChurchList from "../components/Churches/ChurchList";
 import ChurchUserInfo from "../components/ChurchUsers/ChurchUserInfo";
 import EventsList from "../components/Events/EventsLists";
 import { useFetchChurchUser } from "../hooks/useFetchChurchUser";
-import "./ChurchUserProfile.css";
 import { ChurchUserContext } from "../context/churchUserContext";
-
 import { EventContext } from "../context/eventContext";
+import styles from "../theme/forms.module.css";
 
 interface ChurchUserRouteParams {
   userId: string;
@@ -72,22 +70,29 @@ const UserProfile: React.FC = () => {
     <IonPage>
       <ErrorAlert error={error} />
       <LoadingSpinner status={loadingStatus} />
-      <PageHeader header={churchUser ? "User Profile" : "No User"} />
       <IonContent fullscreen>
         <IonGrid>
-          <IonRow> 
+          <IonRow>
             <IonCol size="12">
-            <div className="header-container">
-              <IonImg src="/svg/church_hive_icon.svg" />
-              <h2>Welcome {churchUser?.firstName}</h2>
-            </div>
+              <div className={styles.header}>
+                <IonImg
+                  src="/svg/church_hive_icon.svg"
+                  className={styles.logo}
+                />
+                <h1 className={styles.welcome}>
+                  welcome
+                  <span className={styles.welcomeSpan}>
+                    {churchUser?.firstName}
+                  </span>
+                </h1>
+              </div>
             </IonCol>
             {churchUser && <ChurchUserInfo data={churchUser} />}
             <IonCol size="12">
-              <div className="add">
+              <div className={styles.addButton}>
                 <h4>My Churches</h4>
                 <IonRouterLink routerLink="/add-church" slot="end">
-                  Add
+                  ADD
                 </IonRouterLink>
               </div>
               {churchUser && churchUser?.Churches.length > 0 && (
@@ -95,17 +100,21 @@ const UserProfile: React.FC = () => {
               )}
             </IonCol>
             <IonCol size="12">
-              <div className="add">
+              <div className={styles.addButton}>
                 <h4>My Events</h4>
                 <IonRouterLink routerLink="/add-event" slot="end">
-                  Add
+                  ADD
                 </IonRouterLink>
               </div>
               {userEvents.length > 0 && <EventsList events={userEvents} />}
             </IonCol>
           </IonRow>
           <IonCol>
-            <IonButton expand="full" onClick={handleLogout}>
+            <IonButton
+              expand="full"
+              onClick={handleLogout}
+              className={styles.button}
+            >
               Logout
             </IonButton>
           </IonCol>

@@ -12,8 +12,7 @@ import {
 } from "@ionic/react";
 import AddUser from "./AddUser";
 import LoginAccount from "./LoginAccount";
-// ...
-import "./UserAuth.css";
+import styles from "../theme/forms.module.css";
 
 const UserAuth: React.FC = () => {
   const [selectedPage, setSelectedPage] = useState<"create" | "login">(
@@ -26,15 +25,16 @@ const UserAuth: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol size="12">
-              <div className="header-container">
-                <IonImg src="/svg/church_hive_icon.svg" />
-                <h1>Church Hive</h1>
+              <div className={styles.header}>
+                <IonImg src="/svg/church_hive_icon.svg" className={styles.logo}/>
+                <h1 className={styles.title}>Church<span className={styles.titleSpan}>Hive</span></h1>
               </div>
               <IonSegment
                 value={selectedPage}
                 onIonChange={(e) =>
                   setSelectedPage(e.detail.value as "create" | "login")
                 }
+                className={styles.segment}
               >
                 <IonSegmentButton value="create">
                   <IonLabel>Create an Account</IonLabel>

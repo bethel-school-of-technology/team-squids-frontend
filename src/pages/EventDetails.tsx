@@ -67,7 +67,7 @@ const EventDetails: React.FC = () => {
                   color="secondary"
                   fill="outline"
                   expand="block"
-                  routerLink={`/events/edit/${event.eventId}`}
+                  routerLink={`/edit-event/${event.eventId}`}
                 >
                   Edit Event
                 </IonButton>
