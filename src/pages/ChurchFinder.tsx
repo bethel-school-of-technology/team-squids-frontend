@@ -17,13 +17,6 @@ import { trashBin } from "ionicons/icons";
 const ChurchFinder: React.FC = () => {
   const { searchChurches, churches, getAllChurches } = useContext(ChurchContext);
 
-  // 'e' event object passed to the event handler is a change event targeting an input element
-  // generic type paramenter 
-  // onIonchange when user selects enter instead when query get update.
-  // onChange when user change value in searchBar 
-  // FormEventHandler object vs ChangeEvent object
-  // changeEvent obj doesnt have EventTarget or HTMLInputElement
-
   const handleSearch = async (searchQuery: string) => {
     // Call function to search locations base on query
     await searchChurches(searchQuery)
