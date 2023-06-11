@@ -58,7 +58,7 @@ const ChurchInfo: React.FC<ChurchInfoProps> = ({
       <IonCol size="12">
         <h4>Contact Information</h4>
         <a href={`https://${website}`}>
-          <p className={styles.link}>{churchEmail}</p>
+          <p className={styles.link}>{website}</p>
         </a>
 
           <p>{phoneNumber}</p>
