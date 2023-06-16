@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import {
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
   IonPage,
   IonContent,
   IonImg,
   IonGrid,
   IonRow,
-  IonCol,
+  IonCol
 } from "@ionic/react";
-import AddUser from "./AddUser";
 import LoginAccount from "./LoginAccount";
 import styles from "../theme/forms.module.css";
 
 const UserAuth: React.FC = () => {
-  const [selectedPage, setSelectedPage] = useState<"create" | "login">(
-    "create"
-  );
 
   return (
     <IonPage>

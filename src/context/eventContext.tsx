@@ -97,7 +97,7 @@ export const EventContext = createContext<EventContextProps>({
   searchEvents: (query: string) => Promise.resolve(),
 });
 
-const BASE_URL = "http://localhost:3000/api/event/";
+const BASE_URL = "http://45.79.135.106/api/event/";
 
 export const EventProvider = ({ children }: EventContextProviderProps) => {
   const [events, setEvents] = useState<AllEvents[]>([]);
