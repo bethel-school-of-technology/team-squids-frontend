@@ -32,7 +32,7 @@ const ChurchItem: React.FC<ContainerProps> = ({
       detail={userId !== currentUserId}
     >
       <IonThumbnail slot="start">
-        <img alt="Church photo" src={imageUrl} />
+        <img alt="Silhouette of a person's head" src={imageUrl} />
       </IonThumbnail>
       <IonLabel>
         <h2>{churchName}</h2>

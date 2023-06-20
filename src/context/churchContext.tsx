@@ -77,7 +77,7 @@ export const ChurchContext = createContext<ChurchContextProps>({
   searchChurches: (query: string) => Promise.resolve(),
 });
 
-const BASE_URL = "http://45.79.135.106/api/church/";
+const BASE_URL = "http://localhost:3000/api/church/";
 
 export const ChurchProvider = ({ children }: ChurchContextProviderProps) => {
   const [churches, setChurches] = useState<AllChurches[]>([]);
