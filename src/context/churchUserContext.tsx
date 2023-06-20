@@ -72,7 +72,7 @@ export const ChurchUserContext = createContext<ChurchUserContextProps>({
   isLoggedIn: false,
 });
 
-const BASE_URL = "http://45.79.135.106/api/user/";
+const BASE_URL = "http://localhost:3000/api/user/";
 
 export const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("myChurchUserToken")}`,
