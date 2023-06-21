@@ -82,7 +82,7 @@ const EventInfo: React.FC<EventInfoProps> = ({
       <IonCol size="12" >
         <h4>Contact Information</h4>
         <a href={`https://${Church.website}`} className={styles.link}>
-          <p>{Church.website}</p>
+          <p>{Church.churchEmail}</p>
         </a>
 
         <p>{Church.phoneNumber}</p>

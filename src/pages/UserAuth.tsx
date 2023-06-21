@@ -29,12 +29,26 @@ const UserAuth: React.FC = () => {
                 <IonImg src="/svg/church_hive_icon.svg" className={styles.logo}/>
                 <h1 className={styles.title}>Church<span className={styles.titleSpan}>Hive</span></h1>
               </div>
-              <center>
-                <p className={styles.loginTitle}>Login</p>
-              </center>
+              <IonSegment
+                value={selectedPage}
+                onIonChange={(e) =>
+                  setSelectedPage(e.detail.value as "create" | "login")
+                }
+                className={styles.segment}
+              >
+                <IonSegmentButton value="create">
+                  <IonLabel>Create an Account</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value="login">
+                  <IonLabel>Login</IonLabel>
+                </IonSegmentButton>
+              </IonSegment>
             </IonCol>
           </IonRow>
-          <LoginAccount/>
+          {selectedPage === "create" && (
+            <AddUser setSelectedPage={setSelectedPage} />
+          )}
+          {selectedPage === "login" && <LoginAccount />}
         </IonGrid>
       </IonContent>
     </IonPage>
